@@ -1,0 +1,192 @@
+%=========================================================================
+% (c) Michal Bidlo, Bohuslav Křena, 2008
+
+\chapter{Úvod}
+Úvod tejto bakalarskej prace bude popisany az nakoniec \footnote{Viz Zasady pisania odbornych prac}.
+\chapter{Testovanie softvéru}
+V~nasledujúcej kapitole sú stručne zhrnuté teoretické vedomosti o~testovaní softvéru.
+Kapitola \ref{sekcia:typy_testovania} popisuje, prečo je testovanie softéru dôležité a~aké rôzne typy
+testovania softvéru sa dnes používajú.
+V~kapitole \ref{sekcia:testovanie_v_praxi} si popíšeme, ako sa automaticky testuje softvér vo firme Acision a~aké nástroje táto firma používa.
+Nakoniec kapitola \ref{sekcia:planovac} popisuje plánovač testov, ktorý firma Acision každodenne používa 
+pri testovaní rôznych typov softvéru, ktorý firma vyvíja. 
+Cieľom tejto bakalárskej práce je úprava tohto plánovača tak, aby podporoval distribúciu testov na viaceré systémy 
+a~tým urýchlil čas potrebný na otestovanie softvéru danou sadou testov. 
+
+\section{Typy testovania softvéru} \label{sekcia:typy_testovania}
+Testovanie softvéru je v~dnešnej dobe jedným z~kľúčových faktorov v~IT sfére.
+Podľa štandardu IEEE 1059 \cite{Ieee} je testovanie proces analýzy softvéru a~detekovanie rozdielností medzi 
+existujúcimi a~požadovanými podmienkami a~vyhodnocovaní vlastností testovaného softvéru.
+Viaceré zdroje avšak pojem testovania softvéru definujú inak.
+Dokument \cite{Swebok} definuje pojem testovania softvéru ako {\it dynamickú} verifikáciu správania programu voči {\it očakávanému} správaniu programu na {\it konečnej} vzorke
+testov, vhodne {\it zvolenej} zo zvyčajne nekonečného množstva možných prípadov použitia.
+Pressman v~dokumente \cite{Pressman} prehlásil, že testovanie softvéru je kritickým prvkom zabezpečenia kvality softvéru, ktorý má jedinú primárnu úlohu, a~to násť v~ňom chyby.  
+
+Existujú rôzne spôsoby delenia testovania softvéru. Jedno z~hlavných delení je delenie podľa spôsobu testovania.
+Toto rozdelenie vychádza z~toho, či je potrebné k~prevedeniu testu daný softvér spustiť, alebo nie.
+\subsection*{Statické testovanie}
+Statické testovanie je testovanie ktoré nevyžaduje beh softvéru. Statická analýza sa snaží odhaliť niektoré
+programátorské chyby ako napríklad syntaktické chyby, neicializované premenné, nesprávna práca s~pamäťou, delenie nulou, opakované zavretie súboru a~ďalšie. 
+Medzi statické testovanie patrí napríklad revízia kódu alebo použitie niektorého nástroja pre statické testovanie, napríklad syntaktický analyzátor, sémantický
+analyzátor, analyzátor závislostí, atď. Statické testovanie môže byť manuálne alebo automatické. Tento typ testovania je možný v~ľubovolnej fáze vývoja softvéru.
+\subsection*{Dynamické testovanie}
+Dynamické testovanie vyžaduje beh testovaného softvéru. Dynamické testovanie môže produkovať výsledky, ktoré nie sú so statickou analýzou možné, alebo 
+by boli použitím statického testovania časovo náročné. Tento typ testovania vyžaduje spustiteľnú verziu vyvýjaného softvéru.
+\\
+\\
+Medzi ďalšie delenie patrí delenie testovania podľa spôsobu vykonávania testov:
+\subsection*{Manuálne testovanie}
+Pri manuálnom testovaní vykonáva test používateľ priamou interakciou s~testovaným produktom. 
+Tento typ testovania sa používa pokiaľ test potrebuje ľudské ohodnotenie alebo úsudok.
+
+\subsection*{Automatické testovanie}
+Automatické testovanie je prevádzané strojom.
+Tento typ testovania sa zavádza väčšinou do rozsiahlych projektov.
+Využíva sa pri opakovanom spúsťaní veľkého množstva testov, alebo testov s~veľkými množstvami dát.
+Pri automatickom testovaní sa využíva nejaký automatizovaný nástroj, pričom môže ísť o~nástroje 
+pre vykonávanie testov alebo o~nástroje pre správu testov.
+\\
+\\
+Trocha odlišne sa pristupuje k~deleniu testov na základe toho, aké znalosti máme o~testovanom produkte.
+Môže ísť o:
+\subsection*{Testovanie pomocou bielej skrinky}
+Tento typ testovania vyžaduje prístup k~zdrojovému kódu softvéru. Na základe znalosti zdrojového kódu sa potom vytvárajú testy.
+Testovanie pomocou bielej skrinky však nemusí odhaliť neimplementované časti systému, alebo chýbajúce požiadavky.
+\subsection*{Testovanie pomocou čiernej skrinky}
+Táto metóda nevyžaduje znalosť zdrojového kódu testovaného softvéru počas vytvárania testov.
+Pri návrhu testov sa používa externý pohľad na testovaný softvér. 
+Produkt berieme ako čiernu skrinku, do ktorej sa nevieme pozrieť.
+O~tejto čiernej skrinke vieme len to, ako sa chová navonok a~ako vyzerá.
+Pri tomto type testovania sa zameriavame na vstupy a~výstupy programu, bez znalosti toho, ako je naimplementovaný.
+\subsection*{Testovanie pomocou sivej skrinky}
+Testovanie pomocou sivej skrinky je forma testovania niekde medzi bielou a~čiernou skrinkou. 
+Využívajú sa v~nej limitované vedomosti o~implementácií testovaného softvéru.
+Nemáme napríklad k~dispozícií celý zdrojový kód, ale iba dizajn softvéru alebo databázu.
+\\
+\\
+Testovanie softvéru môže byť zvyčajne vykonávané na rôzných úrovniach 
+procesu vývoja alebo údržby softvéru. Cieľ testu môže byť rôzny: od jedného
+modulu, cez skupinu modulov, alebo celého systému.
+Toto delenie je na základe úrovní testovania softvéru a~vyzerá nasledovne:
+\subsection*{Unit testy}
+Tieto testy verifikujú funkcionalitu softvéru v~častiach, ktoré sú testovateľné oddelene.
+Unit testy sú definované presnejšie v~štandarde IEEE1008-87 \cite{Ieee_unit}.
+\subsection*{Integračné testovanie}
+Integračné testovanie je proces v~ktorom sa verifikuje interakcia medzi viacerými softvérovými komponentami.
+\subsection*{Systémové testovanie}
+Systémové testovanie sa zaoberá správaním celého systému. Behom systémového testovania sa aplikácia testuje ako celok,
+a~preto je toto testovanie vhodné pre neskoršie fázach vývoja.
+\subsection*{Akceptačné testovanie}
+Testuje správanie systému voči požiadavkám zákazníka. Akceptačné testy overujú to, že je daný softvér 
+schopný byť nasadený do ostrej prevádzky, a~typicky sú súčasťou prevzatia softvéru zákazníkom.
+
+Testovanie môže byť cieľené na verifikovanie rôznych vlastností softvéru. Na základe toho, na akú časť systému je 
+testovanie zamerané, môžeme testovanie rozdeliť na:
+\subsection*{Inštalačné testovanie}
+Toto testovanie overuje, či je vytvorený softvér možné nainštalovať
+na cieľové prostredie. Na tento typ testovania sa môžeme pozrieť ako na 
+systémové testovanie ovplyvnené viacerými faktormi, ako napríklad hardwarové požiadavky
+alebo požiadavky na operačný systém. 
+\subsection*{Testovanie výkonu}
+Tento typ testovanie je špeciálne zameraný na to, že softvér spĺňa stanovené požiadavky 
+na výkon, ako napríklad doba odozvy alebo počet vykonaných operácií za čas. 
+\subsection*{Regresné testovanie}
+Podľa štandardu IEEE610.12 \cite{Ieee_glossary} je regresné testovanie \quotedblbase Selektívne pretestovávanie 
+systému alebo komponenty na verifikáciu, že zmeny nespôsobili nechcené efekty a~že systém alebo
+komponenta stále spĺňa špefikované požiadavky.\textquotedblleft
+Myšlienkou tohoto testovania je overiť to, že nové zmeny do funkcionality systému nezaniesli do systému nové typy chýb.
+Bežným spôsobom tohoto testovania je periodické spúšťanie testov vytvorených v~minulosti a~kontrolovanie, či sa zmenilo správanie
+systému a~či sa chyby opravené v~minulosti znovu neprejavili.
+\subsection*{Testovanie použiteľnosti}
+Testovanie použitelnosti overuje aké zložité je pre koncového používateľa pracovať s~daným softvérom.
+Toto testovanie overuje taktiež prácu s~dokumentáciou alebo napríklad schopnosť zotavenia sa z~chyby. 
+
+Uvedené delenia testovania a~ich typy patria medzi najzákladnejšie. 
+Existuje ešte niekoľko spôsobov delenia testovania softvéru, ktoré v~tejto kapitole nie sú popísané.
+
+\section{Testovanie softvéru v~praxi} \label{sekcia:testovanie_v_praxi}
+V~nasledujúcej kapitole si popíšeme, ako môže byť riešené testovanie komerčného softwaru v~praxi.
+Firma Acision\footnote{http://www.acision.com/}, pre ktorú je táto bakalárska práca vytváraná, vyvíja niekoľko komerčných produktov
+v~sfére messagingu. Pri produktoch je kladený veľký dôraz práve na testovanie.
+Jedným z~najväčších produktov ktorý firma vyvíja je produkt {\it Message Controller}
+\footnote{http://www.acision.com/services/messaging-infrastructure/message-controller} (ďalej len MCO).
+Táto bakalárska práca je zameraná pre potreby tohoto produktu a~jeho derivátov.
+MCO je komerčný systém, ktorý je na trhu dostupný už niekoľko rokov, a~preto sú hodnoty uvedené v~tejto 
+bakalárskej práci z~oddelenia maintenance, ktoré je zodpovedné za údržbu systému a~opravovania chýb v~ňom vyskytnutých.
+Jednotlivé produkty sú každodenne testované regresnou sadou testou, ktorá v~prípade MCO pozostáva z~asi 1500 testov.
+
+Údržba produktu MCO funguje formou kontinuálnej integrácie\footnote{angl. Continuous integration}.
+Kontinuálna integrácia je vývoj softwaru, kedy členovia týmu spájanú ich prácu častejšie.
+Obvykle každý člen týmu integruje svoju prácu aspoň raz denne, čo vedie k~niekoľkým integráciám za deň.
+Každá integrácia je verifikovaná automatickým buildom a~testami, aby sa detekovali chyby čo najskôr \cite{Continuous_integration}.
+
+V~praxi to zjednodušene prebieha tak, že je vývojárovi pridelený tzv. ticket, ktorý slúži na popis
+nájdenej chyby v~systéme. Pomocou verzovacieho systému si vezme aktuálnu verziu zdrojových súborov a~začne nájdenú chybu opravovať.
+Po tom, čo vývojár chybu opraví, zmeny do zdrojového kódu mu skontroluje iný vývojár.
+Ak so zmenami do zdrojového kódu bude súhlasiť, uložia tieto zmeny do verzovacieho systému.
+Týmto spôsobom sa zaisťuje kontinuálna integrácia na strane vývojárov.
+
+Paralelne s~týmto vývojom beží na jednom servery program, ktorý monitoruje zmeny vo verzovacom systéme.
+Ak sa nájde nejaká zmena v~zdrojových kódoch, spustí sa automatický preklad a~zdrojové kódy spolu s~dokumentáciou
+sa nanovo skompilujú. Vytvorí sa spustiteľná verzia nového systému. Ak sa preklad zdrojových kódov nepodarí, vývojár ktorý 
+danú chybu spôsobil na stav upozornený a~môže sa čo najrýchlejšie pustiť do opravy spôsobenej chyby kompilácie.
+
+Z~pohľadu testera je situácia podobná. Testerovi je taktiež pridelený ticket, pomocou verzovacieho systému si zoberie aktuálnu verziu
+všetkých testov a~začne pracovať na novom teste ktorý overí, že vývojár opravil chybu popísanú v~tickete správne.
+Ihneď po dokončení testu zaraďuje tento test pomocou verzovacieho systému do aktuálneho repozitára a~vyžiada si
+kontrolu napísaného testu. 
+
+V~noci sa potom vezme najnovšia spustiteľná verzia systému, a~na tomto systéme sa pustí aktuálna verzia
+všetkých dostupných testov. Pomocou regresného testovania sa potom overí, či sa zmenou zdrojového kódu nezaniesli do systému nové
+chyby. Všetky testy sú plne automatizované a~dynamicky overujú, že testovaný systém splňuje všetky požiadavky.
+
+Týmito postupmi je zaistená kontinuálna integrácia. Implementácií kontinuálnej integrácie 
+sa venuje napríklad dokument \cite{Continuous_integration_implementation}. 
+Postupnou iteráciou týchto procesov sa dosahuje výsledná kvalita systému. Vačšina testov pristupuje k~testovanému
+systému metódou čiernej skrinky, takže tester nepotrebuje znalosť zdrojového kódu, a~môže tak vytvárať testy
+ešte pred dokončením samotnej implementácie systému. 
+
+
+
+\section{Princíp použitého plánovača testov} \label{sekcia:planovac}
+Zoznam pouzitych veci
+\begin{itemize}
+\item prerekvizita je dadydadydaaa
+\item cluster je toto
+\item a~este tam mame nieco ine
+\end{itemize}
+
+\subparagraph{aa1}
+aaa1
+\subparagraph{aa2}
+aaa2
+TOto je \textbf{Tucny text} uprostred  normalneho textu
+
+\chapter{Návrh riešenia}
+Táto kapitola sa zaoberá základným návrhom
+\section{Možnosti rozdeľovania testov}
+\section{Komunikácia medzi jednotlivými plánovačmi testov}
+\section{Interpretácia výsledkov}
+\section{Riešenie nových typov problémov}
+
+
+\chapter{Implementácia}
+V~tejto kapitole sa budeme venovať 
+\section{Použité technológie}
+\section{Delenie testov na podmnožiny}
+\section{Spúšťanie podprocesov a~komunikácia s~nimi}
+\section{Sledovanie aktuálneho stavu testovania}
+\section{Zbieranie a~vyhodnocovanie výsledkov}
+\section{Optimalizácie rozdeľovania testov}
+
+
+\chapter{Zhodnotenie dosiahnutých výsledkov}
+\section{Prínos použitia paralelného plánovača testov}
+\section{Porovnanie jednotlivých optimalizácií}
+
+
+\chapter{Záver}
+\section{Zhrnutie}
+\section{Možnosti ďalšieho vývoja}
+
+%=========================================================================
