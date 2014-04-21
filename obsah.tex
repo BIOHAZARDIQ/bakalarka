@@ -3,6 +3,19 @@
 
 \chapter{Úvod}
 Úvod tejto bakalarskej prace bude popisany az nakoniec \footnote{Viz Zasady pisania odbornych prac}.
+
+\begin{itemize}
+\item prerekvizita je dadydadydaaa
+\item cluster je toto
+\item a~este tam mame nieco ine
+\end{itemize}
+
+\subparagraph{aa1}
+aaa1
+\subparagraph{aa2}
+aaa2
+TOto je \textbf{Tucny text} uprostred  normalneho textu
+
 \chapter{Testovanie softvéru}
 V~nasledujúcej kapitole sú stručne zhrnuté teoretické vedomosti o~testovaní softvéru.
 Kapitola \ref{sekcia:typy_testovania} popisuje, prečo je testovanie softéru dôležité a~aké rôzne typy
@@ -52,7 +65,7 @@ Môže ísť o:
 \subsection*{Testovanie pomocou bielej skrinky}
 Tento typ testovania vyžaduje prístup k~zdrojovému kódu softvéru. Na základe znalosti zdrojového kódu sa potom vytvárajú testy.
 Testovanie pomocou bielej skrinky však nemusí odhaliť neimplementované časti systému, alebo chýbajúce požiadavky.
-\subsection*{Testovanie pomocou čiernej skrinky}
+\subsection*{Testovanie pomocou čiernej skrinky} \label{sekcia:cierna_skrinka}
 Táto metóda nevyžaduje znalosť zdrojového kódu testovaného softvéru počas vytvárania testov.
 Pri návrhu testov sa používa externý pohľad na testovaný softvér. 
 Produkt berieme ako čiernu skrinku, do ktorej sa nevieme pozrieť.
@@ -90,7 +103,7 @@ alebo požiadavky na operačný systém.
 \subsection*{Testovanie výkonu}
 Tento typ testovanie je špeciálne zameraný na to, že softvér spĺňa stanovené požiadavky 
 na výkon, ako napríklad doba odozvy alebo počet vykonaných operácií za čas. 
-\subsection*{Regresné testovanie}
+\subsection*{Regresné testovanie} \label{sekcia:regresne_testovanie}
 Podľa štandardu IEEE610.12 \cite{Ieee_glossary} je regresné testovanie \quotedblbase Selektívne pretestovávanie 
 systému alebo komponenty na verifikáciu, že zmeny nespôsobili nechcené efekty a~že systém alebo
 komponenta stále spĺňa špefikované požiadavky.\textquotedblleft
@@ -134,10 +147,10 @@ danú chybu spôsobil na stav upozornený a~môže sa čo najrýchlejšie pusti�
 Z~pohľadu testera je situácia podobná. Testerovi je taktiež pridelený ticket, pomocou verzovacieho systému si zoberie aktuálnu verziu
 všetkých testov a~začne pracovať na novom teste ktorý overí, že vývojár opravil chybu popísanú v~tickete správne.
 Ihneď po dokončení testu zaraďuje tento test pomocou verzovacieho systému do aktuálneho repozitára a~vyžiada si
-kontrolu napísaného testu. 
+kontrolu napísaného testu. Tester väčšinou pristupuje k~testovanému produktu metódou čiernej skrinky (viď kapitola \ref{sekcia:cierna_skrinka}).
 
-V~noci sa potom vezme najnovšia spustiteľná verzia systému, a~na tomto systéme sa pustí aktuálna verzia
-všetkých dostupných testov. Pomocou regresného testovania sa potom overí, či sa zmenou zdrojového kódu nezaniesli do systému nové
+Raz denne (typicky v~noci) sa potom vezme najnovšia spustiteľná verzia systému, a~na tomto systéme sa pustí aktuálna verzia
+všetkých dostupných testov. Pomocou regresného testovania (viď kapitola \ref{sekcia:regresne_testovanie}) sa potom overí, či sa zmenou zdrojového kódu nezaniesli do systému nové
 chyby. Všetky testy sú plne automatizované a~dynamicky overujú, že testovaný systém splňuje všetky požiadavky.
 
 Týmito postupmi je zaistená kontinuálna integrácia. Implementácií kontinuálnej integrácie 
@@ -146,21 +159,158 @@ Postupnou iteráciou týchto procesov sa dosahuje výsledná kvalita systému. V
 systému metódou čiernej skrinky, takže tester nepotrebuje znalosť zdrojového kódu, a~môže tak vytvárať testy
 ešte pred dokončením samotnej implementácie systému. 
 
-
+Pre potreby tohoto testovania vznikol nástroj, ktorý je schopný zostaviť plán všetkých testov, a~tieto testy postupne vykonať.
+Výhodou tohoto nástroja je hlavne to, že je schopný jednoducho zaradiť novo vyvorené testy do regresnej sady, ktorá
+testuje systém množinou všetkých testov. Postupným pridávaním testov do tejto regresnej sady sa však zvýšil čas potrebný pre otestovanie celého systému.
+Regresné testovanie sa časom stalo veľmi časovo náročné, nakoľko čas na otestovanie celého systému sa vyšplhal až 15 hodín a~stále narastal.
+Vznikol problém, že behom noci sa nestihol otestovať celý systém a~na začiatku pracovnej doby sa ešte muselo čakať na výsledky regresného testovania.
+Pre riešenie tohoto problému vznikol nápad vytvorenia rozšíreného plánovača testov, ktorý by bol schopný spúštať testy na viacerých testovacích systémoch.
+V~praxi to znamená, že množina všetkých regresných testov sa rozdelí na niekoľko podmnožín, kde každá podmnožina testov sa spustí na samostatnom
+testovacom stroji. Týmto spôsobom sme schopný zkrátiť čas potrebný pre otestovanie celého systému bez toho, aby sme museli niektoré testy z~regresnej sady 
+úplne vypustiť. 
 
 \section{Princíp použitého plánovača testov} \label{sekcia:planovac}
-Zoznam pouzitych veci
+Pre popis rozšírenia plánovača testov si najprv musíme vysvetliť princíp, akým daný plánovač testov funguje.
+Pre vysvetlenie tohoto princípu si však najprv zavedieme niektoré kľúčové pojmy.
 \begin{itemize}
-\item prerekvizita je dadydadydaaa
-\item cluster je toto
-\item a~este tam mame nieco ine
+\item \textbf{cluster -} je test, ktorý verifikuje funkčnosť nejakej časti systému. Každý cluster je pomenovaný pomocou prefixu {\it cl\_}. 
+\item \textbf{prerekvizita -} je test, ktorý nastavuje nejakú vlastnosť systému na požadovanú hodnotu, prípadne zapína časť systému. 
+Každá prerekvizita má svoju vlastnú odrekvizitu a~je pomenovaná pomocou prefixu {\it p\_}.
+\item \textbf{odrekvizita -} je test, ktorý vracia zmeny systému spôsobené jej vlastnou prerekvizitou. Každá odrekvizita je pomenovaná
+pomocou prefixu {\it u\_}. 
+\item \textbf{test -} je cluster, prerekvizita alebo odrekvizita.
 \end{itemize}
 
-\subparagraph{aa1}
-aaa1
-\subparagraph{aa2}
-aaa2
-TOto je \textbf{Tucny text} uprostred  normalneho textu
+Plánovač testov je napísaný v~skriptovacom jazyku TCL\footnote{https://www.tcl.tk/}. 
+Je špeciálne navrhnutý pre potreby testovania softwaru, ktorý je vysoko konfigurovateľný. 
+Využíva oddelenie časti kódu pre samotný test, a~pre konfiguračné zmeny. 
+Idea plánovača je taká, že každý test sa rozdelí na prerekvizitu (prípadne viac prerekvizít) a~cluster. Cluster obsahuje zdrojový kód, ktorý verifikuje, že daná
+časť systému funguje podľa špecifikácie. Prerekvizita obsahuje zdrojový kód, ktorý mení chovanie systému pre potreby verifikovania funkcionality systému.
+Zmena chovania systému môže byť prevádzaná príkazovou riadkou, zmenou konfiguračného súboru a~pod.
+Tento princíp usporiadava všetky testy do štruktúry, ktorá je znázornená na obrázku \ref{figure:ukazka_planu}.
+\begin{figure}[h]
+	\begin{center}
+    \includegraphics[scale=0.25]{ukazka_planu}
+    \caption{Ukážka plánu testov}
+    \label{figure:ukazka_planu}
+    \end{center}
+\end{figure}
+
+Jednotlivé testy sa potom vykonávajú sekvenčne. Výhodou tohoto prístupu je, že v~prípade, že sa zmena konfigurácie nepodarila,
+daný cluster môžeme preskočiť a~tým ušetriť čas na dokončenie testovania. 
+Test je úspešný, pokiaľ skončí s~nulovou návratovou hodnotou. V~opačnom prípade je test neúspešný. 
+Ďalšou výhodou je znovupoužitelnosť prerekvizít. 
+Jednotlivé prerekvizity totiž môžeme kombinovať a~využiť ich tak pre potreby rôznych typov scenárov pre testy. 
+
+Na obrázku \ref{figure:ukazka_planu} je znázornený príklad dvoch clusterov, pričom každý z~nich vyžaduje iné nastavenie systému. 
+Z~obrázku je vidno, že pre potreby clusteru \texttt {cl\_example\_1} je nutné vykonať prerekvizity \texttt{p\_connect\_to\_system}, 
+\texttt{p\_start\_component}, \texttt{p\_start\_simulator} a~\texttt{p\_configure\_component},
+pričom clusteru \texttt{cl\_example\_2} stačia prerekvizity \texttt{p\_connect\_to\_system} a~\texttt{p\_start\_simulator}.
+Nakoľko cluster \texttt{cl\_example\_2} sa spúšťa až za clusterom \texttt{cl\_example\_1}, je nutné vrátiť zmeny systému, ktoré vykonali prerekvizity 
+\texttt{p\_start\_component} a~\texttt{p\_configure\_component} pomocou odrekvizít \texttt{u\_start\_component} a~\texttt{u\_configure\_component}.
+Jednotlivé prerekvizity na seba môžu, ale nemusia byť závislé, a~preto sa poradie spúšťania prerekvizít môže pre clustre meniť.
+Príkladom závislosti môžu byť 2 prerekvizity, kde jedna prerekvizita zapína nejakú súčasť systému s~jeho defaultnými nastaveniami a~druhá prerekvizita 
+tieto nastavenia mení. V~druhej prerekvizite môže byť preto nastavené, aby sa spustila iba ak sa predtým úspešne splnila prerekvizita na zapnutie 
+časti systému.
+Plánovačka testov sa snaží plánovať jednotlivé clustre za seba tak, aby sa nemuseli nutne vykonať všetky prerekvizity a~odrekvizity pre každý cluster zvlášť.
+Znamená to, že ak majú dva clustre podobné prerekvizity, tak sa tieto clustre naplánujú tak, že sa podobné prerekvizity združia a~spúšťajú sa spravidla len raz. 
+Táto vlasnosť je znázornená na obrázku \ref{figure:ukazka_zdruzovania}. 
+\begin{figure}[h]
+    \includegraphics[scale=0.25]{ukazka_zdruzovania}
+    \caption{Ukážka vlastnosti združovania testov}
+    \label{figure:ukazka_zdruzovania}
+\end{figure}
+
+V~regresnej sade sa bežne nachádzajú clustre, ktoré majú rovnakú množinu prerekvizít. Takéto clustre sa radia za seba, aby sa minimalizovalo
+spúšťanie prerekvizít a~odrekvizít, ktoré majú ajtak spoločné. Neplatí teda pravidlo, že každý cluster má svoju vlastnú unikátnu prerekvizitu.
+Tabuľky \ref{table:tabulka_pomer_mco} a~\ref{table:tabulka_pomer_smsc} zobrazujú prehľad testov v~regresnej sade dvoch najväčších produktoch,
+ktoré sa vo firme Acision testujú.
+
+\begin{table}
+  \begin{center}
+    \begin{tabular}{| l | l | l |}
+    \hline
+    typ testu & počet testov & priemerný čas vykonávania testu v~sekundách\\ \hline
+    cluster & 1000 & 20 \\ \hline
+    prerekvizita & 250 & 25 \\ \hline
+    odrekvizita & 250 & 13 \\
+    \hline
+    \end{tabular}
+    \label{table:tabulka_pomer_mco}
+    \caption{Prehľad jednotlivých testov v~produkte MCO}
+  \end{center}
+\end{table}
+
+\begin{table}
+  \begin{center}
+    \begin{tabular}{| l | l | l |}
+    \hline
+    typ testu & počet testov & priemerný čas vykonávania testu v~sekundách \\ \hline
+    cluster & 2000 & 15 \\ \hline
+    prerekvizita & 550 & 10 \\ \hline
+    odrekvizita & 550 & 12 \\
+    \hline
+    \end{tabular}
+    \label{table:tabulka_pomer_smsc}
+    \caption{Prehľad jednotlivých testov v~produkte SMSCv5}
+  \end{center}
+\end{table}
+
+Medzi ďalšie výhody tohoto plánovača testov patrí možnosť špecifikovania pravidiel, s~akými sa budú dané testy spúštať.
+Je napríklad možné nastaviť clusteru zoznam clusterov, takzvaných preoptov, ktoré musia byť úspešne vykonané ešte pred tým, ako sa vykoná samotný
+cluster. V~prípade, že sa aspoň jeden z~týchto preoptov nevykoná úspešne, cluster sa preskočí.
+Výhoda tohoto prístupu je v~tom, že ak zo sady testov ktoré testujú podobnú funkcionalitu neprejde najzákladnejší test,
+môžeme predpokladať, že všetky pokročilejšie testy by neprešli tiež a~preto ich môžeme preskočiť.
+
+Jednotlivé testy môžeme označovať vhodne zvoleným názvom nejakej funkcionality, pričom môžeme využiť vlastnosť 
+plánovača ktorý ným naplánuje len testy zvolené týmto názvom. Týmto spôsobom môžeme v~regresnej sade vytvárať isté logické celky,
+ktoré v~prípade potreby môžeme otestovať samostatne. Pre regresný beh je použitá funkcionalita {\it all}, ktorá združuje 
+všetky testy, ktoré nie sú explicitne označené funkcionalitou {\it notall}. 
+
+Za zmienku patrí aj možnosť označiť niektoré testy do kategórie označenej ako {\it known bugs}.
+Testy z~tejto kategórie sú v~prípade zlyhania vylúčené zo zoznamu testov, ktoré zlyhali.
+Typicky sa takto označujú testy, ktoré úspešne testujú nejakú funkcionalitu, ale vďaka nejakej nesúvisiacej chybe 
+dopadajú neúspechom. Takýmto testom je možné explicitne uviesť rozsah verzie softvéru, v~ktorom je tento test chybný.
+
+Každý test má svoj zdrojový kód v~spomínanom jazyku TCL a~svoju vlastnú hlavičku, ktorá obsahuje informácie potrebné pre identifikovanie testu a~jeho úspešné zaradenie do regresnej sady.
+Zdrojové kódy testov sú logicky rozdelené a~umiestnené v~súboroch začínajúcich predponou {\it CL-} a~s~príponou {\it .tcl}, napríklad {\it CL-SMPP.tcl} alebo {\it CL-GSM.tcl}.
+Hlavičky testov môžu byť taktiež logicky delené na niekoľko celkov a~začínajú predponou {\it TEST.}, napríklad {\it TEST.ALL} alebo {\it TEST.REVIEW\_23}.
+Takýmto spôsobom sú napríklad delené testy, ktoré prešli kontrolou a~sú úspešne zaradené do regresnej sady (súbor {\it TEST.ALL}) a~testy, ktoré sú do regresnej sady zaradené, ale
+zatiaľ neboli nikým skontrolované (súbor {\it TEST.REVIEW\_23}).
+
+Hlavička každého testu obsahuje nasledovné informácie:
+\begin{itemize}
+\item \textbf{Name -} názov testu
+\item \textbf{Description -} stručný popis, čo daný test vykonáva. 
+\item \textbf{odrekvizita -} je test, ktorý vracia zmeny systému spôsobené jej vlastnou prerekvizitou. Každá odrekvizita je pomenovaná
+pomocou prefixu {\it u\_}. 
+\item \textbf{test -} je cluster, prerekvizita alebo odrekvizita.
+\item \textbf{pre -} je množina všetkých prerekvizít, ktoré musia byť splnené, aby sa daný cluster mohol spustiť.
+\item \textbf{preopt -} je množina všetkých clusterov, ktoré musia byť úspešne vykonané, aby bolo možné daný cluster vykonať.  
+\end{itemize}
+
+Táto sekcia obsahovala zhrnutie toho, akým princípom funguje plánovač testov vytvorený firmou Acision.
+Na záver si ešte uvedieme zoznam výhod a~nevýhod použitia tohoto nástroja.
+
+\noindent Výhody:
+\begin{itemize}
+\item jednoduché zaradenie nového testu do regresnej sady
+\item možná znovupoužiteľnosť prerekvizít
+\item náväznosť jednotlivých testov
+\item 
+\item 
+\item 
+\end{itemize} 
+
+\noindent Nevýhody:
+\begin{itemize}
+\item 
+\item  
+\item jednotlivé testy v~prípade chyby systému nemusia úspešne túto chybu obnoviť, a~môžu spustiť lavínu chýb ktoré by inak nenastali 
+\item v~prípade, že sa konfiguračné zmeny v~odrekvizitách úspešne neobnovia, dochádzame k~neodpovedajúcim výsledkom z~testovania
+\item 
+\item 
+\end{itemize}
 
 \chapter{Návrh riešenia}
 Táto kapitola sa zaoberá základným návrhom

@@ -29,6 +29,18 @@
 
 %zde muzeme vlozit vlastni balicky
 
+%vlastne prikazy
+\graphicspath{ {images/} }
+\addto\captionsczech{
+  \renewcommand{\figurename}{Obrázok}
+  \renewcommand{\appendixname}{Príloha}
+  \renewcommand{\listfigurename}{Zoznam obrázkov}
+  \renewcommand{\listtablename}{Zoznam tabuliek} 
+  \renewcommand{\bibname}{Literatúra}
+  \renewcommand{\tablename}{Tabuľka}
+%  \renewcommand{\contentsname}{Contentsname}
+%  \renewcommand{\glossaryname}{Glossaryname}
+}
 
 % =======================================================================
 % balíček "hyperref" vytváří klikací odkazy v pdf, pokud tedy použijeme pdflatex
@@ -74,34 +86,38 @@
   %===========================================================================
   %Klicova slova
   keywords.cs={automatické testování softwaru,paralelizace,plánovač,vyhodnocování výsledků,distribuce zátěže}, %klicova slova v ceskem jazyce
-  keywords.en={automatical software testing,parallelization,scheduler,evaluation results,load distribution}, %klicova slova v anglickem jazyce
+  keywords.en={automatical software testing,parallelization,scheduler,evaluation of results,load distribution}, %klicova slova v anglickem jazyce
   %Abstract
   abstract.cs={
-  Tato bakalářská práce se zabývá automatickým testováním softwaru s použitím plánovače testů. 
-  Popisuje tvorbu plánu spouštení testů na základě skupin testů se spoločnými vlastnostma prostředí, 
-  které je pro testy nutno připravit. 
-  Dále popisuje možnosti jak optimálně rozdělovat skupiny testů na několik podmnožin, aby bylo možný
-  spouštet tyto podmnožiny nezávisle na sobě. Každá podmnožina testov je spouštené na samostatným testovacím systému 
-  a tím je znížen čas potřebný pro úspěšné otestování testovaného softwaru danou sadou testů.
-  Vytvořený nástroj se úspěšně používá při každodením testování několika produktů ve firmě Acision, pro kterou byl
-  tenhle nástroj vytvárěn.}, % abstrakt v ceskem jazyce
+    Tato bakalářská práce se zabývá automatickým testováním softwaru s použitím plánovače testů. 
+    Popisuje tvorbu rozšíření existujícího plánovače testů tak, aby bylo možné efektivně rozdělit skupinu tesů na části, 
+    které se budů vykonávat nezávisle na sobě. Jednotlivý testy jsou rozdělovány na základě společných vlastností
+    prostředí, které je pro tyto testy nutno připravit. 
+    Práce dále popisuje jaké optimalizace jsou použity pro rozdělování testů do podmnožin.
+    Každá podmnožina testov je spouštěná na samostatným testovacím systému 
+    a tím je znížen čas potřebný pro úspěšné otestování testovaného softwaru danou sadou testů.
+    Vytvořený nástroj se úspěšně používá při každodením testování několika produktů ve firmě Acision, pro kterou byl
+    tenhle nástroj vytvárěn.
+  }, % abstrakt v ceskem jazyce
   abstract.en={
-	This bachelor thesis is about automatical software testing using the planning scheduler.
-	It describes creation of the testing plan according to the test groups with the common characteristics of the enviroment, 
-	that need to be prepared for each test group. 
-	Furthermore, it describes the possibilities of how we can optimally divide these test groups to the several subsets, so we can
-	run each subset independently on each others. Each subset of tests is being run on a standalone testing system,
-	so the time needed for succesful completion of testing with the given set of tests is reduced.
-	Created tool is succesfully used during everyday testing of the several products in the Acision company, to which was 
-	this tool made.
+    This bachelor thesis is about automatical software testing using the testing scheduler.
+    It describes creation of the extension for the existing testing scheduler, so it will be possible to effectively split 
+    a group of test to segments, that will be executed independently at each other.
+    Tests are splitted according to the common characteristics of the enviroment, 
+    that need to be prepared for each test. 
+    Furthermore, it describes what optimizations are used for splitting of the tests to subgroups. 
+    Each subset of the tests is being run on a standalone testing system,
+    so the time needed for succesful completion of testing with the given set of tests is reduced.
+    Created tool is succesfully used during everyday testing of the several products in the Acision company, to which was 
+    this tool made.
   }, % abstrakt v anglickem jazyce
   %Prohlaseni
-  declaration={Prohlašuji, že jsem tuto bakalářskou práci vypracoval samostatně pod vedením pana Ing. Františka Ščuglíka Ph.D. a pod technickým vedením pana Miroslava Bureša.},
+  declaration={Prohlašuji, že jsem tuto bakalářskou práci vypracoval samostatně pod vedením pana Ing. Františka Ščuglíka, Ph.D. a pod technickým vedením pana Miroslava Bureša.},
   %Podekovani (nepovinne)
   acknowledgment={
-  Chtěl bych poděkovat hlavně vedoucímu práce Ing. Františkovi Ščuglíkovi Ph.D. za cenné rady a připomínky při psaní této práce. 
-  Stejně velké díky patří také mému odbornému konzultantovi Miroslavovi Burešovi, za jeho rady, které mi pomohli k úspěšnému vytvoření této práce. 
-  Dále bych rád poděkoval firmě Acision, která mi umožnila vypracovávat touto práci a taky mé rodině za podporu při studiu.
+Chtěl bych poděkovat svému odbornému konzultantovi Miroslavovi Burešovi, za jeho rady, které mi pomohli k úspěšnému vytvoření této práce.
+    Stejně velké díky patří také mému vedoucímu práce, Ing. Františkovi Ščuglíkovi Ph.D., za cenné rady a připomínky při psaní této práce.
+    Dále bych rád poděkoval firmě Acision, která mi umožnila vypracovávat touto práci a taky mé rodině za podporu při studiu.
   } % nepovinne
 }
 
@@ -131,8 +147,8 @@
   \tableofcontents
   
   % Seznam obrazku a tabulek (pokud prace obsahuje velke mnozstvi obrazku, tak se to hodi)
-  % \listoffigures
-  % \listoftables 
+  \listoffigures
+  \listoftables 
 
   % Text prace
   % ----------------------------------------------
@@ -152,6 +168,5 @@
   \bibliography{literatura} % viz. literatura.bib
   \end{flushleft}
   \appendix
-  
   \input{prilohy} % viz. prilohy.tex
 \end{document}
