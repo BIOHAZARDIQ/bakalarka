@@ -14,16 +14,19 @@
 aaa1
 \subparagraph{aa2}
 aaa2
-TOto je \textbf{Tucny text} uprostred  normalneho textu
+
+TOto je \textbf{Tucny text} uprostred  normalneho textu.
+
+Toto je \emph{Emph text} uprostred normalneho textu.
 
 \chapter{Testovanie softvéru}
 V~nasledujúcej kapitole sú stručne zhrnuté teoretické vedomosti o~testovaní softvéru.
 Kapitola \ref{sekcia:typy_testovania} popisuje, prečo je testovanie softéru dôležité a~aké rôzne typy
 testovania softvéru sa dnes používajú.
-V~kapitole \ref{sekcia:testovanie_v_praxi} si popíšeme, ako sa automaticky testuje softvér vo firme Acision a~aké nástroje táto firma používa.
+V~kapitole \ref{sekcia:testovanie_v_praxi} si popíšeme, ako sa automaticky testuje softvér vo firme Acision a~aké nástroje táto firma využíva.
 Nakoniec kapitola \ref{sekcia:planovac} popisuje plánovač testov, ktorý firma Acision každodenne používa 
 pri testovaní rôznych typov softvéru, ktorý firma vyvíja. 
-Cieľom tejto bakalárskej práce je úprava tohto plánovača tak, aby podporoval distribúciu testov na viaceré systémy 
+Cieľom tejto bakalárskej práce je úprava tohto plánovača tak, aby podporoval distribúciu testov na viaceré systémy,
 a~tým urýchlil čas potrebný na otestovanie softvéru danou sadou testov. 
 
 \section{Typy testovania softvéru} \label{sekcia:typy_testovania}
@@ -38,7 +41,7 @@ Pressman v~dokumente \cite{Pressman} prehlásil, že testovanie softvéru je kri
 Existujú rôzne spôsoby delenia testovania softvéru. Jedno z~hlavných delení je delenie podľa spôsobu testovania.
 Toto rozdelenie vychádza z~toho, či je potrebné k~prevedeniu testu daný softvér spustiť, alebo nie.
 \subsection*{Statické testovanie}
-Statické testovanie je testovanie ktoré nevyžaduje beh softvéru. Statická analýza sa snaží odhaliť niektoré
+Statické testovanie je testovanie, ktoré nevyžaduje beh softvéru. Statická analýza sa snaží odhaliť niektoré
 programátorské chyby ako napríklad syntaktické chyby, neicializované premenné, nesprávna práca s~pamäťou, delenie nulou, opakované zavretie súboru a~ďalšie. 
 Medzi statické testovanie patrí napríklad revízia kódu alebo použitie niektorého nástroja pre statické testovanie, napríklad syntaktický analyzátor, sémantický
 analyzátor, analyzátor závislostí, atď. Statické testovanie môže byť manuálne alebo automatické. Tento typ testovania je možný v~ľubovolnej fáze vývoja softvéru.
@@ -50,14 +53,14 @@ by boli použitím statického testovania časovo náročné. Tento typ testovan
 Medzi ďalšie delenie patrí delenie testovania podľa spôsobu vykonávania testov:
 \subsection*{Manuálne testovanie}
 Pri manuálnom testovaní vykonáva test používateľ priamou interakciou s~testovaným produktom. 
-Tento typ testovania sa používa pokiaľ test potrebuje ľudské ohodnotenie alebo úsudok.
+Tento typ testovania sa používa,pokiaľ test potrebuje ľudské ohodnotenie alebo úsudok.
 
 \subsection*{Automatické testovanie}
 Automatické testovanie je prevádzané strojom.
 Tento typ testovania sa zavádza väčšinou do rozsiahlych projektov.
 Využíva sa pri opakovanom spúsťaní veľkého množstva testov, alebo testov s~veľkými množstvami dát.
 Pri automatickom testovaní sa využíva nejaký automatizovaný nástroj, pričom môže ísť o~nástroje 
-pre vykonávanie testov alebo o~nástroje pre správu testov.
+pre vykonávanie testov, alebo o~nástroje pre správu testov.
 \\
 \\
 Trocha odlišne sa pristupuje k~deleniu testov na základe toho, aké znalosti máme o~testovanom produkte.
@@ -70,14 +73,14 @@ Táto metóda nevyžaduje znalosť zdrojového kódu testovaného softvéru poč
 Pri návrhu testov sa používa externý pohľad na testovaný softvér. 
 Produkt berieme ako čiernu skrinku, do ktorej sa nevieme pozrieť.
 O~tejto čiernej skrinke vieme len to, ako sa chová navonok a~ako vyzerá.
-Pri tomto type testovania sa zameriavame na vstupy a~výstupy programu, bez znalosti toho, ako je naimplementovaný.
+Pri tomto type testovania sa zameriavame na vstupy a~výstupy programu bez znalosti toho, ako je naimplementovaný.
 \subsection*{Testovanie pomocou sivej skrinky}
 Testovanie pomocou sivej skrinky je forma testovania niekde medzi bielou a~čiernou skrinkou. 
 Využívajú sa v~nej limitované vedomosti o~implementácií testovaného softvéru.
 Nemáme napríklad k~dispozícií celý zdrojový kód, ale iba dizajn softvéru alebo databázu.
 \\
 \\
-Testovanie softvéru môže byť zvyčajne vykonávané na rôzných úrovniach 
+Testovanie softvéru môže byť zvyčajne vykonávané na rôznych úrovniach 
 procesu vývoja alebo údržby softvéru. Cieľ testu môže byť rôzny: od jedného
 modulu, cez skupinu modulov, alebo celého systému.
 Toto delenie je na základe úrovní testovania softvéru a~vyzerá nasledovne:
@@ -85,12 +88,12 @@ Toto delenie je na základe úrovní testovania softvéru a~vyzerá nasledovne:
 Tieto testy verifikujú funkcionalitu softvéru v~častiach, ktoré sú testovateľné oddelene.
 Unit testy sú definované presnejšie v~štandarde IEEE1008-87 \cite{Ieee_unit}.
 \subsection*{Integračné testovanie}
-Integračné testovanie je proces v~ktorom sa verifikuje interakcia medzi viacerými softvérovými komponentami.
+Integračné testovanie je proces, v~ktorom sa verifikuje interakcia medzi viacerými softvérovými komponentami.
 \subsection*{Systémové testovanie}
-Systémové testovanie sa zaoberá správaním celého systému. Behom systémového testovania sa aplikácia testuje ako celok,
-a~preto je toto testovanie vhodné pre neskoršie fázach vývoja.
+Systémové testovanie sa zaoberá správaním celého systému. Počas systémového testovania sa aplikácia testuje ako celok,
+a~preto je toto testovanie vhodné pre neskoršie fázy vývoja.
 \subsection*{Akceptačné testovanie}
-Testuje správanie systému voči požiadavkám zákazníka. Akceptačné testy overujú to, že je daný softvér 
+Testuje správanie systému voči požiadavkám zákazníka. Akceptačné testy overujú to, ako je daný softvér 
 schopný byť nasadený do ostrej prevádzky, a~typicky sú súčasťou prevzatia softvéru zákazníkom.
 
 Testovanie môže byť cieľené na verifikovanie rôznych vlastností softvéru. Na základe toho, na akú časť systému je 
@@ -109,10 +112,10 @@ systému alebo komponenty na verifikáciu, že zmeny nespôsobili nechcené efek
 komponenta stále spĺňa špefikované požiadavky.\textquotedblleft
 Myšlienkou tohoto testovania je overiť to, že nové zmeny do funkcionality systému nezaniesli do systému nové typy chýb.
 Bežným spôsobom tohoto testovania je periodické spúšťanie testov vytvorených v~minulosti a~kontrolovanie, či sa zmenilo správanie
-systému a~či sa chyby opravené v~minulosti znovu neprejavili.
+systému, a~či sa chyby opravené v~minulosti znovu neprejavili.
 \subsection*{Testovanie použiteľnosti}
-Testovanie použitelnosti overuje aké zložité je pre koncového používateľa pracovať s~daným softvérom.
-Toto testovanie overuje taktiež prácu s~dokumentáciou alebo napríklad schopnosť zotavenia sa z~chyby. 
+Testovanie použitelnosti overuje, aké zložité je pre koncového používateľa pracovať s~daným softvérom.
+Toto testovanie overuje taktiež prácu s~dokumentáciou, alebo napríklad schopnosť zotavenia sa z~chyby. 
 
 Uvedené delenia testovania a~ich typy patria medzi najzákladnejšie. 
 Existuje ešte niekoľko spôsobov delenia testovania softvéru, ktoré v~tejto kapitole nie sú popísané.
@@ -121,16 +124,16 @@ Existuje ešte niekoľko spôsobov delenia testovania softvéru, ktoré v~tejto 
 V~nasledujúcej kapitole si popíšeme, ako môže byť riešené testovanie komerčného softwaru v~praxi.
 Firma Acision\footnote{http://www.acision.com/}, pre ktorú je táto bakalárska práca vytváraná, vyvíja niekoľko komerčných produktov
 v~sfére messagingu. Pri produktoch je kladený veľký dôraz práve na testovanie.
-Jedným z~najväčších produktov ktorý firma vyvíja je produkt {\it Message Controller}
+Jedným z~najväčších produktov, ktorý firma vyvíja je produkt {\it Message Controller}
 \footnote{http://www.acision.com/services/messaging-infrastructure/message-controller} (ďalej len MCO).
 Táto bakalárska práca je zameraná pre potreby tohoto produktu a~jeho derivátov.
 MCO je komerčný systém, ktorý je na trhu dostupný už niekoľko rokov, a~preto sú hodnoty uvedené v~tejto 
 bakalárskej práci z~oddelenia maintenance, ktoré je zodpovedné za údržbu systému a~opravovania chýb v~ňom vyskytnutých.
-Jednotlivé produkty sú každodenne testované regresnou sadou testou, ktorá v~prípade MCO pozostáva z~asi 1500 testov.
+Jednotlivé produkty sú každodenne testované regresnou sadou testov, ktorá v~prípade MCO pozostáva z~asi 1500 testov.
 
 Údržba produktu MCO funguje formou kontinuálnej integrácie\footnote{angl. Continuous integration}.
 Kontinuálna integrácia je vývoj softwaru, kedy členovia týmu spájanú ich prácu častejšie.
-Obvykle každý člen týmu integruje svoju prácu aspoň raz denne, čo vedie k~niekoľkým integráciám za deň.
+Obvykle každý člen tímu integruje svoju prácu aspoň raz denne, čo vedie k~niekoľkým integráciám za deň.
 Každá integrácia je verifikovaná automatickým buildom a~testami, aby sa detekovali chyby čo najskôr \cite{Continuous_integration}.
 
 V~praxi to zjednodušene prebieha tak, že je vývojárovi pridelený tzv. ticket, ktorý slúži na popis
@@ -141,11 +144,11 @@ Týmto spôsobom sa zaisťuje kontinuálna integrácia na strane vývojárov.
 
 Paralelne s~týmto vývojom beží na jednom servery program, ktorý monitoruje zmeny vo verzovacom systéme.
 Ak sa nájde nejaká zmena v~zdrojových kódoch, spustí sa automatický preklad a~zdrojové kódy spolu s~dokumentáciou
-sa nanovo skompilujú. Vytvorí sa spustiteľná verzia nového systému. Ak sa preklad zdrojových kódov nepodarí, vývojár ktorý 
-danú chybu spôsobil na stav upozornený a~môže sa čo najrýchlejšie pustiť do opravy spôsobenej chyby kompilácie.
+sa nanovo skompilujú. Vytvorí sa spustiteľná verzia nového systému. Ak sa preklad zdrojových kódov nepodarí, vývojár, ktorý 
+danú chybu spôsobil, je na stav upozornený a~môže sa čo najrýchlejšie pustiť do opravy spôsobenej chyby kompilácie.
 
 Z~pohľadu testera je situácia podobná. Testerovi je taktiež pridelený ticket, pomocou verzovacieho systému si zoberie aktuálnu verziu
-všetkých testov a~začne pracovať na novom teste ktorý overí, že vývojár opravil chybu popísanú v~tickete správne.
+všetkých testov a~začne pracovať na novom teste, ktorý overí, že vývojár opravil chybu popísanú v~tickete správne.
 Ihneď po dokončení testu zaraďuje tento test pomocou verzovacieho systému do aktuálneho repozitára a~vyžiada si
 kontrolu napísaného testu. Tester väčšinou pristupuje k~testovanému produktu metódou čiernej skrinky (viď kapitola \ref{sekcia:cierna_skrinka}).
 
@@ -159,19 +162,19 @@ Postupnou iteráciou týchto procesov sa dosahuje výsledná kvalita systému. V
 systému metódou čiernej skrinky, takže tester nepotrebuje znalosť zdrojového kódu, a~môže tak vytvárať testy
 ešte pred dokončením samotnej implementácie systému. 
 
-Pre potreby tohoto testovania vznikol nástroj, ktorý je schopný zostaviť plán všetkých testov, a~tieto testy postupne vykonať.
-Výhodou tohoto nástroja je hlavne to, že je schopný jednoducho zaradiť novo vyvorené testy do regresnej sady, ktorá
+Pre potreby tohto testovania vznikol nástroj, ktorý je schopný zostaviť plán všetkých testov, a~tieto testy postupne vykonať.
+Výhodou tohoto nástroja je hlavne to, že je schopný jednoducho zaradiť novovytvorené testy do regresnej sady, ktorá
 testuje systém množinou všetkých testov. Postupným pridávaním testov do tejto regresnej sady sa však zvýšil čas potrebný pre otestovanie celého systému.
 Regresné testovanie sa časom stalo veľmi časovo náročné, nakoľko čas na otestovanie celého systému sa vyšplhal až 15 hodín a~stále narastal.
-Vznikol problém, že behom noci sa nestihol otestovať celý systém a~na začiatku pracovnej doby sa ešte muselo čakať na výsledky regresného testovania.
-Pre riešenie tohoto problému vznikol nápad vytvorenia rozšíreného plánovača testov, ktorý by bol schopný spúštať testy na viacerých testovacích systémoch.
+Vznikol problém, že počas noci sa nestihol otestovať celý systém a~na začiatku pracovnej doby sa ešte muselo čakať na výsledky regresného testovania.
+Pre riešenie tohto problému vznikol nápad vytvorenia rozšíreného plánovača testov, ktorý by bol schopný spúštať testy na viacerých testovacích systémoch.
 V~praxi to znamená, že množina všetkých regresných testov sa rozdelí na niekoľko podmnožín, kde každá podmnožina testov sa spustí na samostatnom
-testovacom stroji. Týmto spôsobom sme schopný zkrátiť čas potrebný pre otestovanie celého systému bez toho, aby sme museli niektoré testy z~regresnej sady 
+testovacom stroji. Týmto spôsobom sme schopní skrátiť čas potrebný pre otestovanie celého systému bez toho, aby sme museli niektoré testy z~regresnej sady 
 úplne vypustiť. 
 
 \section{Princíp použitého plánovača testov} \label{sekcia:planovac}
 Pre popis rozšírenia plánovača testov si najprv musíme vysvetliť princíp, akým daný plánovač testov funguje.
-Pre vysvetlenie tohoto princípu si však najprv zavedieme niektoré kľúčové pojmy.
+Pre vysvetlenie tohto princípu si však najprv zavedieme niektoré kľúčové pojmy.
 \begin{itemize}
 \item \textbf{cluster -} je test, ktorý verifikuje funkčnosť nejakej časti systému. Každý cluster je pomenovaný pomocou prefixu {\it cl\_}. 
 \item \textbf{prerekvizita -} je test, ktorý nastavuje nejakú vlastnosť systému na požadovanú hodnotu, prípadne zapína časť systému. 
@@ -186,7 +189,7 @@ Je špeciálne navrhnutý pre potreby testovania softwaru, ktorý je vysoko konf
 Využíva oddelenie časti kódu pre samotný test, a~pre konfiguračné zmeny. 
 Idea plánovača je taká, že každý test sa rozdelí na prerekvizitu (prípadne viac prerekvizít) a~cluster. Cluster obsahuje zdrojový kód, ktorý verifikuje, že daná
 časť systému funguje podľa špecifikácie. Prerekvizita obsahuje zdrojový kód, ktorý mení chovanie systému pre potreby verifikovania funkcionality systému.
-Zmena chovania systému môže byť prevádzaná príkazovou riadkou, zmenou konfiguračného súboru a~pod.
+Zmena chovania systému môže byť prevádzaná napr. príkazovou riadkou, zmenou konfiguračného súboru a~pod.
 Tento princíp usporiadava všetky testy do štruktúry, ktorá je znázornená na obrázku \ref{figure:ukazka_planu}.
 \begin{figure}[h]
 	\begin{center}
@@ -197,9 +200,9 @@ Tento princíp usporiadava všetky testy do štruktúry, ktorá je znázornená 
 \end{figure}
 
 Jednotlivé testy sa potom vykonávajú sekvenčne. Výhodou tohoto prístupu je, že v~prípade, že sa zmena konfigurácie nepodarila,
-daný cluster môžeme preskočiť a~tým ušetriť čas na dokončenie testovania. 
+daný cluster môžeme preskočiť, a~tým ušetriť čas na dokončenie testovania. 
 Test je úspešný, pokiaľ skončí s~nulovou návratovou hodnotou. V~opačnom prípade je test neúspešný. 
-Ďalšou výhodou je znovupoužitelnosť prerekvizít. 
+Ďalšou výhodou je znovupoužiteľnosť prerekvizít. 
 Jednotlivé prerekvizity totiž môžeme kombinovať a~využiť ich tak pre potreby rôznych typov scenárov pre testy. 
 
 Na obrázku \ref{figure:ukazka_planu} je znázornený príklad dvoch clusterov, pričom každý z~nich vyžaduje iné nastavenie systému. 
@@ -210,7 +213,7 @@ Nakoľko cluster \texttt{cl\_example\_2} sa spúšťa až za clusterom \texttt{c
 \texttt{p\_start\_component} a~\texttt{p\_configure\_component} pomocou odrekvizít \texttt{u\_start\_component} a~\texttt{u\_configure\_component}.
 Jednotlivé prerekvizity na seba môžu, ale nemusia byť závislé, a~preto sa poradie spúšťania prerekvizít môže pre clustre meniť.
 Príkladom závislosti môžu byť 2 prerekvizity, kde jedna prerekvizita zapína nejakú súčasť systému s~jeho defaultnými nastaveniami a~druhá prerekvizita 
-tieto nastavenia mení. V~druhej prerekvizite môže byť preto nastavené, aby sa spustila iba ak sa predtým úspešne splnila prerekvizita na zapnutie 
+tieto nastavenia mení. V~druhej prerekvizite môže byť preto nastavené, aby sa spustila, iba ak sa predtým úspešne splnila prerekvizita na zapnutie 
 časti systému.
 Plánovačka testov sa snaží plánovať jednotlivé clustre za seba tak, aby sa nemuseli nutne vykonať všetky prerekvizity a~odrekvizity pre každý cluster zvlášť.
 Znamená to, že ak majú dva clustre podobné prerekvizity, tak sa tieto clustre naplánujú tak, že sa podobné prerekvizity združia a~spúšťajú sa spravidla len raz. 
@@ -256,14 +259,14 @@ ktoré sa vo firme Acision testujú.
   \end{center}
 \end{table}
 
-Medzi ďalšie výhody tohoto plánovača testov patrí možnosť špecifikovania pravidiel, s~akými sa budú dané testy spúštať.
-Je napríklad možné nastaviť clusteru zoznam clusterov, takzvaných preoptov, ktoré musia byť úspešne vykonané ešte pred tým, ako sa vykoná samotný
+Medzi ďalšie výhody tohto plánovača testov patrí možnosť špecifikovania pravidiel, s~akými sa budú dané testy spúšťať.
+Je napríklad možné nastaviť clusteru zoznam clusterov, takzvaných preoptov, ktoré musia byť úspešne vykonané ešte predtým, ako sa vykoná samotný
 cluster. V~prípade, že sa aspoň jeden z~týchto preoptov nevykoná úspešne, cluster sa preskočí.
-Výhoda tohoto prístupu je v~tom, že ak zo sady testov ktoré testujú podobnú funkcionalitu neprejde najzákladnejší test,
-môžeme predpokladať, že všetky pokročilejšie testy by neprešli tiež a~preto ich môžeme preskočiť.
+Výhoda tohto prístupu je v~tom, že ak zo sady testov, ktoré testujú podobnú funkcionalitu, neprejde najzákladnejší test,
+môžeme predpokladať, že všetky pokročilejšie testy by neprešli tiež, a~preto ich môžeme preskočiť.
 
 Jednotlivé testy môžeme označovať vhodne zvoleným názvom nejakej funkcionality, pričom môžeme využiť vlastnosť 
-plánovača ktorý ným naplánuje len testy zvolené týmto názvom. Týmto spôsobom môžeme v~regresnej sade vytvárať isté logické celky,
+plánovača, ktorý nám naplánuje len testy zvolené týmto názvom. Týmto spôsobom môžeme v~regresnej sade vytvárať isté logické celky,
 ktoré v~prípade potreby môžeme otestovať samostatne. Pre regresný beh je použitá funkcionalita {\it all}, ktorá združuje 
 všetky testy, ktoré nie sú explicitne označené funkcionalitou {\it notall}. 
 
