@@ -36,7 +36,7 @@ vlna:
 	
 
 clean:
-	rm -f *.dvi *.log $(CO).blg $(CO).bbl $(CO).toc *.aux $(CO).out $(CO).lof
+	rm -f *.dvi *.log $(CO).blg $(CO).bbl $(CO).toc *.aux $(CO).out $(CO).lof $(CO).lot
 	rm -f $(CO).pdf
 	rm -f *~
 
