@@ -30,6 +30,25 @@
 %zde muzeme vlozit vlastni balicky
 
 %vlastne prikazy
+\usepackage{parcolumns}
+\usepackage{listings}
+\lstset{
+    columns=fixed,
+    numbersep=5pt,
+    basicstyle=\ttfamily\footnotesize,
+    numberstyle=\footnotesize\color{Gray},
+    commentstyle=\it\footnotesize\color{Gray},
+    captionpos=b, 
+    frame=lines,
+    framesep=10pt,
+    language=clean,
+    extendedchars=true,
+    inputencoding=utf8,
+    breaklines=true,
+    literate={ú}{{\'u}}1
+             {á}{{\'a}}1
+}
+
 \graphicspath{ {images/} }
 \addto\captionsczech{
   \renewcommand{\figurename}{Obrázok}
@@ -38,6 +57,7 @@
   \renewcommand{\listtablename}{Zoznam tabuliek} 
   \renewcommand{\bibname}{Literatúra}
   \renewcommand{\tablename}{Tabuľka}
+  \renewcommand*\lstlistingname{Obrázok}
 %  \renewcommand{\contentsname}{Contentsname}
 %  \renewcommand{\glossaryname}{Glossaryname}
 }
