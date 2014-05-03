@@ -524,7 +524,9 @@ je potrebné naplánovať.
 
 Tabuľka \ref{table:pocet_naplanovanych_testov} zobrazuje počet clusterov a~prerekvizít, ktoré sa plánujú
 pri každodennom spúšťaní nočných regresií pomocou funkcionality \texttt{all}. Z~tabuľky vyplýva, že približne 5\% testov sa 
-z~nočných regresií vynecháva a~zároveň to, že sa spustí viac ako dvojnásobok prerekvizít, ako existuje v~testovacej sade.
+z~nočných regresií vynecháva. Túto množinu tvoria napríklad testy, ktoré nie sú plne automatické, a~vyžadujú tak interakciu s~používateľom,
+alebo testy o~ktorých sa vie, že je nevhodné ich púšťať spolu s~veľkou množinou testov.
+Zároveň z~obrázku vypláva to, že sa spustí viac ako dvojnásobok prerekvizít, ako existuje v~testovacej sade.
 Každá prerekvizita sa teda spustí v~priemere viac ako dvakrát. 
 Vo svetle týchto informácií je teda vhodné zameriavať sa pri rozdeľovaní testov na clustre.
 
@@ -739,20 +741,140 @@ a~v~prípade zlyhania systému, či už hlavného procesu alebo podprocesov, by 
 
 \section{Interpretácia výsledkov}
 \label{sekcia:interpretacia_vysledkov}
+Medzi jednu z~najdôležitejsích vlastností, ktoré musí každý testovací nástroj mať, je vlastnosť zobrazovania výsledkov z~testovania.
+Pri návrhu rozšírenia plánovača testov bolo nutné riešiť situáciu, ako zobraziť výsledky z~každého testovacieho systému jednotlivo,
+a~takisto aj súhrn celkových výsledkov. 
+
+Rozšírenie plánovača testov disponuje niekoľkými výsledkami, ktorými môže každý test skončiť. 
+Jednotlivé výsledky platia len v~prípade, že sa daný test spúšťal na všetkých testovacích systémoch len raz. Sú to výsledky:
+\begin{itemize}
+\item \textbf{passed} -- test ktorý sa skončil úspechom (návratová hodnota je rovná nule).
+\item \textbf{failed} -- test ktorý sa ukončil neúspechom (nenulová návratová hodnota).
+\item \textbf{skipped} -- test ktorý sa vďaka neúspechu nejakého predošlého testu vynechal, nakoľko by jeho spustenie skončilo neúspechom.
+\item \textbf{passed on second attempt} -- cluster ktorý sa vďaka prepínaču plánovača \textbf{-tw} spustil po neúspechu znova, pričom na druhý
+krát skončil úspechom. Test označený týmto výsledkom je zároveň označený výsledkom \textbf{passed}
+\item \textbf{known bug - failed} -- cluster ktorý je pre aktuálnu verziu softvéru označený ako \textbf{known bug}, ktorý skončil úspechom. 
+Cluster označený týmto výsledkom nie je označený výsledkom \textbf{failed}.
+\item \textbf{known bug - passed} -- cluster ktorý je pre aktuálnu verziu softvéru označený ako \textbf{known bug}, ktorý skončil neúspechom.
+Cluster označený týmto výsledkom je zároveň označený aj výsledkom \textbf{passed}.
+\end{itemize} 
+
+V~prípade, že sa nejaký test spúšťal na viacerých systémoch, bolo nutné riešit stav, v~ktorom sa test mohol ocitnúť. 
+Problémom je situácia, kedy nejaký test, ktorý sa spúšťal na viacerých systémoch, skončil na týchto rozdielnych systémoch rôznymi výsledkami.
+Pre riešenie tejto situácie bol zavedený stav \textbf{unclear}. 
+Ak test skončí s~rôznymi výsledkami, jeho finálny výsledok sa určí podľa prevodovej tabuľky \ref{table:vysledky_testu_prevod}.
+Stavy \emph{passed on second attempt}, \emph{known bug - failed}
+a~\emph{known bug - passed} nie sú zaznačené z~dôvodu, že tieto špeciálne stavy sa mapujú na stavy \emph{failed} a~\emph{failed}.
+
+Spomínané stavy výsledkov testov platia pre celkové výsledky zo všetkých testovacích systémov. Rozšírený plánovač testov navyše umožňuje zobraziť 
+výsledky všetkých testov pre každý testovací systém jednotlivo. Výsledok každého testu sa zobrazuje v~rovnakom poradí, ako sa testy spúšťali.
+Každý zobrazovaní výsledkov z~každého testovacieho systému majú však testy pre jednoduchosť len stavy \emph{passed}, \emph{failed} a~\emph{skipped}. 
+
+\begin{table}
+  \begin{center}
+    \begin{tabular}{| c | c | c |}
+    \hline
+    výsledok 1  & výsledok 2 & konečný výsledok \\ \hline
+    passed      & passed     & passed  \\ \hline
+    failed      & failed     & failed  \\ \hline
+    skipped     & skipped    & skipped \\ \hline
+    passed      & skipped    & passed  \\ \hline
+    failed      & skipped    & failed  \\ \hline
+    passed      & failed     & unclear \\ \hline
+    unclear     &      *     & unclear \\ 
+    \hline
+    \end{tabular}
+    \label{table:vysledky_testu_prevod}
+    \caption{Mapovanie rozdielnych výsledkov testu na konečný výsledok}
+  \end{center}
+\end{table}
+
 
 
 \section{Riešenie nových typov problémov}
 \label{sekcia:riesenie_problemov}
+Pri vytváraní rozšírenia plánovača je potrebné myslieť na nové problémy, ktoré sa objavili
+až pri riešení distribúcie testov. Jedným z~problémov je zobrazovanie výsledkov testov spomínané v~predchádzajúcej kapitole.
+Pre riešenie tohoto problému bol zavedený výsledok testu\emph{unclear}.
+
+\subsection*{Nezávislosť medzi testami}
+Ďalším z~problémov, ktorého riešenie bolo treba navrhnúť, bol problém, ktorý porušoval vlastnosť nezávislosti 
+medzi testami a~vlastnosť integrity testovacej sady, popísaných v~dokumente \cite{Kapfhammer}.
+Jednalo sa o~problém, že niektoré testy používali pevne stanovený sieťový port, ktorý slúžil napríklad pre
+komunikáciu so simulátorom, alebo pre napojenie sa na nejakú časť testovaného systému, atď.
+Problémom tohoto pevného portu bola distribúcia testov, ktoré používali rovnaký port.
+V~prípade, že sa takéto testy spúšťali naraz, dochádzalo k~obsadeniu portu prvým testom, pričom druhý test 
+už k~portu nemal prístup, a~tak končil neúspechom.
+
+Riešením tohoto problému je parameter port offset \textbf{-po}. 
+Každý test, ktorý používal pevne stanovenú hodnotu portu sa musel upraviť tak, aby 
+sa ako port použila táto pevná hodnota pripočítaná o~hodnotu zadanú parametrom \textbf{-po}.
+Jednotlivé podprocesy plánovača testov sa spúšťajú s~parametrom \textbf{-po}, ktorý sa
+navyšuje práve o~hodnotu \textbf{-po} s~každým podprocesom.
+V~praxi to znamená, že ak nastavíme hodnotu offsetu na 1000, tak sa prvý podproces spustí s~parametrom
+\textbf{-po 1000}, druhý podproces sa spustí s~parametrom \textbf{-po 2000}, tretí s~\textbf{-po 3000} atď.
+V~teste sa potom používa štandardné číslo portu, ktorý sa využíval v~teste pred úpravou, s~pridanou hodnotou port offsetu.
+Týmto spôsobom sa zabraňuje problému, že niektoré testy pristupovali k~rovnakému portu súčastne.
+Implicitnou hodnotou parametru \textbf{-po}, ktorá sa používa napríklad pri spustení plánovača testov
+bez potreby distribúcie testov je hodnota 0. 
+
+\subsection*{Systém logovania}
+Ďalším novým problémom sa stalo aj spravovanie logovacích súborov. Plánovač testov totiž
+pri vykonávaní testov zapisuje informácie o~aktuálne prevádzaných testoch do viacerých logovacích súborov.
+Pri distribuovaní testov sa však spúšťajú viaceré podprocesy plánovača testov, pričom každý podproces
+si tieto súbory vytvára zvlášť. V~rámci centrálnej správy bolo nutné navrhnúť prístup, akým sa budú
+logovať testy z~viacerých strojov na jedno centrálne miesto.
+Pre riešenie tohoto problému bolo možné implementovať 2 možné spôsoby:
+\begin{itemize}
+\item \textbf{Zapisovanie údajov do logov po každom teste} -- týmto spôsobom by sa do logovacích súborov vytváraných hlavným procesom
+postupne zapisovali informácie, vždy po aktuálne dokončenom teste, nezávisle na testovacom systéme.
+Tento prístup je však nevyhovujúci, lebo by podprocesy museli posielať logovacie informácie hlavnému procesu, čo je náročné na zdroje.
+Ďalšou nevýhodou je to, že by sa poradie jednotlivých testov z~testovacích systémov pomiešalo.
+\item \textbf{Parsovanie údajov do logov po dokončení testovania} -- toto riešenie spočíva v~tom, že
+sa najprv počká na dokončenie testovania. V~momente, ak je testovanie ukončené, môžeme počítať so situáciou,
+že každý podproces plánovačky testov si vytvoril vlastné logovacie súbory, v~ktorých je zachované poradie testov.
+Ak máme tieto súbory k~dispozícií, môžeme si z~nich vytiahnuť potrebné informácie a~skopírovať ich do logovacích
+súborov vytvorených rozšíreným plánovačom testov. Toto riešenie má výhodu, že je menej náročné na zdroje, a~zároveň
+že sa v~logoch dodržiava poradie testov vykonávaných pre každý systém zvlášť. 
+Pri implementácií rozšírenia plánovača testov sa využíva práve toto riešenie.
+\end{itemize} 
 
 
+
+%
+% Kapitola 4
+%
 \chapter{Implementácia}
-V~tejto kapitole sa budeme venovať 
-\section{Použité technológie}
-\section{Delenie testov na podmnožiny}
+Kapitola popisuje základné implementačné detaily jednotlivých častí rozšírenia pre plánovač testov.
+Prvá kapitola popisuje, aké technológie boli pre implementáciu rozšírenia plánovača použité.
+Nakoľko sa jedná o~implementáciu rozšírenia pre nástroj, ktorý už bol vytvorený, kapitola taktiež popisuje 
+rozdelenie zdrojového kódu na časť vytvorenú firmou Acision, a~časť vytvorenú mnou.
+Kapitola \ref{sekcia:distribucia_testov} popisuje implementáciu distribúcie testov so zameraním na 
+rozloženie záťaže. Tretia kapitola popisuje, akou formou sa spúšťajú testy na jednotlivých testovacích
+systémoch. Táto kapitola ďalej popisuje implementáciu komunikácie medzi jednotlivými procesmi plánovača testov.
+Ďalej kapitola \ref{sekcia:sledovanie_stavu} popisuje implementáciu novej funkcionality plánovača, ktorou je progress bar.
+Posledná kapitola \ref{sekcia:optimalizacie} popisuje niektoré optimalizácie, ktoré sú v~rozšírenom plánovači testov
+implementované, a~ich porovnania.
+
+\section{Použité technológie a~členenie práce}
+
+\section{Distribúcia testov}
+\label{sekcia:distribucia_testov}
+
 \section{Spúšťanie podprocesov a~komunikácia s~nimi}
+\label{sekcia:spustanie_podprocesov}
+
 \section{Sledovanie aktuálneho stavu testovania}
+\label{sekcia:sledovanie_stavu}
+
 \section{Zbieranie a~vyhodnocovanie výsledkov}
+\label{sekcia:zbieranie_vysledkov}
+
 \section{Optimalizácie rozdeľovania testov}
+\label{sekcia:optimalizacie}
+
+
+
 
 
 \chapter{Zhodnotenie dosiahnutých výsledkov}
