@@ -956,20 +956,80 @@ Tieto skupiny sa potom zoradia podľa odhadovaného času behu celej skupiny.
 V~cykle sa potom prechádzajú tieto skupiny od najväčšej po najmenšiu, a~postupne sa priraďujú 
 do jedného z~\emph{m} zoznamov spúšťaných clusterov na distribuovaných systémoch.
 
-Vylepšením implementácie tohoto algoritmu sa neskôr venuje kapitola \label{kapitola:optimalizacie}. 
+Tento algoritmus je možné vylepšiť o~rôzne druhy optimalizácií a~heuristiky.
+Vylepšením implementácie tohoto algoritmu sa venuje kapitola \label{kapitola:optimalizacie}. 
 
 
 \section{Spúšťanie podprocesov a~komunikácia s~nimi}
 \label{sekcia:spustanie_podprocesov}
+Pre každý testovací systém sa musí spustiť nový podproces plánovača testov,
+ktorý sa pomocou IP adresy napojí na testovací systém, na ktorom sa bude testovať daný softvér.
+Pri implementácií spúšťania podprocesov som využil procedúru \texttt{BgExec}\footnote{dostupná z~http://wiki.tcl.tk/12704},
+ktorá dokáže spustiť podproces na pozadí. Procedúra taktiež umožňuje udržiavať počet aktuálne bežiacich podprocesov na pozadí.
+Takýmto spôsobom je možné jednoducho kontrolovať počet bežicich regresných testov na všetkých systémoch.
+
+Pre nastavenie počtu systémov, na ktoré chceme distribuovať všetky regresné testy, vznikol nový parameter \textbf{-mi}.
+Za tento parameter sa uvádza zoznam konfiguračných súborov, ktoré sa použijú pre spustenie testov na rôznych
+testovacích systémoch. Počet konfiguračných súborov udáva počet systémov, na ktoré sa budú testy distribuovať.
+Aby sa zabránilo sutuácií, že by jednotlivé konfiguračné súbory používali inú verziu produktu, ktorá sa
+používa hlavne pri vyberaní správnych testov, plánovač vyžaduje taktiež zadanie konfiguračného súboru ktorý
+sa použije pre výber testov. Tento konfiguračný súbor sa zadáva rovnako ako v~plánovači testov bez rozšírenia
+o~možnosti spúšťať testy na distribuovaných systémoch, a~to parametrom \textbf{-i}.
+Príklad spustenia regresných testov v~produkte MCO na troch distribuovaných systémoch je uvedený na obrázku 
+\ref{obrazok:priklad_spustania_testov_paralelne}
+
+\begin{figure}[h]
+\begin{lstlisting}
+meszarosf@mco-v156#./Run_test.tcl -i cfg.ini -mi cfg-vm1.ini cfg-vm2.ini 
+   cfg-vm3.ini -B TEST.REVIEW_23 -f all -wf long_running notall -tw -po 1000
+\end{lstlisting}
+\caption{Príklad distribuovania regresných testov na 3 testovacie systémy}
+\label{obrazok:priklad_spustania_testov_paralelne}
+\end{figure}
+
+Pred spustením podprocesov plánovača testov sa najprv zistia parametre, s~ktorými sa dané 
+inštancie spustia. Z~týchto parametrov sa vylúčia tie, ktoré nie sú vhodné pre
+distribuovanie testov. Jedná sa napríklad o~parametre určené pre interaktívny režim spomínaný v~kapitole 
+\ref{sekcia:princip_pouziteho_planovaca}.
+
+Plánovač testov potom rozdelí testy na \textit{m} častí, zadaných pomocou prepínača \textbf{-mi}.
+Zoznam všetkých clusterov, určených pre každý testovací systém sa potom vloží do samostatných súborov.
+Po spustení podprocesov plánovača testov si potom každý podproces zoberie jeden súbor so zoznamom 
+clusterov na otestovanie, a~tieto clustre naplánuje a~otestuje.
+
+Spúšťanie podprocesov je implementované vo funkcii \texttt{prl\_run\_multiple\_schedulers}.
+Po spustení týchto podprocesov na pozadí sa vo funkcii hlavného procesu \texttt{prl\_accept\_conn} čaká na dáta od podprocesov.
+Jednotlivé podprocesy asynchrónne zasielajú výsledky jednotlivých testov a~takisto aj test plán.
+
+Ako prvé sa čaká na test plány od každého podprocesu. Po prijatí týchto test plánov sa vypočítajú informácie
+o~odhade času testovania, počtu prerekvizít, počtu clusterov a~iné.
+Medzi týmito informáciami je uvedené napríklad aj percentuálne vyjadrenie počtu clusterov alebo prerekvizít,
+ktoré sa spúšťaju viacnásobne. Zároveň sa uvádza odhadovaný čas, ktorý v~prípade distribuovania testov
+na aktuálny počet testovacích systémov ušetríme. Príklad týchto informácií je uvedený na obrázku \ref{obrazok:ukazka_statistiky}
+\begin{figure}[h]
+\begin{lstlisting}
+TODO
+TODO
+TODO
+\end{lstlisting}
+\caption{Príklad informácií zobrazovaných pred spustením regresných testoch}
+\label{obrazok:ukazka_statistiky}
+\end{figure}
+
+Po prijatí všetkých test plánov sa spustí vykonávanie testov. 
+Pre vypísanie test plánov a~nespustenie testovania slúži parameter \textbf{-p}, ktorý
+je možné využiť pre rýchle zistenie informácií o~plánovaných regresných testoch.
 
 
 \section{Sledovanie aktuálneho stavu testovania}
 \label{sekcia:sledovanie_stavu}
+Pri spúšťaní veľkého množstva testo
 
 \section{Zbieranie a~vyhodnocovanie výsledkov}
 \label{sekcia:zbieranie_vysledkov}
 
-
+\section{Parsovanie logovacích informácií}
+\label{sekcia:parsovanie_logov}
 
 
 %
