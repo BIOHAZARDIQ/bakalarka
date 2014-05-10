@@ -191,6 +191,7 @@ stanovené požiadavky na výkon, ako napríklad doba odozvy alebo počet
 vykonaných operácií za čas. 
 
 \item \textbf{Regresné testovanie} 
+\label{sekcia:regresne_testovanie}
 Podľa štandardu IEEE610.12 \cite{Ieee_glossary} je regresné testovanie 
 \quotedblbase Selektívne pretestovávanie systému alebo komponenty na 
 verifikáciu, že zmeny nespôsobili nechcené efekty a~že systém alebo
@@ -251,20 +252,20 @@ testov dvoch najväčších produktoch, ktoré sa vo firme Acision testujú.
     odrekvizita & 339 & 244 \\
     \hline
     \end{tabular}
-    \label{tabulka:pocet_testov}
     \caption{Prehľad ceľkového počtu testov v~dvoch najväčších produktoch firmy Acision}
+    \label{tabulka:pocet_testov}
   \end{center}
 \end{table}
 
-Údržba produktu MCO funguje formou kontinuálnej integrácie\footnote{angl. Continuous integration}.
+Údržba produktu MCO funguje formou kontinuálnej integrácie\footnote{angl. continuous integration}.
 Kontinuálna integrácia je vývoj softwaru, kedy členovia týmu integrujú
 ich prácu často. Obvykle každý člen tímu integruje svoju prácu aspoň 
 raz denne, čo vedie k~niekoľkým integráciám za deň \cite{Continuous_integration}.
-Každá integrácia je verifikovaná automatickým buildom, aby sa detekovali 
+Každá integrácia je verifikovaná automatickým prekladom\footnote{angl. build}, aby sa detekovali 
 chyby čo najskôr. Raz denne sa potom pomocou regresných testov zisťuje,
 či integrácia novej časti sotvéru prebehla úspešne.
 
-V~praxi to zjednodušene prebieha tak, že je vývojárovi\footnote{angl. developerovi}
+V~praxi to zjednodušene prebieha tak, že je vývojárovi\footnote{angl. developer}
 pridelený tzv. ticket, ktorý slúži na popis nájdenej chyby v~systéme. 
 Pomocou verzovacieho systému si vezme aktuálnu verziu zdrojových súborov 
 a~začne nájdenú chybu opravovať.
@@ -453,11 +454,11 @@ na obrázku \ref{obrazok:ukazka_planu_testov}. Jednoduchý plán testov
 z~produktu MCO je zobrazený v~prílohe \ref{priloha:jednoduchy_plan_testov}.
 
 \begin{figure}[h]
-    \begin{center}
+  \begin{center}
     \includegraphics[scale=1]{ukazka_planu_testov}
     \caption{Ukážka plánu testov}
     \label{obrazok:ukazka_planu_testov}
-    \end{center}
+  \end{center}
 \end{figure}
 
 Jednotlivé testy sa potom vykonávajú sekvenčne. Výhodou tohoto prístupu 
@@ -505,11 +506,11 @@ Táto vlastnosť je znázornená na obrázku \ref{obrazok:ukazka_zdruzovania_tes
 nedisponoval vlastnosťou združovania testov.
 
 \begin{figure}[h]
-    \begin{center}
+  \begin{center}
     \includegraphics[scale=1]{ukazka_zdruzovania_testov}
     \caption{Ukážka vlastnosti združovania testov}
     \label{obrazok:ukazka_zdruzovania_testov}
-    \end{center}
+  \end{center}
 \end{figure}
 
 V~regresnej sade sa bežne nachádzajú clustre, ktoré majú rovnakú množinu 
@@ -701,7 +702,7 @@ Pri návrhu distribuovania testov som vychádzal z~informácií o~počte testov 
 ktoré daný plánovač testov používajú. Informácie som čerpal z~dvoch najväčších produktov (MCO a~SMSCv5), 
 ktoré tento plánovač každodenne používajú. Pri každom regresnom behu, sa zbierajú štatistiky o~tom,
 koľko testov bolo spustených, a~ako dlho každý test trval. 
-V~tabuľkách \ref{tabulka:testy_mco} a~\ref{tabulka:testy_smscv5} sú zobrazené informácie o~testoch z~týchto dvoch najväčších produktov.
+V~tabuľkách \ref{tabulka:testy_mco} a~\ref{tabulka:testy_smsc} sú zobrazené informácie o~testoch z~týchto dvoch najväčších produktov.
 
 \begin{table}
   \begin{center}
@@ -713,8 +714,8 @@ V~tabuľkách \ref{tabulka:testy_mco} a~\ref{tabulka:testy_smscv5} sú zobrazen�
     odrekvizita  & 339  & 1 & 63  & 19,56 & 18 & 7 \\
     \hline
     \end{tabular}
-    \label{tabulka:testy_mco}
     \caption{Prehľad celkového počtu testov v~produkte MCO}
+    \label{tabulka:testy_mco}
   \end{center}
 \end{table}
 
@@ -728,8 +729,8 @@ V~tabuľkách \ref{tabulka:testy_mco} a~\ref{tabulka:testy_smscv5} sú zobrazen�
     odrekvizita  & 224  & 1 & 78   & 6,96  & 5  & 1 \\
     \hline
     \end{tabular}
-    \label{tabulka:testy_smscv5}
     \caption{Prehľad celkového počtu testov v~produkte SMSCv5}
+    \label{tabulka:testy_smsc}
   \end{center}
 \end{table}
 
@@ -799,11 +800,11 @@ a~druhý systém by spúšťal clustre z~podmnožiny 2 a~3 (clustre \texttt{cl\_
 \texttt{cl\_subset2\_test3}, \texttt{cl\_subset3\_test1} a~cluster \texttt{cl\_subset3\_test2}).
 
 \begin{figure}[h]
-    \begin{center}
+  \begin{center}
     \includegraphics[scale=1]{ukazka_podmnozin}
     \caption{Príklad rozdeľovania clusterov na podmnožiny na základe spoločných prerekvizít}
     \label{obrazok:podmnoziny_testov}
-    \end{center}
+  \end{center}
 \end{figure}
 
 
@@ -821,11 +822,11 @@ rozdeliť rovnomerne. Po rozdelení by sa do každej časti museli pridať prere
 by sme daným delením prišli. Princíp rozdelenia plánu na 3 časti je znázornený na obrázku \ref{obrazok:distribucia_na_casti}.
 
 \begin{figure}[h]
-    \begin{center}
+  \begin{center}
     \includegraphics[scale=1]{delenie_planu_na_casti}
     \caption{Príklad rozdeľovania clusterov na základe častí plánu}
     \label{obrazok:distribucia_na_casti}
-    \end{center}
+  \end{center}
 \end{figure}
 
 Po rozdelení je jasné, že každej časti musíme pridať prerekvizity a~odrekvizity
@@ -858,11 +859,11 @@ Pre povahu testov v~regresnej sade by však najviac na toto doplácal práve ten
 \end{itemize}
 
 \begin{figure}[h]
-    \begin{center}
+  \begin{center}
     \includegraphics[scale=1]{casti_po_preplanovani}
-	\caption{Príklad rozdeľovania clusterov na základe častí plánu - po preplánovaní}
-	\label{obrazok:distribucia_casti_po_preplanovani}
-    \end{center}
+    \caption{Príklad rozdeľovania clusterov na základe častí plánu - po preplánovaní}
+    \label{obrazok:distribucia_casti_po_preplanovani}
+  \end{center}
 \end{figure}
 
 \section{Centralizovaná správa plánovača}
