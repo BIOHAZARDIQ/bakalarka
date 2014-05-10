@@ -32,7 +32,7 @@ desky:
 	pdflatex desky
 
 vlna:
-	vlna -m -v KkSsVvZzOoUuAaIi obsah.tex
+	vlna -m -v KkSsVvZzOoUuAaIi *.tex
 	
 
 clean:

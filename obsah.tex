@@ -191,7 +191,6 @@ stanovené požiadavky na výkon, ako napríklad doba odozvy alebo počet
 vykonaných operácií za čas. 
 
 \item \textbf{Regresné testovanie} 
-\label{sekcia:regresne_testovanie}
 Podľa štandardu IEEE610.12 \cite{Ieee_glossary} je regresné testovanie 
 \quotedblbase Selektívne pretestovávanie systému alebo komponenty na 
 verifikáciu, že zmeny nespôsobili nechcené efekty a~že systém alebo
@@ -450,7 +449,8 @@ chovanie systému pre potreby verifikovania funkcionality systému.
 Zmena chovania systému môže byť prevádzaná napríklad príkazovou riadkou, 
 zmenou konfiguračného súboru a~pod.
 Tento princíp usporiadava všetky testy do štruktúry, ktorá je znázornená 
-na obrázku \ref{obrazok:ukazka_planu_testov}.
+na obrázku \ref{obrazok:ukazka_planu_testov}. Jednoduchý plán testov
+z~produktu MCO je zobrazený v~prílohe \ref{priloha:jednoduchy_plan_testov}.
 
 \begin{figure}[h]
     \begin{center}
@@ -471,8 +471,8 @@ potreby rôznych typov scenárov pre testy.
 
 Na obrázku \ref{obrazok:ukazka_planu_testov} je znázornený príklad štyroch 
 clusterov, pričom platí že clustre vyžadujú iné nastavenie systému. 
-Z~obrázku je vidno, že pre potreby clusterov \texttt {cl\_send\_sms}
-a~\texttt {cl\_send\_100\_sms} je nutné vykonať prerekvizity \texttt{p\_connect}, 
+Z~obrázku je vidno, že pre potreby clusterov \texttt{cl\_send\_sms}
+a~\texttt{cl\_send\_100\_sms} je nutné vykonať prerekvizity \texttt{p\_connect}, 
 \texttt{p\_start\_component}, \texttt{p\_start\_simulator} a~prerekvizitu 
 \texttt{p\_configure\_component}. Zvyšným dvom clusterom stačia iba tri prerekvizity, a~to prerekvizita \texttt{p\_connect}, \texttt{p\_start\_simulator}
 a~\texttt{p\_start\_component}. Cluster \texttt{cl\_test\_after\_sending} má rovnakú množinu prerekvizít ako cluster \texttt{cl\_test\_component\_basic}, 
@@ -540,7 +540,7 @@ v~produkte MCO.
 
 \begin{figure}[h]
 \begin{lstlisting}
-meszarosf@mco-v156#./Run_test.tcl -i cfg.ini -B TEST.REVIEW_23 -f all -wf long_running -tw
+meszarosf@mco-v156#./Run_test.tcl -i cfg.ini -B TEST.REVIEW_23 -f all -tw
 \end{lstlisting}
 \caption{Príklad spúšťania regresných testov pomocou použitého plánovača}
 \label{obrazok:priklad_spustania_testov}
@@ -855,8 +855,8 @@ Pre povahu testov v~regresnej sade by však najviac na toto doplácal práve ten
 \noindent \textbf{Nevýhody}:
 \begin{itemize}
 \item náročné na implementáciu, pretože by sa musela zmenila logika plánovača
-
 \end{itemize}
+
 \begin{figure}[h]
     \begin{center}
     \includegraphics[scale=1]{casti_po_preplanovani}
@@ -1023,7 +1023,39 @@ súborov vytvorených rozšíreným plánovačom testov. Toto riešenie má výh
 Pri implementácií rozšírenia plánovača testov sa využíva práve toto riešenie.
 \end{itemize} 
 
+\subsection*{Neželané distribuovanie testov}
+V~regresnej sade existujú množiny testov, ktoré chceme spúšťať vždy ako celok.
+Príkladom takejto množiny testov je funkcionalita \textbf{env}, ktorá
+slúži na nainštalovanie produktu MCO. Táto funkcionalita obsahuje 5 clusterov,
+ktoré tvoria jeden funkčný celok slúžiaci na inštaláciu produktu.
+Táto funkcionalita obsahuje clustre, ktoré v~prípade produktu MCO:
+\begin{enumerate}
+\item vymažú zo systému produkt MCO
+\item stiahnu verziu produktu MCO zadanú v~konfiguračnom súbore
+\item nainštalujú stiahnutú verziu produktu
+\item nakonfigurujú systém
+\item nainštalujú externé súčasti systému
+\end{enumerate} 
 
+V~prípade regresných testov sa pred samotným testovaním vždy vykoná táto 
+funkcionalita, aby sa zaistilo že je systém nainštalovaný nanovo.
+Pri využívaní viacerých systémov pre distribúciu testov je nutné na každom
+tomto systéme preinštalovať testovaný produkt. Pre tento účel bol naimplementovaný
+parameter \textbf{-wd}\footnote{skratka pre angl. without distribution}, ktorý zapríčiní,
+že testy sa nebudú distribuovať, ale po naplánovaní sa všetky spustia na 
+každom systéme. Obrázok \ref{obrazok:distribuovana_instalacia} zobrazuje 
+príkaz na nainštalovanie produktu MCO na troch distribuovaných systémoch,
+aby sme na týchto systémoch mohli začať s~distribúciou testov.
+
+
+\begin{figure}[h]
+\begin{lstlisting}
+meszarosf@mco-v156#./Run_test.tcl -i cfg.ini -mi cfg-vm1.ini cfg-vm2.ini 
+   cfg-vm3.ini -f env -wd
+\end{lstlisting}
+\caption{Príklad inštalácie produktu MCO na troch systémoch súčasne}
+\label{obrazok:distribuovana_instalacia}
+\end{figure}
 
 %
 % Kapitola 4
@@ -1058,22 +1090,30 @@ Táto časť je rozdelená na niekoľko súborov. Pri implementovaní som všetk
 mnou vytvoreného súboru \textbf{prlmng.tcl}. Tento súbor obsahuje všetky funkcie potrebné pre správnu funkcionalitu rozšírenia.
 Pri vytváraní rozšírenia sa však niektoré časti kódu museli upraviť. Jednalo sa hlavne o~hlavný súbor plánovačky testov, súbor
 \textbf{Run\_test.tcl} a~o~súbor zodpovedný pre plánovanie testov, súbor \textbf{tstmng.tcl}. 
-Zmeny prevedené v~súbore \textbf{Run\_test.tcl}:
-
-
-Zmeny prevedené v~súbore \textbf{tstmng.tcl}:
+\\
+\\
+\noindent Zmeny prevedené v~súbore \textbf{Run\_test.tcl}: \\
+Riadky: 1426--1430, 1453--1457, 1460--1486 a~ďalej riadky 1488 až 1500. \\
+Celkovo približne 50 riadkov kódu (bez komentárov).
+\\
+\\
+\noindent Zmeny prevedené v~súbore \textbf{tstmng.tcl}: \\
+Riadky: 115--125, 2245--2253, 2285--2307, 2536--2567, 2607--2609, 3080--3082, 3184--3187, 3221--3228 a~riadky 3237--3245 \\
+Ďalej riadky: 2345, 2350, 2354, 2364, 2369, 2395, 2400, 2409, 2442, 2462, 2467, 2473, 2489, 2513, 2518, 2523, 2528 a~2533 \\
+Celkovo približne 123 riadkov kódu (bez komentárov).
+\\
 
 Nakoľko firma Acision vyvýja komerčný softvér, pri odovzdávaní zdrojových kódov 
 som pre ochranu duševného vlastníctva firmy Acision odovzdal len súbory nutné pre 
 beh plánovača testov. Pri odovzdávaní som dodržal logickú štruktúru testov, ktoré sa
 v~produkte MCO používajú, avšak zdrojové kódy testov som musel nahradiť jednoduchou funkciou,
 ktorá počká náhodný čas a~potom ukončí test úspechom.
-Odovzdané súbory obsahujú štatistický súbor \textbf{TTT\_stat.txt}, ktorý uchováva časy vykonávania
+Odovzdané súbory obsahujú štatistický súbor \textit{TTT\_stat.txt}, ktorý uchováva časy vykonávania
 každého testu spúšťaného v~regresnej sade produktu MCO. Tento súbor obsahuje presné informácie o~dĺžke
 behu testov v~tomto produkte, a~je použitý pre porovnanie výsledkov.
-Ďalej je medzi odovzdanými súbormi súbor \textbf{KNOWN.BUGS} z~produktu MCO. Tento súbor obsahuje testy
+Ďalej je medzi odovzdanými súbormi súbor \textit{KNOWN.BUGS} z~produktu MCO. Tento súbor obsahuje testy
 ohraničené verziami, v~ktorých sa vyskutujú odhalené chyby, ktoré nemusia priamo súvisieť
-s~funkcionalitou, ktorá sa v~danom teste testuje. Viac sa o~súbore \textbf{KNOWN.BUGS} píše v~kapitole \ref{sekcia:princip_pouziteho_planovaca}.
+s~funkcionalitou, ktorá sa v~danom teste testuje. Viac sa o~súbore \textit{KNOWN.BUGS} píše v~kapitole \ref{sekcia:princip_pouziteho_planovaca}.
 Z~časti \textit{ttt-core} som odovzdal len súbory nutné pre beh plánovača. 
 
 \section{Distribúcia testov}
@@ -1082,28 +1122,39 @@ Pri implementovaní distribúcie testov som použil distribúciu clusterov na z�
 popísanú v~kapitole \ref{sekcia:moznosti_distribuovania}.
 Implementácia distribuovania testov je obsiahnutá vo funkcií \texttt{prl\_divide\_test\_groups}.
 
-Táto funkcia sekvenčne prejde všetky testy, a~rozdelí ich do skupín kde každý cluster v~rovnakej skupine,
+Táto funkcia sekvenčne prejde všetky testy, a~rozdelí ich do skupín, kde každý cluster v~rovnakej skupine,
 má rovnakú množinu prerekvizít. Pre každú takúto skupinu sa potom spočíta odhadovaný čas behu tejto skupiny.
 Odhadovaný čas sa ráta na základe posledného času behu daného clusteru, zaznamenanom v~súbore \textit{TTT\_stat.txt}.
-Tieto skupiny sa potom zoradia podľa odhadovaného času behu celej skupiny.
-V~cykle sa potom prechádzajú tieto skupiny od najväčšej po najmenšiu, a~postupne sa priraďujú 
+Tieto skupiny sa potom zoradia podľa odhadovaného času behu celej skupiny zostupne.
+V~cykle sa potom prechádzajú tieto skupiny od najväčšieho odhadovaného času behu po najmenší, a~postupne sa priraďujú 
 do jedného z~\emph{m} zoznamov spúšťaných clusterov na distribuovaných systémoch.
+Daná skupina clusterov sa priradí vždy do toho zoznamu spúšťaných clusterov, ktorý má
+najmenší odhadovaný čas behu. Týmto spôsobom sa zaisťuje rozloženie záťaže. 
+
+Zoznam clusterov pre každý distribuovaný systém sa potom vloží do samostatného súboru.
+Pri spustení plánovača testov na jednotlivých distribuovaných systémoch, si potom každý
+plánovač zoberie jeden takýto súbor. Z~tohoto súboru si vyčíta zoznam clusterov,
+ktoré sa majú spustiť. Tento zoznam nanovo preplánuje, a~vloží doňho prípadné \textit{Preopty}.
+Takýto plán testov sa potom začne postupne vykonávať.
 
 Tento algoritmus je možné vylepšiť o~rôzne druhy optimalizácií a~heuristiky.
 Vylepšením implementácie tohoto algoritmu sa venuje kapitola \label{kapitola:optimalizacie}. 
 
 
-\section{Spúšťanie podprocesov a~komunikácia s~nimi}
+\section{Spúšťanie a~komunikácia s~podprocesmi}
 \label{sekcia:spustanie_podprocesov}
 Pre každý testovací systém sa musí spustiť nový podproces plánovača testov,
 ktorý sa pomocou IP adresy napojí na testovací systém, na ktorom sa bude testovať daný softvér.
-Pri implementácií spúšťania podprocesov som využil procedúru \texttt{BgExec}\footnote{dostupná z~http://wiki.tcl.tk/12704},
+Hlavný proces plánovača testov potom slúži ako centralizovaná správa testov uvedená
+v~kapitole \ref{sekcia:centralizovana_sprava}.
+Pri implementácií spúšťania podprocesov som využil procedúru \texttt{BgExec}\footnote{dostupná z~webu http://wiki.tcl.tk/12704},
 ktorá dokáže spustiť podproces na pozadí. Procedúra taktiež umožňuje udržiavať počet aktuálne bežiacich podprocesov na pozadí.
 Takýmto spôsobom je možné jednoducho kontrolovať počet bežicich regresných testov na všetkých systémoch.
 
 Pre nastavenie počtu systémov, na ktoré chceme distribuovať všetky regresné testy, vznikol nový parameter \textbf{-mi}.
 Za tento parameter sa uvádza zoznam konfiguračných súborov, ktoré sa použijú pre spustenie testov na rôznych
 testovacích systémoch. Počet konfiguračných súborov udáva počet systémov, na ktoré sa budú testy distribuovať.
+
 Aby sa zabránilo sutuácií, že by jednotlivé konfiguračné súbory používali inú verziu produktu, ktorá sa
 používa hlavne pri vyberaní správnych testov, plánovač vyžaduje taktiež zadanie konfiguračného súboru ktorý
 sa použije pre výber testov. Tento konfiguračný súbor sa zadáva rovnako ako v~plánovači testov bez rozšírenia
@@ -1114,7 +1165,7 @@ Príklad spustenia regresných testov v~produkte MCO na troch distribuovaných s
 \begin{figure}[h]
 \begin{lstlisting}
 meszarosf@mco-v156#./Run_test.tcl -i cfg.ini -mi cfg-vm1.ini cfg-vm2.ini 
-   cfg-vm3.ini -B TEST.REVIEW_23 -f all -wf long_running -tw -po 1000
+   cfg-vm3.ini -B TEST.REVIEW_23 -f all -tw -po 1000
 \end{lstlisting}
 \caption{Príklad distribuovania regresných testov na 3 testovacie systémy}
 \label{obrazok:priklad_spustania_testov_paralelne}
@@ -1133,17 +1184,34 @@ clusterov na otestovanie, a~tieto clustre naplánuje a~otestuje.
 Spúšťanie podprocesov je implementované vo funkcii \texttt{prl\_run\_multiple\_schedulers}.
 Po spustení týchto podprocesov na pozadí sa vo funkcii hlavného procesu \texttt{prl\_accept\_conn} čaká na dáta od podprocesov.
 Jednotlivé podprocesy asynchrónne zasielajú výsledky jednotlivých testov a~takisto aj test plán.
+Každý podproces komunikuje len s~hlavným procesom. Jednotlivé podprocesy o~sebe navzájom nevedia,
+nakoľko to neni potrebné. 
+
+Pre komunikáciu s~podprocesmi si hlavný proces vyčlení jeden voľný systémový port,
+na ktorom bude očakávať výsledky z~podprocesov. 
+Zisťovanie voľného portu a~začanie čakania na výsledky od podprocesov je implementované vo funkcii \texttt{prl\_server\_start}.
 
 Ako prvé sa čaká na test plány od každého podprocesu. Po prijatí týchto test plánov sa vypočítajú informácie
 o~odhade času testovania, počtu prerekvizít, počtu clusterov a~iné.
 Medzi týmito informáciami je uvedené napríklad aj percentuálne vyjadrenie počtu clusterov alebo prerekvizít,
 ktoré sa spúšťaju viacnásobne. Zároveň sa uvádza odhadovaný čas, ktorý v~prípade distribuovania testov
 na aktuálny počet testovacích systémov ušetríme. Príklad týchto informácií je uvedený na obrázku \ref{obrazok:ukazka_statistiky}
+
 \begin{figure}[h]
 \begin{lstlisting}
-TODO
-TODO
-TODO
+status: ##########################################################
+status: #                  Number of TCS: 1487                   #
+status: #                 Number of Prereq: 656                  #
+status: #  Expected execution time of the node 1: 0 d 09:05:53   #
+status: #  Expected execution time of the node 2: 0 d 08:25:29   #
+status: #  Expected execution time of the node 3: 0 d 08:59:47   #
+status: #            Cluster overlapping ratio: 2.3%             #
+status: #              Test overlapping ratio: 3.1%              #
+status: #         Expected execution time: 0 d 09:05:53          #
+status: #          Approximate time saved: 0 d 15:43:49          #
+status: #                  Plan has 2799 nodes.                  #
+status: #              Planning lasts: 0 d 00:00:15              #
+status: ##########################################################
 \end{lstlisting}
 \caption{Príklad informácií zobrazovaných pred spustením regresných testoch}
 \label{obrazok:ukazka_statistiky}
@@ -1156,14 +1224,105 @@ je možné využiť pre rýchle zistenie informácií o~plánovaných regresnýc
 
 \section{Sledovanie aktuálneho stavu testovania}
 \label{sekcia:sledovanie_stavu}
-Pri spúšťaní veľkého množstva testo
+Pri spúšťaní veľkého množstva testov bolo v~plánovači testov problematické
+zisťovať, v~akej fázy testovania sa práve nachádzame. Pred samotným ukončením
+testovania nebolo možné napríklad zistiť počet clusterov, ktoré skončili úspechom
+či neúspechom. Jediný údaj, ktorý bolo možné zistiť, bol aktuálne poradie testu
+zo všetkých možných testov.
+Pri implementovaní rozšírenia pre plánovač testov som sa rozhodol tento
+prístup vylepšiť formou progress baru.
+
+Progress bar zobrazuje informácie z~jednotlivých testovacích systémov 
+a~umožnuje tak zlepšiť prehľad o~aktuálnom stave testovania. 
+Progress bar si zisťuje šírku terminálu (prípadne to, či máme vôbec terminál
+k~dispozícií) a~na základe tejto šírky si upravuje svoju vlastnú veľkosť.
+Je naimplementovaný tak, aby vždy využíval celú šírku terminálu, a~tým
+umožňoval zobrazovať výsledky, ako napríklad grafické znázornenie podielu
+dokončených testov, čo najpresnejšie. Progress bar je schopný prispôsobovať
+sa zmene šírky terminálu pri behu testovania.
+
+Minimálna šírka terminálu pre podporu progress baru je 80 znakov.
+Aktualizácia progress baru prebieha vždy po dokončení určitého testu
+a~prijatia výsledku tohoto testu od podprocesu vo funkcií \texttt{prl\_accept\_conn}.
+Na začiatku sa najprv vo funkcií \texttt{prl\_init\_progress\_bar} zistia všetky dostupné
+informácie o~vytváranom progress bare. Aktualizácia samotného progress baru je implementovaná
+vo funkcii \texttt{prl\_update\_progress\_bar}.
+
+Príkladom progress baru s~rôznymi typmi výsledkov je znázornený na obrázku
+\ref{obrazok:progress_bar}.
+
+\begin{figure}[h]
+\begin{lstlisting}
+status: ###################################
+status: Running parallel testing on 3 nodes
+status: ###################################
+status: 
+status: pid of the main process      : 1882
+status: pids of the all subprocesses : 1891 1892 1893
+status: 
+status:   Total:  65.59%  |  1836 tests of 2799  |  Time elapsed: 00:02:29      
+status:                                                                         
+status: Node 1:   2.3% [#.]  |    23 tests of  986                                
+status: Node 2: 100.0% [##]  |   849 tests of  849  |  Finished in: 00:01:08      
+status: Node 3: 100.0% [##]  |   964 tests of  964  |  Finished in: 00:00:56      
+status:                                                                         
+status: Number of PASSED  test clusters: 0 of 1487                              
+status: Number of FAILED  test clusters: 7 of 1487                              
+status: Number of SKIPPED test clusters: 1007 of 1487
+\end{lstlisting}
+\caption{Ukážka progress baru so šírkou terminálu 82 znakov}
+\label{obrazok:progress_bar}
+\end{figure}
+
 
 \section{Zbieranie a~vyhodnocovanie výsledkov}
 \label{sekcia:zbieranie_vysledkov}
+Zbieranie výsledkov funguje na princípe zasielania správ. 
+Každý podproces zasiela hlavnému procesu (ktorý slúži ako centralizovaná
+správa testov) výsledky o~každom dokončenom teste. Jednotlivé výsledky sa
+pre každý test zaznamenajú. V~praxi sa stáva, že veľká časť prerekvizít
+a~odrekvizít je spúšťaná viacnásobne. Navyše pri dopĺňaní \textit{Preopt-ov}
+ako je uvedené v~kapitole \ref{sekcia:moznosti_distribuovania} sa stáva, 
+že sa viacnásobne spúšťajú aj clustre. 
+
+Pre každý test sa ukladá množina jeho všetkých výsledkov. 
+Po dokončení testovania sa potom z~tejto množiny na základe prevodovej
+tabuľky \ref{tabulka:vysledky_testu_prevod} určí konečný výsledok,
+ktorý sa zobrazí v~štatistikách o~prebehnutom testovaní.
+Určovanie konečného výsledku je implementované vo funkcii \texttt{prl\_determine\_test\_result}.
+
+Ak sa nejaký podproces nečakane ukončí, automaticky prichádzame o~časť výsledkov.
+Používateľ musí byť o~tomto fakte informovaný, nakoľko sa jedná o~kľúčovú chybu.
+Pre detekovanie tohoto problému pred samotným začatím testovania každý podproces
+zasiela hlavnému procesu plán testov.
+
+Pri detekovaní, že sa daný podproces ukončil (či už plánovane alebo nečakane v~prípade
+nejakej chyby) sa porovnajú všetky prijaté výsledky testov s~plánom, ktorý sa posielal na
+začiatku. V~prípade, že podproces zaslal menej výsledkov, ako mal v~test pláne,
+používateľ je o~tejto situácií informovaný. 
 
 \section{Parsovanie logovacích informácií}
 \label{sekcia:parsovanie_logov}
+V~priebehu testovania si každý podproces plánovača testov vytvára vlastné
+logovacie súbory, do ktorých si ukladá informácie o~testoch.
+Samotný hlavný proces však žiadne testy nespúšťa, a~preto v~ňom tieto informácie
+chýbajú. Pre každého testera sú však logovacie informácie dôležitou súčasťou jeho
+každodennej práce. Navyše sa logovacie súbory používajú aj pri vytváraní
+dokumentácie zvanej ATP\footnote{angl. Acceptance Test Protocol} ktorý je súčasťou
+akceptačného testovania spomínaného v~kapitole \ref{kapitola:testovanie_softveru}.
 
+Navrhnuté riešenie sa snaží tento problém odstrániť tým, že sa vytvorené
+logovacie súbory po dokončení testovania skopírujú na jedno centrálne miesto.
+Princíp spájania logovacích súborov je ten, že sa postupne začnú prechádzať
+všetky logovacie súbory vytvorené podprocesmi. V~každom súbore sa preskočí úvodná časť 
+a~prejde sa k~časti, ktorá obsahuje výsledky z~testov. Tieto výsledky sa potom nakopírujú
+do logovacieho súboru vytvoreného hlavným procesom. Jednotlivé časti z~rôznych podprocesov
+sa pomocou komentára označia, aby sa vedelo určiť kde jednotlivé logovacie informácie
+z~každého podprocesu začínajú a~končia.
+
+Implementácia parsovania logovacích súborov je obsiahnutá vo funkciách \texttt{prl\_parse\_error\_logs}
+a~\texttt{prl\_parse\_logs}. 
+ 
 
 %
 % Kapitola 5
