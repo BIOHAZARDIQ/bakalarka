@@ -752,8 +752,8 @@ je potrebné naplánovať.
     odrekvizita  & 706  & 596 \\
     \hline
     \end{tabular}
-    \label{tabulka:pocet_naplanovanych_testov}
     \caption{Prehľad počtu naplánovaných testov pri spúšťaní regresií v~produktoch MCO a~SMSCv5}
+    \label{tabulka:pocet_naplanovanych_testov}
   \end{center}
 \end{table}
 
@@ -773,7 +773,8 @@ Tento princíp distribúcie by spočíval v~rozdeľovaní clusterov do n podmno�
 trvaní všetkých clusterov, v~danej podmnožine. Každý cluster by bol zaradený do jednej podmnožiny, pričom by platilo,
 že každá podmnožina by sa spúšťala na samostatnom testovacom systéme. Pri rozdeľovaní testov na podmnožiny by sa bral zreteľ na
 distribuovanie záťaže.
-
+\\
+\\
 \noindent \textbf{Výhody}:
 \begin{itemize}
 \item jednoduché na implementáciu
@@ -969,8 +970,8 @@ Každý zobrazovaní výsledkov z~každého testovacieho systému majú však te
     unclear     &      *     & unclear \\ 
     \hline
     \end{tabular}
-    \label{tabulka:vysledky_testu_prevod}
     \caption{Mapovanie rozdielnych výsledkov testu na konečný výsledok}
+    \label{tabulka:vysledky_testu_prevod}
   \end{center}
 \end{table}
 
@@ -1091,18 +1092,7 @@ Táto časť je rozdelená na niekoľko súborov. Pri implementovaní som všetk
 mnou vytvoreného súboru \textbf{prlmng.tcl}. Tento súbor obsahuje všetky funkcie potrebné pre správnu funkcionalitu rozšírenia.
 Pri vytváraní rozšírenia sa však niektoré časti kódu museli upraviť. Jednalo sa hlavne o~hlavný súbor plánovačky testov, súbor
 \textbf{Run\_test.tcl} a~o~súbor zodpovedný pre plánovanie testov, súbor \textbf{tstmng.tcl}. 
-\\
-\\
-\noindent Zmeny prevedené v~súbore \textbf{Run\_test.tcl}: \\
-Riadky: 1426--1430, 1453--1457, 1460--1486 a~ďalej riadky 1488 až 1500. \\
-Celkovo približne 50 riadkov kódu (bez komentárov).
-\\
-\\
-\noindent Zmeny prevedené v~súbore \textbf{tstmng.tcl}: \\
-Riadky: 115--125, 2245--2253, 2285--2307, 2536--2567, 2607--2609, 3080--3082, 3184--3187, 3221--3228 a~riadky 3237--3245 \\
-Ďalej riadky: 2345, 2350, 2354, 2364, 2369, 2395, 2400, 2409, 2442, 2462, 2467, 2473, 2489, 2513, 2518, 2523, 2528 a~2533 \\
-Celkovo približne 123 riadkov kódu (bez komentárov).
-\\
+Zmeny prevedené v~týchto dvoch hlavných súboroch sú zobrazené v~prílohe \ref{priloha:zmeny_do_zdrojakov}.
 
 Nakoľko firma Acision vyvýja komerčný softvér, pri odovzdávaní zdrojových kódov 
 som pre ochranu duševného vlastníctva firmy Acision odovzdal len súbory nutné pre 
@@ -1249,7 +1239,8 @@ Na začiatku sa najprv vo funkcií \texttt{prl\_init\_progress\_bar} zistia vše
 informácie o~vytváranom progress bare. Aktualizácia samotného progress baru je implementovaná
 vo funkcii \texttt{prl\_update\_progress\_bar}.
 
-Príkladom progress baru s~rôznymi typmi výsledkov je znázornený na obrázku
+Príkladom progress baru s~minimálnou šírkou terminálu a~rôznymi 
+typmi výsledkov je znázornený na obrázku
 \ref{obrazok:progress_bar}.
 
 \begin{figure}[h]
@@ -1263,15 +1254,15 @@ status: pids of the all subprocesses : 1891 1892 1893
 status: 
 status:   Total:  65.59%  |  1836 tests of 2799  |  Time elapsed: 00:02:29      
 status:                                                                         
-status: Node 1:   2.3% [#.]  |    23 tests of  986                                
-status: Node 2: 100.0% [##]  |   849 tests of  849  |  Finished in: 00:01:08      
-status: Node 3: 100.0% [##]  |   964 tests of  964  |  Finished in: 00:00:56      
+status: Node 1:   2.3% []  |    23 tests of  986                                
+status: Node 2: 100.0% []  |   849 tests of  849  |  Finished in: 00:01:08      
+status: Node 3: 100.0% []  |   964 tests of  964  |  Finished in: 00:00:56      
 status:                                                                         
 status: Number of PASSED  test clusters: 0 of 1487                              
 status: Number of FAILED  test clusters: 7 of 1487                              
 status: Number of SKIPPED test clusters: 1007 of 1487
 \end{lstlisting}
-\caption{Ukážka progress baru so šírkou terminálu 82 znakov}
+\caption{Ukážka progress baru so šírkou terminálu 80 znakov}
 \label{obrazok:progress_bar}
 \end{figure}
 
