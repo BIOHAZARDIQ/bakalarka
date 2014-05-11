@@ -682,6 +682,7 @@ Na záver si ešte uvedieme zoznam výhod a~nevýhod použitia tohoto nástroja.
 \end{itemize}
 
 
+
 %
 % Kapitola 3
 %
@@ -1082,8 +1083,12 @@ Posledná kapitola \ref{sekcia:sledovanie_stavu} popisuje implementáciu novej f
 \section{Použité technológie a~členenie práce}
 \label{sekcia:pouzite_technologie}
 Rozšírenie plánovača testov je napísané v~jazyku Tcl/Tk (Tool Command Language), pre verziu 8.4.19.
+Pre správny beh aplikácie je taktiež nutné mať nainštalované rozšírenie tohoto jazyka zvané 
+\textit{Expect}\footnote{dostupný na stránke http://expect.sourceforge.net/}.
 Plánovač testov je vo firme známy pod názvom TTT (Tcl Testing Tool).
-Pre každý produkt je delený na 2 časti, pričom každá časť sa udržiava v~samostatnom repozitáry vo verzovacom systéme.
+
+Testovacia sada pre produkty je delená na 2 časti, 
+pričom každá časť sa udržiava v~samostatnom repozitáry vo verzovacom systéme.
 Jedná sa o~časti: 
 \begin{itemize}
 \item \textbf{ttt-core} -- Je logická časť plánovača testov, zodpovedná predovšetkým za plánovanie, zbieranie výsledkov,
@@ -1363,9 +1368,10 @@ do logovacieho súboru vytvoreného hlavným procesom. Jednotlivé časti z~rôz
 sa pomocou komentára označia, aby sa vedelo určiť kde jednotlivé logovacie informácie
 z~každého podprocesu začínajú a~končia.
 
-Implementácia parsovania logovacích súborov je obsiahnutá vo funkciách \texttt{prl\_parse\_error\_logs}
-a~\texttt{prl\_parse\_logs}. 
+Implementácia parsovania logovacích súborov je obsiahnutá v~dvoch funkciách, 
+a~to \texttt{prl\_parse\_error\_logs} a~\texttt{prl\_parse\_logs}. 
  
+
 
 %
 % Kapitola 5
@@ -1521,8 +1527,9 @@ ktoré majú medzi sebou podobné prerekvizity. Takéto clustre je potom možné
 naplánovať a~využiť tak vlastnosti združovania testov.
 
 Zapínanie tejto optimalizácie je riadené nastavením premennej \texttt{g\_prl\_optimize} na hodnotu 
-väčšiu alebo rovnú 3. V~prípade využitia tejto optimalizácie sa zároveň zapne
+väčšiu alebo rovnú 3. V~prípade využitia tejto optimalizácie sa zároveň aktivuje
 využívanie predošlých dvoch optimalizácií.
+
 
 
 %
@@ -1530,12 +1537,91 @@ využívanie predošlých dvoch optimalizácií.
 %
 \chapter{Zhodnotenie dosiahnutých výsledkov}
 \label{kapitola:zhodnotenie_vysledkov}
+V~nasledujúcej kapitole si porovnáme vytvorené rozšírenie plánovača s~jeho
+pôvodnou verziou, ktorá nedisponovala funkcionalitou distribuovania testov.
+Ukážeme si niektoré štatistiky, z~ktorých bude zrejmý prínos vytvorenia
+rozšírenia pre tento nástroj. Jednotlivé štatistiky sú zbierané na základe
+informácií priamo z~produktov vo firme Acision, kde sa tento plánovač testov
+s~využitím distribúcie testov každodenne používa. V~kapitole si na záver 
+porovnáme vplyv jednotlivých naimplementovaných optimalizácií na regresné
+testovanie. 
 
-\section{Prínos použitia paralelného plánovača testov}
+
+\section{Prínos vytvorenia rozšírenia pre plánovač testov}
 \label{sekcia:prinos_pouzitia}
+Prínos vytvorenia rozšírenia pre distribúciu testov na viaceré testovacie 
+systémy je zrejmý. Táto bakalárska práca vznikla z~potreby, že sa každodenné
+regresné testovanie natiahlo na viac ako 15 hodín. Čas potrebný pre tento
+typ testovania sa navyše každým pridaným testom zvyšoval. 
+Za posledný rok sa v~produkte MCO zvýšil tento čas o~takmer 2 hodiny.
+
+Z~dôvodu, že je regresné testovanie časovo náročná operácia, sa taktiež 
+pri písaní nových testov bral na časovú náročnosť veľký ohľad.
+V~prípade niektorých testov sa tým znížila kvalita testu, nakoľko sa tieto
+testy museli obmedziť, aby nevykonávali taký veľký počet operácií.
+Jednalo sa hlavne o~niektoré základné typy stress testov.
+
+Postupom času sa musel vymyslieť spôsob, akým by bolo možné skrátiť 
+dĺžku trvania regresných testov. Tým spôsobom bola distribúcia testov.
+
+\begin{table}
+  \begin{center}
+    \begin{tabular}{ | p{2cm} | p{5.3cm} | p{5.3cm} | }
+      \hline
+      \nohyphens{počet testovacích systémov} & čas potrebný pre dokončenie testovania v~produkte MCO & čas potrebný pre dokončenie testovania v~produkte \nohyphens{SMSCv5} \\ \hline
+      1  & 14:56:43 & 15:08:32 \\ \hline
+      2  & 08:06:45 & 08:07:32 \\ \hline 
+      3  & 05:32:34 & 05:36:16 \\ \hline  
+      4  & 04:37:08 & 04:08:06 \\ \hline
+      5  & 03:29:33 & 03:37:21 \\ \hline
+      6  & 03:09:17 & 03:17:33 \\ \hline
+      7  & 02:55:42 & 02:46:58 \\ \hline
+      8  & 02:34:39 & 02:41:35 \\ \hline
+      9  & 02:26:04 & 02:28:20 \\ \hline
+      10 & 02:10:16 & 02:10:00 \\ \hline
+    \end{tabular}
+    \caption{Prínos použitia distribúcie testov na rôzny počet testovacích systémov}
+    \label{tabulka:prinos_pouzitia_distribucie}
+  \end{center}
+\end{table}
+
+Tabuľka \ref{tabulka:prinos_pouzitia_distribucie} znázorňuje dĺžku trvania 
+regresných testov pre produkty MCO a~SMSCv5 využitím rôznych počtov 
+testovacích systémov, na ktoré je možné testy distribuovať. 
+V~prípade použitia jedného testovacieho systému
+je vytvorený plán testov identický s~plánom testov pred naimplementovaním 
+rozšírenia pre podporu distribúcie testov. 
+
+Z~tabuľky vyplýva, že použitím dvoch testovacích systémov skráti celkový
+čas potrebný pre dokončenie testovania na približne 54\% z~celkového času 
+potrebného pre dokončenie testovania v~prípade použitia jedného testovacieho systému.
+Táto hodnota nového času testovania nie je presná polovica, nakoľko sa pri
+vytváraní nových test plánov určitá množina prerekvizít spustí vždy.
+Príkladom takejto prerekvizity je prerekvizita na pripojenie sa na testovací
+systém, alebo na zapínanie nejakej často používanej komponenty. 
+
+V~prípade využitia štyroch testovacích systémov efektivita distribúcie mierne klesá.
+Čas potrebný pre dokončenie testovania tvorí v~prípade produktu MCO približne
+31\% (namiesto idálnych 25\%) z~času potrebného pre testovanie na jednom testovacom systéme.
+V~prípade produktu SMSCv5 je táto percentuálna hodnota o~trochu lepšia, a~to niekde
+na úrovni 27\%.
+
+Ďalším pridávaním testovacích systémov sa efektivita distribúcie postupne znižuje.
+Je to zapríčinené hlavne prekrývaním clusterov a~prerekvizít 
+(hodnota test overlapping ratio použitá v~obrázku \ref{obrazok:ukazka_statistiky}), čo znamená
+že sa tieto testy spúšťajú vďaka distribuovaniu viacnásobne. Plánovač testov 
+je schopný túto hodnotu prekrývania testov pri naplánovaní testov vypočítať.
+
+Grafické znázornenia tabuľky \ref{tabulka:prinos_pouzitia_distribucie}
+pre produkty MCO a~SMSCv5 sú umiestnené v~prílohách \ref{priloha:graf_mco} a~\ref{priloha:graf_smsc}.
+
+
 
 \section{Porovnanie jednotlivých optimalizácií}
 \label{sekcia:porovnanie_optimalizacii}
+
+
+
 
 %
 % Kapitola 7

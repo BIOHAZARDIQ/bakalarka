@@ -12,6 +12,7 @@ testov používaných v~praxi
 \end{itemize}
 
 
+
 %
 % Priloha B
 %
@@ -33,7 +34,6 @@ pozostáva z~približne 3000 testov.
 Príkaz pre naplánovanie a~spustenie regresnej sady každodenne 
 používanej v~produkte MCO je zobrazený na obrázku 
 \ref{obrazok:priklad_spustania_testov}.
-
 
 \begin{figure}[h]
   \includegraphics[scale=0.90]{ukazka_jednoducheho_planu}
@@ -90,6 +90,10 @@ Tento čas sa počíta na základe predošlého regresného testovania,
 nakoľko sa pri každom testovaní zaznamenávajú časy behu jednotlivých testov.
 
 
+
+%
+% Priloha D
+%
 \chapter{Ukážka progress baru}
 \label{priloha:ukazka_progress_baru}
 \begin{figure}[h]
@@ -98,5 +102,79 @@ nakoľko sa pri každom testovaní zaznamenávajú časy behu jednotlivých test
     \caption{Ukážka progress baru s~väčšou šírkou terminálu}
   \end{center}
 \end{figure}
-%\chapter{Plakat}
 
+
+
+%
+% Priloha E
+%
+\chapter{Prínos práce pre produkt MCO}
+\label{priloha:graf_mco}
+Nasledujúci graf zobrazuje závislosť medzi počtom použitých testovacích
+systémov a~časom potrebným pre otestovanie produktu MCO regresnou sadou testov.
+
+\begin{figure}[h!]
+\begin{tikzpicture}[x=1.4cm,y=0.6cm]
+
+  \def\xmin{1}
+  \def\xmax{10}
+  \def\ymin{0}
+  \def\ymax{16}
+
+  % grid
+  \draw[style=help lines, ystep=2, xstep=1] (\xmin,\ymin) grid
+  (\xmax,\ymax);
+
+  % axes
+  \draw[->] (\xmin,\ymin) -- (\xmax,\ymin) node[right] {počet systémov};
+  \draw[->] (\xmin,\ymin) -- (\xmin,\ymax) node[above] {čas [h]};
+
+  % xticks and yticks
+  \foreach \x in {1,2,...,10}
+    \node at (\x, \ymin) [below] {\x};
+  \foreach \y in {2,4,...,16}
+    \node at (\xmin,\y) [left] {\y};
+
+  \draw[color=blue] plot[smooth,mark=*,mark size=2pt] file {mco.dat}
+   node [right] {MCO};
+
+\end{tikzpicture}
+\end{figure}
+
+
+
+%
+% Priloha F
+%
+\chapter{Prínos práce pre produkt SMSCv5}
+\label{priloha:graf_smsc}
+Nasledujúci graf zobrazuje závislosť medzi počtom použitých testovacích
+systémov a~časom potrebným pre otestovanie produktu SMSCv5 regresnou sadou testov.
+
+\begin{figure}[h!]
+\begin{tikzpicture}[x=1.4cm,y=0.6cm]
+
+  \def\xmin{1}
+  \def\xmax{10}
+  \def\ymin{0}
+  \def\ymax{16}
+
+  % grid
+  \draw[style=help lines, ystep=2, xstep=1] (\xmin,\ymin) grid
+  (\xmax,\ymax);
+
+  % axes
+  \draw[->] (\xmin,\ymin) -- (\xmax,\ymin) node[right] {počet systémov};
+  \draw[->] (\xmin,\ymin) -- (\xmin,\ymax) node[above] {čas [h]};
+
+  % xticks and yticks
+  \foreach \x in {1,2,...,10}
+    \node at (\x, \ymin) [below] {\x};
+  \foreach \y in {2,4,...,16}
+    \node at (\xmin,\y) [left] {\y};
+
+  \draw[color=blue] plot[smooth,mark=*,mark size=2pt] file {smsc.dat}
+   node [right] {SMSCv5};
+
+\end{tikzpicture}
+\end{figure}
