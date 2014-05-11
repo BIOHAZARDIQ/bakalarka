@@ -193,9 +193,9 @@ vykonaných operácií za čas.
 \item \textbf{Regresné testovanie} 
 \label{sekcia:regresne_testovanie}
 Podľa štandardu IEEE610.12 \cite{Ieee_glossary} je regresné testovanie 
-\quotedblbase Selektívne pretestovávanie systému alebo komponenty na 
+\uvodzovky{Selektívne pretestovávanie systému alebo komponenty na 
 verifikáciu, že zmeny nespôsobili nechcené efekty a~že systém alebo
-komponenta stále spĺňa špefikované požiadavky.\textquotedblleft
+komponenta stále spĺňa špefikované požiadavky.}
 Myšlienkou tohoto testovania je overiť to, že nové zmeny do funkcionality 
 systému nezaniesli do systému nové typy chýb.
 Bežným spôsobom tohoto testovania je periodické spúšťanie testov 
@@ -241,15 +241,19 @@ Každý test sa zameriava na nejakú vlastnosť testovaného systému pre
 verifikáciu, že sa táto vlastnosť správa podľa špecifikácie.
 Tabuľka \ref{tabulka:pocet_testov} zobrazuje prehľad celkového počtu 
 testov dvoch najväčších produktoch, ktoré sa vo firme Acision testujú.
+Jednotlivé testy je možné obmedziť tak, aby sa spúšťali iba pri testovaní
+špecifickej verzie produktu. V~regresnom testovaní sa z~tohoto dôvodu nespúšťajú
+všetky testy, ktoré pre daný produkt existujú, ale spúšťa sa iba ich podmnožina.
+
 
 \begin{table}
   \begin{center}
     \begin{tabular}{| c | r | r |}
     \hline
     typ testu & počet testov v~produkte MCO & počet testov v~produkte SMSCv5 \\ \hline
-    cluster & 1811 & 1723 \\ \hline
-    prerekvizita & 339 & 244 \\ \hline
-    odrekvizita & 339 & 244 \\
+    cluster & 1846 & 2534 \\ \hline
+    prerekvizita & 355 & 390 \\ \hline
+    odrekvizita & 346 & 389 \\
     \hline
     \end{tabular}
     \caption{Prehľad ceľkového počtu testov v~dvoch najväčších produktoch firmy Acision}
@@ -700,7 +704,7 @@ vytváraní rozšírenia plánovača testov, a~navrhuje možnosti ich riešenia.
 \label{sekcia:moznosti_distribuovania}
 Pri návrhu distribuovania testov som vychádzal z~informácií o~počte testov a~prerekvizít produktov,
 ktoré daný plánovač testov používajú. Informácie som čerpal z~dvoch najväčších produktov (MCO a~SMSCv5), 
-ktoré tento plánovač každodenne používajú. Pri každom regresnom behu, sa zbierajú štatistiky o~tom,
+ktoré tento plánovač testov každodenne používajú. Pri každom regresnom behu, sa zbierajú štatistiky o~tom,
 koľko testov bolo spustených, a~ako dlho každý test trval. 
 V~tabuľkách \ref{tabulka:testy_mco} a~\ref{tabulka:testy_smsc} sú zobrazené informácie o~testoch z~týchto dvoch najväčších produktov.
 
@@ -708,13 +712,13 @@ V~tabuľkách \ref{tabulka:testy_mco} a~\ref{tabulka:testy_smsc} sú zobrazené 
   \begin{center}
     \begin{tabular}{| c | r | r | r | r | r | r |}
     \hline
-    typ testu & počet testov & min. čas [s] & max. čas [s] & priem. čas [s] & modus & medián \\ \hline
-    cluster      & 1811 & 1 & 931 & 18,47 & 8  & 7 \\ \hline
-    prerekvizita & 339  & 1 & 82  & 19,54 & 18 & 1 \\ \hline
-    odrekvizita  & 339  & 1 & 63  & 19,56 & 18 & 7 \\
+    typ testu & počet testov & min. čas [s] & max. čas[s] & priem. čas [s] & modus & medián \\ \hline
+    cluster      & 1791 & 1 & 931 & 18,47 & 8  & 7 \\ \hline
+    prerekvizita & 323  & 1 & 82  & 19,54 & 18 & 1 \\ \hline
+    odrekvizita  & 323  & 1 & 63  & 19,56 & 18 & 7 \\
     \hline
     \end{tabular}
-    \caption{Prehľad celkového počtu testov v~produkte MCO}
+    \caption{Prehľad testov dostupných pre najnovšiu verziu produktu MCO a~štatistiky o~dĺzke trvania testov v~sekundách}
     \label{tabulka:testy_mco}
   \end{center}
 \end{table}
@@ -724,12 +728,12 @@ V~tabuľkách \ref{tabulka:testy_mco} a~\ref{tabulka:testy_smsc} sú zobrazené 
     \begin{tabular}{| c | r | r | r | r | r | r |}
     \hline
     typ testu & počet testov & min. čas [s] & max. čas [s] & priem. čas [s] & modus & medián \\ \hline
-    cluster      & 1723 & 1 & 1963 & 26,19 & 12 & 3 \\ \hline
-    prerekvizita & 224  & 1 & 120  & 9,82  & 6  & 1 \\ \hline
-    odrekvizita  & 224  & 1 & 78   & 6,96  & 5  & 1 \\
+    cluster      & 1810 & 1 & 1963 & 26,19 & 12 & 3 \\ \hline
+    prerekvizita & 247  & 1 & 120  & 9,82  & 6  & 1 \\ \hline
+    odrekvizita  & 247  & 1 & 78   & 6,96  & 5  & 1 \\
     \hline
     \end{tabular}
-    \caption{Prehľad celkového počtu testov v~produkte SMSCv5}
+    \caption{Prehľad testov dostupných pre najnovšiu verziu produktu SMSCv5 a~štatistiky o~dĺzke trvania testov v~sekundách}
     \label{tabulka:testy_smsc}
   \end{center}
 \end{table}
@@ -738,7 +742,7 @@ Z~tabuliek je vidieť, že produkt MCO má priemerné časy clusterov, prerekviz
 V~produkte SMSCv5 je priemerný čas vykonávania clusterov niekoľkonásobne vyšší, ako priemerný čas vykonávania prerekvizít alebo odrekvizít.
 Tieto tabuľky však ukazujú celkový počet všetkých testov. Niektoré testy sa však sú však z~regresnej sady vynechané.
 Navyše z~tabuliek nie je jasné, koľko prerekvizít sa skutočne naplánuje pre jeden beh regresií.
-Z~konceptu plánovača totiž vyplýva, že niektoré prerekvizity je nutné púšťať viacnásobne.
+Z~konceptu plánovača totiž vyplýva, že niektoré prerekvizity je nutné spúšťať viacnásobne.
 Je to preto, lebo každý cluster môže mať inú množinu prerekvizít, a~všetky tieto kombinácie možných prerekvizít pre každý cluster
 je potrebné naplánovať.
 
@@ -747,20 +751,22 @@ je potrebné naplánovať.
     \begin{tabular}{| c | r | r |}
     \hline
     typ testu  & počet testov pre produkt MCO & počet testov pre produkt SMSCv5 \\ \hline
-    cluster      & 1702 & 1650 \\ \hline
-    prerekvizita & 706  & 596  \\ \hline
-    odrekvizita  & 706  & 596 \\
+    cluster      & 1710 & 1716 \\ \hline
+    prerekvizita & 707  & 661  \\ \hline
+    odrekvizita  & 707  & 661 \\
     \hline
     \end{tabular}
-    \caption{Prehľad počtu naplánovaných testov pri spúšťaní regresií v~produktoch MCO a~SMSCv5}
+    \caption{Prehľad počtu naplánovaných testov pri regresnom testovaní v~produktoch MCO a~SMSCv5}
     \label{tabulka:pocet_naplanovanych_testov}
   \end{center}
 \end{table}
 
 Tabuľka \ref{tabulka:pocet_naplanovanych_testov} zobrazuje počet clusterov a~prerekvizít, ktoré sa plánujú
-pri každodennom spúšťaní nočných regresií pomocou funkcionality \texttt{all}. Z~tabuľky vyplýva, že približne 5\% testov sa 
+pri každodennom spúšťaní nočných regresií pomocou funkcionality \texttt{all} a~v~prípade produktu SMSCv5 aj
+pomocou funkcionality \texttt{2nd}. Z~tabuľky vyplýva, že približne 5\% testov sa 
 z~nočných regresií vynecháva. Túto množinu tvoria napríklad testy, ktoré nie sú plne automatické, a~vyžadujú tak interakciu s~používateľom,
-alebo testy o~ktorých sa vie, že je nevhodné ich púšťať spolu s~veľkou množinou testov.
+alebo testy o~ktorých sa vie, že je nevhodné ich spúšťať spolu s~veľkou množinou testov, 
+nakoľko môžu negatívne ovplyvniť výsledky týchto testov.
 Zároveň z~obrázku vypláva to, že sa spustí viac ako dvojnásobok prerekvizít, ako existuje v~testovacej sade.
 Každá prerekvizita sa teda spustí v~priemere viac ako dvakrát. 
 Vo svetle týchto informácií je teda vhodné zameriavať sa pri rozdeľovaní testov na clustre.
@@ -768,8 +774,8 @@ Vo svetle týchto informácií je teda vhodné zameriavať sa pri rozdeľovaní 
 V~nasledujúcej časti sa pozrieme na navrhnuté možnosti distribuovania testov, ich výhody a~nevýhody.
 Treba podotknúť, že plánovač testov si uchováva čas behu každého naposledy spusteného testu.
 Táto štatistika sa môže využiť pri distribuovaní testov, aby sme vedeli rovnomerne rozložiť záťaž pre každý systém.
-\subsubsection*{Distribúcia clusterov na základe času behu clusteru}
-Tento princíp distribúcie by spočíval v~rozdeľovaní clusterov do n podmnožín na základe súčtu časov, 
+\subsubsection*{Distribúcia clusterov na základe dĺžky behu clusterov}
+Tento princíp distribúcie by spočíval v~rozdeľovaní clusterov do \textit{n} podmnožín na základe súčtu časov 
 trvaní všetkých clusterov, v~danej podmnožine. Každý cluster by bol zaradený do jednej podmnožiny, pričom by platilo,
 že každá podmnožina by sa spúšťala na samostatnom testovacom systéme. Pri rozdeľovaní testov na podmnožiny by sa bral zreteľ na
 distribuovanie záťaže.
@@ -830,10 +836,10 @@ by sme daným delením prišli. Princíp rozdelenia plánu na 3 časti je znázo
   \end{center}
 \end{figure}
 
-Po rozdelení je jasné, že každej časti musíme pridať prerekvizity a~odrekvizity
+Po rozdelení je dôležíté, aby sme každej časti pridali prerekvizity a~odrekvizity
 o~ktoré sme prišli pri delení. Ak sa tieto testy pridajú do plánu, celý plán
 pre 3 systémy by vyzeral tak, ako je znázornené na obrázku \ref{obrazok:distribucia_casti_po_preplanovani}.
-Z~obrázku je jasné, že pre vysoký počet testov by bol tento prístup najvhodnejší.
+Z~obrázku vyplýva, že pre vysoký počet testov by bol tento prístup najvhodnejší.
 Problémom tohoto prístupu je však to, že požiadavkom na funkcionalitu plánovača bolo to,
 aby sa princíp plánovania testov nezmenil. Znamená to, že by sa museli rešpektovať hlavičky testov
 napríklad na položku \emph{Preopt}, čo znamená, že každému clusteru môžeme nastaviť množinu clusterov,
@@ -1125,11 +1131,34 @@ najmenší odhadovaný čas behu. Týmto spôsobom sa zaisťuje rozloženie zá�
 Zoznam clusterov pre každý distribuovaný systém sa potom vloží do samostatného súboru.
 Pri spustení plánovača testov na jednotlivých distribuovaných systémoch, si potom každý
 plánovač zoberie jeden takýto súbor. Z~tohoto súboru si vyčíta zoznam clusterov,
-ktoré sa majú spustiť. Tento zoznam nanovo preplánuje, a~vloží doňho prípadné \textit{Preopty}.
-Takýto plán testov sa potom začne postupne vykonávať.
+ktoré sa majú spustiť. Tento zoznam clusterov sa potom nanovo preplánuje a~začne 
+postupne vykonávať.
 
-Tento algoritmus je možné vylepšiť o~rôzne druhy optimalizácií a~heuristiky.
-Vylepšením implementácie tohoto algoritmu sa venuje kapitola \label{kapitola:optimalizacie}. 
+Preplánovanie testov je nutné z~rôznych dôvodov. Jedným z~nich je, že do zoznamu clusterov 
+sa musia pridať \textit{Preopty} kvôli splneniu požiadavku na zachovanie funkcionality, 
+spomínaného na konci kapitoly \ref{sekcia:moznosti_distribuovania}.
+Ďalším dôvodom je, že rozšírenie plánovača využíva distribuovanie testov na základe 
+spoločných prerekvizít. Vďaka tomuto distibuovaniu sa pre jeden systém môžu zvoliť 
+clustre z~rôznych častí test plánu, ktorý by vznikol bez distribuovania testov.
+Tieto časti teda treba vhodne \uvodzovky{prepojiť} pomocou prerekvizít a~odrekvizít. 
+
+Ďalším z~dôvodov, prečo sa clustre musia preplánovať je fakt, že plánovač testov neobsahuje
+funkcionalitu, ktorou by sme mohli spustiť už predpripravený plán testov.
+Táto funkcionalita by sa musela naimplementovať. Regresné testovanie trvá približne 15 hodín, 
+a~vytvorenie test plánu pre takéto testovanie trvá menej ako minútu.
+Na základe tohoto faktu môžeme čas potrebný na vytvorenie test plánu považovať za zanedbateľný, a~môžeme
+si dovoliť testy takýmto spôsobom preplánovávať.
+
+Posledným a~nemenej dôležitým dôvodom, prečo sa preplánovanie testov používa je fakt,
+že plánovač testov sa vo firme Acision každodenne používa niekoľko rokov.
+Jeho funkcionalita je teda rokmi overená, a~preto sa môžeme spoľahnúť, 
+že sa všetky testy úspešne vykonajú a~že sa žiadny nevynechá.
+V~prípade naimplementovania funkcionality, ktorá by zmenila logiku plánovania tak,
+aby preplánovanie testov nebolo potrebné, by sme narazili na problém, že by sme túto
+funkcionalitu museli veľmi dôkladne otestovať. 
+
+Algoritmus distribúcie testov je možné vylepšiť o~rôzne druhy optimalizácií a~heuristiky.
+Vylepšením implementácie tohoto algoritmu sa venuje kapitola \ref{kapitola:optimalizacie}. 
 
 
 \section{Spúšťanie a~komunikácia s~podprocesmi}
@@ -1138,7 +1167,7 @@ Pre každý testovací systém sa musí spustiť nový podproces plánovača tes
 ktorý sa pomocou IP adresy napojí na testovací systém, na ktorom sa bude testovať daný softvér.
 Hlavný proces plánovača testov potom slúži ako centralizovaná správa testov uvedená
 v~kapitole \ref{sekcia:centralizovana_sprava}.
-Pri implementácií spúšťania podprocesov som využil procedúru \texttt{BgExec}\footnote{dostupná z~webu http://wiki.tcl.tk/12704},
+Pri implementácií spúšťania podprocesov som využil procedúru \texttt{BgExec}\footnote{dostupná zo stránky http://wiki.tcl.tk/12704},
 ktorá dokáže spustiť podproces na pozadí. Procedúra taktiež umožňuje udržiavať počet aktuálne bežiacich podprocesov na pozadí.
 Takýmto spôsobom je možné jednoducho kontrolovať počet bežicich regresných testov na všetkých systémoch.
 
@@ -1176,16 +1205,22 @@ Spúšťanie podprocesov je implementované vo funkcii \texttt{prl\_run\_multipl
 Po spustení týchto podprocesov na pozadí sa vo funkcii hlavného procesu \texttt{prl\_accept\_conn} čaká na dáta od podprocesov.
 Jednotlivé podprocesy asynchrónne zasielajú výsledky jednotlivých testov a~takisto aj test plán.
 Každý podproces komunikuje len s~hlavným procesom. Jednotlivé podprocesy o~sebe navzájom nevedia,
-nakoľko to neni potrebné. 
+nakoľko sa každý podproces správa ako autonómny systém. 
 
 Pre komunikáciu s~podprocesmi si hlavný proces vyčlení jeden voľný systémový port,
 na ktorom bude očakávať výsledky z~podprocesov. 
-Zisťovanie voľného portu a~začanie čakania na výsledky od podprocesov je implementované vo funkcii \texttt{prl\_server\_start}.
+Zisťovanie voľného portu a~inicializovanie čakania na výsledky od podprocesov 
+je implementované vo funkcii \texttt{prl\_server\_start}. 
+Hlavný proces plánovača testov predá podprocesom číslo portu tak, že podprocesy
+spustí s~parametrom \textbf{-lp}\footnote{angl. skratka pre listening port} so zadaným
+číslom portu.
 
 Ako prvé sa čaká na test plány od každého podprocesu. Po prijatí týchto test plánov sa vypočítajú informácie
 o~odhade času testovania, počtu prerekvizít, počtu clusterov a~iné.
 Medzi týmito informáciami je uvedené napríklad aj percentuálne vyjadrenie počtu clusterov alebo prerekvizít,
-ktoré sa spúšťaju viacnásobne. Zároveň sa uvádza odhadovaný čas, ktorý v~prípade distribuovania testov
+ktoré sa spúšťaju viacnásobne. Počítanie tohoto percentuálneho vyjadrenia 
+je implementované vo funkcii \texttt{prl\_count\_test\_overlapping}.
+Zároveň sa uvádza odhadovaný čas, ktorý v~prípade distribuovania testov
 na aktuálny počet testovacích systémov ušetríme. Príklad týchto informácií je uvedený na obrázku \ref{obrazok:ukazka_statistiky}
 
 \begin{figure}[h]
@@ -1208,6 +1243,26 @@ status: ##########################################################
 \label{obrazok:ukazka_statistiky}
 \end{figure}
 
+\noindent Tieto informácie sú vypisované vo funkcii \texttt{prl\_plan\_stat} a~ich význam je nasledovný:
+\begin{itemize}
+\item \textbf{Number of TCS} -- celkový počet naplánovaných clusterov.
+\item \textbf{Number of Prereq} -- celkový počet naplánovaných prerekvizít.
+\item \textbf{Expected execution time of the node x} -- odhadovaný čas dĺžky
+trvania testovania pre každý testovací systém na 
+základe štatistického súboru \textit{TTT\_stat.txt}.
+\item \textbf{Cluster overlapping ratio} -- percentuálne vyjadrenie počtu
+clusterov, ktoré sa spustia vďaka distribuovaniu viacnásobne. 
+\item \textbf{Test overlapping ratio} -- percentuálne vyjadrenie počtu
+clusterov, prerekvizít a~odrekvizít, ktoré sa spustia vďaka distribuovaniu viacnásobne.
+\item \textbf{Expected execution time} -- odhadovaný čas dĺžky
+trvania celého testovania, zistený z~maximálneho odhadovaného času pre
+každý testovací systém.
+\item \textbf{Approximate time saved} -- odhadovaný ušetrený čas v~prípade,
+že by sme nevyužili vlastnosti distribuovania testov.
+\item \textbf{Plan has x nodes} -- celkový počet naplánovaných testov.
+\item \textbf{Planning lasts} -- čas trvania plánovania.
+\end{itemize}
+
 Po prijatí všetkých test plánov sa spustí vykonávanie testov. 
 Pre vypísanie test plánov a~nespustenie testovania slúži parameter \textbf{-p}, ktorý
 je možné využiť pre rýchle zistenie informácií o~plánovaných regresných testoch.
@@ -1226,7 +1281,7 @@ prístup vylepšiť formou progress baru.
 Progress bar zobrazuje informácie z~jednotlivých testovacích systémov 
 a~umožnuje tak zlepšiť prehľad o~aktuálnom stave testovania. 
 Progress bar si zisťuje šírku terminálu (prípadne to, či máme vôbec terminál
-k~dispozícií) a~na základe tejto šírky si upravuje svoju vlastnú veľkosť.
+k~dispozícií, čo neplatí napríklad v~prípade použitia utility cron) a~na základe tejto šírky si upravuje svoju vlastnú veľkosť.
 Je naimplementovaný tak, aby vždy využíval celú šírku terminálu, a~tým
 umožňoval zobrazovať výsledky, ako napríklad grafické znázornenie podielu
 dokončených testov, čo najpresnejšie. Progress bar je schopný prispôsobovať
@@ -1243,8 +1298,7 @@ Príkladom progress baru s~minimálnou šírkou terminálu a~rôznymi
 typmi výsledkov je znázornený na obrázku
 \ref{obrazok:progress_bar}.
 
-\begin{figure}[h]
-\begin{lstlisting}
+\begin{lstlisting}[caption=Ukážka progress baru so šírkou terminálu 80 znakov,label=obrazok:progress_bar]
 status: ###################################
 status: Running parallel testing on 3 nodes
 status: ###################################
@@ -1262,9 +1316,6 @@ status: Number of PASSED  test clusters: 0 of 1487
 status: Number of FAILED  test clusters: 7 of 1487                              
 status: Number of SKIPPED test clusters: 1007 of 1487
 \end{lstlisting}
-\caption{Ukážka progress baru so šírkou terminálu 80 znakov}
-\label{obrazok:progress_bar}
-\end{figure}
 
 
 \section{Zbieranie a~vyhodnocovanie výsledkov}
@@ -1319,10 +1370,159 @@ a~\texttt{prl\_parse\_logs}.
 %
 % Kapitola 5
 %
-\chapter{Optimalizácie rozdeľovania testov}
+\chapter{Optimalizácie algoritmu distribúcie testov}
 \label{kapitola:optimalizacie}
+V~nasledujúcej kapitole si popíšeme optimalizácie algoritmu distribuovania
+testov na základe spoločných prerekvizít, ktorý je v~rozšírení plánovača 
+testov naimplementovaný. 
+Jednotlivé optimalizácie boli postupne naimplementované do funkcie 
+\texttt{prl\_divide\_test\_groups}, ktorá slúži na distribúciu testov.
+Tieto optimalizácie na seba naväzujú a~je možné ich jednoducho zapínať a~vypínať 
+pomocou  premennej \texttt{g\_prl\_optimize}. 
+Nastavenie tejto premennej je umiestnené 
+na začiatku súboru \textit{prlmng.tcl}, ktorý obsahuje všetky nové funkcie
+naimplementované pre potreby rozšírenia plánovača testov.
+Pre optimalizácie je využívaný štatistický súbor \textit{TTT\_stat.txt}
+spomínaný v~predchádzajúcich kapitolách. Plánovač testov je schopný
+využívať svoj posledný beh testov a~zbierať štatistiky tak, aby bolo možné
+zlepšiť rozloženie záťaže v~nasledujúcom testovaní.
+
+\section{Optimalizácia 1 -- distribúcia využitím dĺžky trvania behu prerekvizít a~odrekvizít}
+\label{sekcia:optimalizacia1}
+Základný algoritmus pre distribúciu využíva len časy trvania jednotlivých clusterov.
+Rozloženie záťaže medzi jednotlivé testovacie systémy je zabezpečované iba
+štatistikami zozbieranými zo spúštania jednotlivých clusterov.
+Do plánu testov sa však pridávajú aj prerekvizity a~odrekvizity, a~to môže
+narušiť optimálne rozloženie záťaže. 
+
+Prvá optimalizácia algoritmu distribuovania testov sa snaží minimalizovať
+tento problém tak, že sú testy distribuované aj na základe
+času trvania prerekvizít a~odrekvizít. Zapnutie tejto optimalizácie
+je možné nastavením premennej \texttt{g\_prl\_optimize} na hodnotu 
+väčšiu alebo rovnú 1.
+
+Distribúcia testov na \textit{m} častí zadaných pomocou parametra \textbf{-mi}
+pracuje tak, že sa pri priraďovaní skupiny clusterov s~rovnakými prerekvizitami
+do jednej z~\textit{m} častí počíta odhadovaný čast trvania danej časti.
+Tento čas sa však nepočíta len na základe clusterov, ale do tohoto času sú prirátané
+aj jednotlivé časy prerekvizít a~odrekvizít pre konkrétnu skupinu testov.
+
+Všetkých \textit{m} častí pre každý testovací systém si udržiava
+zoznam a~časy jednotlivých testov. Tieto časy sa spočítajú, a~pomocou
+tejto hodnoty sa riadi rozloženie záťaže pre každý testovací systém.
+
+Hlavnou nedokonalosťou tohoto prístupu je, že skupiny clusterov obsahujú 
+navzájom podobné množiny prerekvizít. Pri priraďovaní takejto skupiny clusterov
+do jednej z~\textit{m} častí by sa teda väčšina prerekvizít a~odrekvizít
+pridala viacnásobne. Toto je však neželaný efekt, nakoľko plánovač testov
+disponuje vlastnosťou združovania testov, popísanou v~kapitole \ref{sekcia:princip_pouziteho_planovaca}.
+
+Vďaka tejto vlastnosti sa prerekvizity pri vytváraní plánu testov združujú,
+a~preto je viacnásobné pridanie prerekvizít a~odrekvizít do spomínaných častí neželané.
+Pre čiastočné riešenie tohoto problému sa teda prerekvizity a~odrekvizity
+pridávajú do každej časti len raz. 
+
+Rozloženie záťaže je teda v~konečnom výsledku pre každý testovací systém 
+riešené tak, že sa odhaduje čas vykonávania každej časti regresných testov
+pomocou času vykonávania všetkých clusterov v~danej časti. Do tohoto času vykonávania 
+sa však ešte pridajú časy vykonávania prerekvizít a~odrekvizít pre dané clustre,
+avšak čas trvania prerekvizít a~odrekvizít sa pripočítava len raz.
+
+Takýmto spôsobom môžeme pomerne presne určiť dĺžku trvania testovania
+pre každý testovací systém zvlášť. Odchýlkami tejto vypočítanej hodnoty
+trvania testovania oproti skutočnému trvaniu testovaniu po preplánovaní 
+sú len prerekvizity a~odrekvizity, ktoré sa spúšťajú viacnásobne, a~samozrejme
+pridané \textit{Preopty}. 
 
 
+\section{Optimalizácia 2 -- distribúcia využitím rozdeľovania skupín clusterov}
+\label{sekcia:optimalizacia2}
+Rozšírenie plánovača testov pre podporu distribuovania testov využíva 
+distribúciu clusterov na základe spoločných prerekvizít spomínaných v~kapitole 
+\ref{sekcia:moznosti_distribuovania}.
+Na začiatku distribúcie testov sa najprv vytvoria skupiny clusterov so spoločnými
+prerekvizitami, a~následne sa distribuujú priamo tieto skupiny. 
+
+Nevýhodou tohoto prístupu je to, že v~testovacej sade môžeme mať takéto skupiny,
+ktorých je málo a~zároveň majú príliš veľký čas vykonávania. V~prípade, že máme
+skupín testov menej, ako je počet testovacích systémov, niektoré testovacie 
+systémy ostanú nevyužité, lebo sa im nepriradí žiadna z~týchto skupín.
+
+Najnevhodnejšou variantou testovacej sady pre základný algoritmus distribúcie
+testov je sada, ktorá obsahuje všetky clustre s~rovnakou množinou prerekvizít. 
+V~prípade takejto sady sa všetky clustre zaradia do jednej spoločnej skupiny, a~túto skupinu
+by ďalej nebolo možné distribuovať. Príkladom takejto nevhodnej sady je
+testovacia sada znázornená na obrázku \ref{obrazok:sada_pre_optimalizaciu2}.
+V~prípade takejto testovacej sady a~bez použitia optimalizácie by 
+sa takáto skupina clusterov vôbec nedistribuovala. Všetky clustre by sa spustili
+na jednom testovacom systéme a~prípadné ostatný testovacie systémy by ostali nevyužité.
+
+Riešením tohoto problému je použitie optimalizácie, ktorá je schopná takúto
+veľkú skupinu clusterov dozdeliť na menšie. Táto optimalizácia funguje tak,
+že sa takéto veľké skupiny testov rozdelia na dve menšie. Algoritmus delí takéto veľké 
+skupiny clusterov vždy na dve časti, aby sme v~prípade delenia skupín na viac častí
+zbytočne nezanášali do jednotlivých testovacích systémov nové prerekvizity a~odrekvizity
+súvisiace. Algoritmus sa snaží odhadnúť, akú veľkú časť skupiny testov potrebujeme
+pre aktuálny testovací systém (testovací systém s~najmenším odhadovaným časom testovania), 
+do ktorého vkladáme nové clustre. Zvyšná časť clusterov sa ponechá na 
+distribuovanie do ostatných testovacích systémov. 
+
+Takýmto spôsobom je zaistené to, že sa v~prípade úspechu algoritmu táto veľká skupina
+clusterov rozdelí tak, že sa aktuálnemu testovaciemu systému priradia clustre práve tak,
+aby sa tento testovací systém naplno využil s~ohľadom na rozloženie záťaže.
+Následné pridávanie clusterov do tohoto testovacieho systému by už nemalo byť potrebné.
+
+Algoritmus rozdelovania veľkých skupín clusterov na dve menšie je naimplementovaný vo funkcii
+\texttt{prl\_split\_test\_groups}.
+Detekcia toho, či je nutné skupinu clusterov rozdeliť je obsiahnutá vo funkcii \texttt{prl\_divide\_test\_groups},
+ktorá slúži na distribúciu testov.
+
+Tento typ optimalizácie je zapnúť nastavením premennej \texttt{g\_prl\_optimize} na hodnotu 
+väčšiu alebo rovnú 2. V~prípade aplikovania tejto optimalizácie sa automaticky zapína
+aj optimalizácia s~využitím dĺžky trvania prerekvizít a~odrekvizít.
+
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=1]{sada_pre_optimalizaciu2}
+    \caption{Príklad nevhodnej sady testov pre základný algoritmus distribúcie testov}
+    \label{obrazok:sada_pre_optimalizaciu2}
+  \end{center}
+\end{figure}
+
+
+
+\section{Optimalizácia 3 -- distribúcia využitím podobnosti prerekvizít}
+\label{sekcia:optimalizacia3}
+Táto optimalizácia využíva pri distribúcií testov skutočnosť, že čím viac
+skupín clusterov s~podobnými prerekvizitami existuje v~danom distribuovanom systéme,
+tým efektívnejšie vieme využiť vlastnosť združovania testov popísanej v~kapitole 
+\ref{sekcia:princip_pouziteho_planovaca}.
+Pri rozhodovaní, do ktorej z~\textit{m} skupín testov zadaných pomocou prepínača \textbf{-mi}
+vložíme aktuálnu skupinu clusterov je teda vhodné rozhodovať sa aj na základe tohoto faktora.
+
+Táto optimalizácia funguje tak, že sa najprv zistia všetky možné testovacie systémy,
+do ktorých je možné vložiť skupinu clusterov bez toho, aby sa narušilo
+rozloženie záťaže na týchto systémoch. V~prípade, že je takýchto systémov viac
+(čo sa v~prípade širokej škály clusterov s~rôznymi prerekvizitami bežne stáva),
+aktuálnu skupinu clusterov automaticky nepriradíme testovaciemu systému, 
+ktorý má najmenší odhadovaný čas dĺžky trvania testovania. Namiesto toho si pre každý takýto
+testovací systém spočítame počet prerekvizít, ktoré má spoločné s~aktuálnou skupinou
+clusterov, ktorú sa snažíme distribuovať. 
+
+Skupinu clusterov potom priradíme do toho testovacieho systému, ktorý má najviac
+podobných prerekvizít. V~prípade, že existuje viac testovacích systémov, ktoré
+majú rovnaký počet podobných prerekvizít, aktuálnu skupinu testov vložíme do 
+testovacieho systému s~najmenším odhadovaným časom dĺžky trvania testovania.
+
+Počítanie podobnosti prerekvizít je jednoduchá operácia, ktorá nám vo výsledku 
+zabezpečí, že sa na jednotlivých testovacích systémoch budú združovať clustre,
+ktoré majú medzi sebou podobné prerekvizity. Takéto clustre je potom možné efektívnejšie
+naplánovať a~využiť tak vlastnosti združovania testov.
+
+Zapínanie tejto optimalizácie je riadené nastavením premennej \texttt{g\_prl\_optimize} na hodnotu 
+väčšiu alebo rovnú 3. V~prípade využitia tejto optimalizácie sa zároveň zapne
+využívanie predošlých dvoch optimalizácií.
 
 
 %

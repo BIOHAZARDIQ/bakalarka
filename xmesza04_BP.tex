@@ -30,6 +30,8 @@
 %zde muzeme vlozit vlastni balicky
 
 %vlastne prikazy
+\newcommand\uvodzovky[1]{\quotedblbase #1\textquotedblleft}%
+
 \usepackage{parcolumns}
 \usepackage{listings}
 \lstset{
@@ -57,7 +59,7 @@
   \renewcommand{\listtablename}{Zoznam tabuliek} 
   \renewcommand{\bibname}{Literatúra}
   \renewcommand{\tablename}{Tabuľka}
-  \renewcommand*\lstlistingname{Obrázok}
+  \renewcommand{\lstlistingname}{Príklad}
 %  \renewcommand{\contentsname}{Contentsname}
 %  \renewcommand{\glossaryname}{Glossaryname}
 }
