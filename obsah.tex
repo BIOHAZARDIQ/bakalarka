@@ -1,11 +1,7 @@
 %=========================================================================
 % (c) Michal Bidlo, Bohuslav Křena, 2008
 
-
-%odkazy na kapitoly:     kapitola:nazov_kapitoly
-%odkazy na podkapitoly:  sekcia:nazov_sekcie
-%odkazy na obrazky:      obrazok:nazov_obrazku
-%odkazy na tabulky:      tabulka:nazov_tabulky
+% Autor: Filip Mészáros
 
 
 %
@@ -247,6 +243,19 @@ Jednotlivé testy je možné obmedziť tak, aby sa spúšťali iba pri testovan�
 špecifickej verzie produktu. 
 V~regresnom testovaní sa z~tohoto dôvodu nespúšťajú všetky testy, 
 ktoré pre daný produkt existujú, ale spúšťa sa iba ich podmnožina.
+Spúšťanie regresných testov pre produkty MCO a~SMSCv5 je zabezpečované 
+príkazmi uvedenými v~príkladoch \ref{priklad:regresie_mco}
+a~\ref{priklad:regresie_smsc}.
+
+\begin{lstlisting}[caption=Spúšťanie regresných testov v~produkte MCO
+,label=priklad:regresie_mco]
+meszarosf@mco-v156#./Run_test.tcl -i mco.ini -B TEST.REVIEW_23 -f all -tw
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Spúšťanie regresných testov v~produkte SMSCv5
+,label=priklad:regresie_smsc]
+meszarosf@smsc-v156#./Run_test.tcl -i smsc.ini -f all 2nd -tw
+\end{lstlisting}
 
 
 \begin{table}
@@ -267,7 +276,7 @@ ktoré pre daný produkt existujú, ale spúšťa sa iba ich podmnožina.
 
 Údržba produktu MCO funguje formou kontinuálnej 
 integrácie\footnote{angl. continuous integration}.
-Kontinuálna integrácia je vývoj softwaru, kedy členovia týmu integrujú
+Kontinuálna integrácia je vývoj softvéru, kedy členovia týmu integrujú
 ich prácu často. Obvykle každý člen tímu integruje svoju prácu aspoň 
 raz denne, čo vedie k~niekoľkým integráciám za deň 
 \cite{Continuous_integration}.
@@ -452,7 +461,7 @@ v~jazyku Tcl/Tk.
 
 Plánovač testov je napísaný v~skriptovacom jazyku Tck/Tk
 \footnote{https://www.tcl.tk/}. 
-Je špeciálne navrhnutý pre potreby testovania softwaru, ktorý je vysoko 
+Je špeciálne navrhnutý pre potreby testovania softvéru, ktorý je vysoko 
 konfigurovateľný. Využíva oddelenie časti kódu pre samotný test, 
 a~pre konfiguračné zmeny. Idea plánovača je taká, že každý test sa 
 rozdelí na prerekvizitu (prípadne viac prerekvizít) a~cluster. Cluster 
@@ -674,8 +683,8 @@ ktoré sú označené funkcionalitou \texttt{long\_running}.
 \item \textbf{Sets} -- umožňuje ďalší spôsob logického rozdeľovania testov 
 na podmnožiny, podobne ako položka \texttt{Functionalities}.
 \item \textbf{Versions} -- dolné a~prípadne aj horné ohraničenie hodnoty 
-verzie softwaru, na ktorej je daný test možné pustiť
-(Napríklad test určený pre software od verzie 2.3-0.0 vrátane, 
+verzie softvéru, na ktorej je daný test možné pustiť
+(Napríklad test určený pre softvér od verzie 2.3-0.0 vrátane, 
 až do verzie 2.3-04.06 môžeme označiť ako: \textgreater= 2.3-00.00 
 $\sim$ \textgreater= 2.3-04.06).
 \item \textbf{CR} -- popisok slúžiaci na označenie čísla ticketu, alebo 
@@ -1136,8 +1145,7 @@ a~\emph{skipped}.
     passed      & skipped    & passed  \\ \hline
     failed      & skipped    & failed  \\ \hline
     passed      & failed     & unclear \\ \hline
-    unclear     &      *     & unclear \\ 
-    \hline
+    unclear     &      *     & unclear \\ \hline
     \end{tabular}
     \caption{Mapovanie rozdielnych výsledkov testu na konečný výsledok}
     \label{tabulka:vysledky_testu_prevod}
@@ -1871,6 +1879,9 @@ testovacích systémov, na ktoré je možné testy distribuovať.
 V~prípade použitia jedného testovacieho systému
 je vytvorený plán testov identický s~plánom testov pred naimplementovaním 
 rozšírenia pre podporu distribúcie testov. 
+Údaje v~tabuľke vznikli naplánovaním regresných testov, ktoré sa 
+s~spomínaných dvoch produktoch každodenne spúšťajú.
+Pri plánovaní testov boli využité všetky naimplementované optimalizácie.
 
 Z~tabuľky vyplýva, že použitím dvoch testovacích systémov skráti celkový
 čas potrebný pre dokončenie testovania na približne 54\% z~celkového času 
@@ -1899,12 +1910,222 @@ Grafické znázornenia tabuľky \ref{tabulka:prinos_pouzitia_distribucie}
 pre produkty MCO a~SMSCv5 sú umiestnené v~prílohách 
 \ref{priloha:graf_mco} a~\ref{priloha:graf_smsc}.
 
+Pre zhodnotenie prínosu vytvorenia rozšírenia plánovača testov je nutné
+overiť, ako je zvládnuté rozloženie záťaže medzi jednotlivými testovacími
+systémami. Pri distribuovaní testov na viaceré testovacie systémy je 
+rozloženie záťaže vylepšované zbieraním štatistických informácií o~poslednom
+behu testovania. 
+Vo výsledku je rozloženie záťaže na jednotlivých testovacích systémoch
+rovnomerné, a~pri použití niekoľkých testovacích systémoch sa 
+minimálne a~maximálne zaťaženie testovacích systémov líši rádovo v~percentách.
+Dôkazom toho sú napríklad nasledujúce tabuľky. 
+
+Tabuľky \ref{tabulka:rozlozenie_zataze_mco_2} a~\ref{tabulka:rozlozenie_zataze_mco_3} 
+zobrazujú rozloženie záťaže v~prípade
+použitia rôzneho počtu testovacích systémov. Údaje sú zozbierané
+z~distribúcie regresných testov produktu MCO. V~prípade použitia
+dvoch testovacích systémov je rozdiel dĺžky testovania na týchto systémoch
+prižne 17 minút. Tento čas tvorí približne 3,5\% z~maximálnej dĺžky testovania.
+V~prípade použitia troch testovacích systémov je toto percento niekde 
+na úrovni šiestich percent.
+ 
+Zvyšné dve tabuľky zobrazujú rozloženie záťaže pri distribúcií testovacej
+sady pre produkt SMSCv5. Tabuľka \ref{tabulka:rozlozenie_zataze_smsc_2} 
+zobrazuje, že v~prípade použitia dvoch testovacích systémov je rozdiel
+v~dĺžke trvania testovania približne 28 minút, čo tvorí približne 6\%
+z~maximálnej dĺžky testovania. V~prípade použitia štyroch
+testovacích systémov ako je zobrazených v~tabuľke \ref{tabulka:rozlozenie_zataze_smsc_4},
+je rozdiel medzi najkratším a~najdlhším časom testovania približne 18 minút, čo
+tvorí približne 7\% z~maximálnej dĺžky testovania.
+
+
+
+\begin{table}[h!]
+  \begin{center}
+    \begin{tabular}{ | r | c | }
+      \hline
+      testovací systém & dĺžka testovania \\ \hline
+      1  & 08:06:45  \\ \hline
+      2  & 07:49:38  \\ \hline 
+    \end{tabular}
+    \caption{Rozloženie záťaže pre produkt MCO v~prípade použitia 2 
+             testovacích systémov}
+    \label{tabulka:rozlozenie_zataze_mco_2}
+  \end{center}
+\end{table}
+
+\begin{table}[h!]
+  \begin{center}
+    \begin{tabular}{ | r | c | }
+      \hline
+      testovací systém & dĺžka testovania \\ \hline
+      1  & 05:14:40  \\ \hline
+      2  & 05:11:28  \\ \hline 
+      3  & 05:32:34  \\ \hline 
+    \end{tabular}
+    \caption{Rozloženie záťaže pre produkt MCO v~prípade použitia 3 
+             testovacích systémov}
+    \label{tabulka:rozlozenie_zataze_mco_3}
+  \end{center}
+\end{table}
+
+
+\begin{table}[h!]
+  \begin{center}
+    \begin{tabular}{ | r | c | }
+      \hline
+      testovací systém & dĺžka testovania \\ \hline
+      1  & 08:07:32  \\ \hline
+      2  & 07:39:21  \\ \hline 
+    \end{tabular}
+    \caption{Rozloženie záťaže pre produkt SMSCv5 v~prípade použitia 2 
+             testovacích systémov}
+    \label{tabulka:rozlozenie_zataze_smsc_2}
+  \end{center}
+\end{table}
+
+\begin{table}[h!]
+  \begin{center}
+    \begin{tabular}{ | r | c | }
+      \hline
+      testovací systém & dĺžka testovania \\ \hline
+      1  & 04:06:11  \\ \hline
+      2  & 03:49:51  \\ \hline 
+      3  & 03:58:52  \\ \hline 
+      4  & 04:08:06  \\ \hline
+    \end{tabular}
+    \caption{Rozloženie záťaže pre produkt SMSCv5 v~prípade použitia 4 
+             testovacích systémov}
+    \label{tabulka:rozlozenie_zataze_smsc_4}
+  \end{center}
+\end{table}
 
 
 \section{Porovnanie jednotlivých optimalizácií}
 \label{sekcia:porovnanie_optimalizacii}
+Pri porovnávaní jednotlivých optimalizácií som vychádzal z~plánovania testov
+regresnej sady, ktoré sa spúšťajú denne pre dva najväčšie produkty. 
+Tabuľky \ref{tabulka:porovnanie_optimalizacii_mco}
+a~\ref{tabulka:porovnanie_optimalizacii_smsc} zobrazujú dĺžku trvania
+regresných testov pre rôzny počet testovacích systémov a~rôzne úrovne
+optimalizácie. Z~tabuliek vyplýva, že využívanie dĺžky trvania prerekvizít
+a~odrekvizít ako je použité v~optimalizácií 1, nie je vždy lepšie riešenie.
+Táto optimalizácia má najväčší efekt, keď sa prerekvizity spúšťajú maximálne
+raz. V~prípade použitia veľkej sady testov sa však bežne niektoré prerekvizity
+spúšťajú niekoľkonásobne. V~takomto prípade má optimalizácia len minimálny,
+alebo dokonca aj negatívny vplyv. Optimalizácia 2 funguje na princípe rozdelovania
+veľkých skupín clusterov so spoločnými prerekvizitami. Táto optimalizácia
+nadobúda efekt iba v~prípade, že je takéto skupiny nutné rozdeliť aby sme 
+zachovali optimálne rozloženie záťaže. V~prípade regresných testov sa však 
+takéto veľké skupiny testov dokážu distribuovať aj bez toho, aby to narušilo
+rozloženie záťaže. Znova teda platí, že táto optimalizácia má efekt skôr na
+menší počet testov. 
+
+Z~pohľadu regresného testovania má však veľký vplyv posledná optimalizácia.
+Táto optimalizácia sa snaží distribuovať clustre na testovacie systémy tak,
+aby sa na každom testovacom systéme združovali clustre s~podobnými prerekvizitami.
+Je to z~dôvodu, aby plánovač testov mohol využiť svoju vlastnosť združovania
+testov. Z~tabuliek vyplýva, že tento typ optimalizácie je schopný skrátiť
+čas potrebný na dokončenie regresného testovania aj o~niekoľko desiatok minút.
 
 
+\begin{table}
+  \begin{center}
+    \begin{tabular}{ | C{2.9cm} | C{2.8cm} | C{2.51cm} | C{2.51cm} | C{2.51cm} | }
+      \hline
+      & \multicolumn{4}{c|}{Dĺžka regresného testovania} \\ \cline{2-5}
+      počet testovacích systémov & bez optimalizácií & optimalizácia 1 & optimalizácia 2 & optimalizácia 3 \\ \hline
+      1  & 14:56:43 & 14:56:43 & 14:56:43 & 14:56:43 \\ \hline
+      2  & 08:53:16 & 08:40:17 & 08:40:17 & 08:06:45 \\ \hline
+      3  & 06:19:57 & 06:22:37 & 06:22:37 & 05:32:34 \\ \hline
+      4  & 05:03:54 & 05:05:24 & 05:05:24 & 04:37:08 \\ \hline
+      5  & 04:13:29 & 04:15:41 & 04:15:41 & 03:29:33 \\ \hline
+      6  & 03:37:58 & 03:40:10 & 03:40:10 & 03:09:17 \\ \hline
+      7  & 03:12:31 & 03:26:33 & 03:26:33 & 02:55:42 \\ \hline
+      8  & 03:00:58 & 02:52:57 & 02:52:57 & 02:34:39 \\ \hline
+      9  & 02:45:07 & 02:35:39 & 02:35:39 & 02:26:04 \\ \hline
+      10 & 02:40:52 & 02:41:40 & 02:41:40 & 02:10:16 \\ \hline
+    \end{tabular}
+    \caption{Porovnanie jednotlivých optimalizácií pri plánovaní regresných testov v~produkte MCO}
+    \label{tabulka:porovnanie_optimalizacii_mco}
+  \end{center}
+\end{table}
+
+\begin{table}
+  \begin{center}
+    \begin{tabular}{ | R{2.9cm} | C{2.8cm} | C{2.51cm} | C{2.51cm} | C{2.51cm} | }
+      \hline
+      & \multicolumn{4}{c|}{Dĺžka regresného testovania} \\ \cline{2-5}
+      počet testovacích systémov & bez optimalizácií & optimalizácia 1 & optimalizácia 2 & optimalizácia 3 \\ \hline
+      1  & 15:08:32 & 15:08:32 & 15:08:32 & 15:08:32 \\ \hline
+      2  & 08:19:32 & 08:23:25 & 08:23:25 & 08:07:32 \\ \hline
+      3  & 05:54:31 & 05:53:21 & 05:53:21 & 05:36:16 \\ \hline
+      4  & 04:40:18 & 04:51:22 & 04:51:22 & 04:08:06 \\ \hline
+      5  & 03:52:44 & 03:50:06 & 03:50:06 & 03:37:21 \\ \hline
+      6  & 03:15:13 & 03:18:23 & 03:18:23 & 03:17:33 \\ \hline
+      7  & 02:53:37 & 03:00:35 & 03:00:35 & 02:46:58 \\ \hline
+      8  & 02:38:00 & 02:46:31 & 02:46:31 & 02:41:35 \\ \hline
+      9  & 02:27:12 & 02:27:25 & 02:27:25 & 02:28:20 \\ \hline
+      10 & 02:21:39 & 02:08:54 & 02:08:54 & 02:10:00 \\ \hline
+    \end{tabular}
+    \caption{Porovnanie jednotlivých optimalizácií pri plánovaní regresných testov v~produkte SMSCv5}
+    \label{tabulka:porovnanie_optimalizacii_smsc}
+  \end{center}
+\end{table}
+
+Pre demonštrovanie optimalizácie 2 si uvedieme naplánovanie funkcionality
+\textit{addrtran} pre produkt MCO. Táto funkcionalita pozostáva z~niekoľko
+desiatok testov, z~ktorých väčšina má rovnakú množinu prerekvizít. 
+Testy v~tejto funkcionalite majú len 2 množiny prerekvizít, takže všetky
+clustre sa rozdelia len do dvoch skupín testov. 
+Tabuľka \ref{tabulka:porovnanie_optimalizacie_2} zobrazuje dĺžky trvania
+testovania tejto funkcionality a~efekt spomínanej optimalizácie. 
+Pri plánovaní tejto funkcionality bol využitý parameter \textit{-wp}, 
+ktorý zapríčiní, že sa funkcionalita naplánuje bez použitia Preoptov.
+
+\begin{table}[h!]
+  \begin{center}
+    \begin{tabular}{ | C{1.5cm} | C{4cm} | C{4.5cm} | }
+      \hline
+      testovací systém & dĺžka testovania bez využitia optimalizácie & dĺžka testovania s~využitím optimalizácie \\ \hline
+      1 & 11:31 &  11:31 \\ \hline \hline
+      1 & 03:46 &  07:27 \\ \hline 
+      2 & 10:54 &  07:52 \\ \hline \hline
+      1 & 03:46 &  06:00 \\ \hline
+      2 & 10:54 &  06:32 \\ \hline
+      3 &   -   &  06:35 \\ \hline \hline
+      1 & 03:46 &  05:35 \\ \hline
+      2 & 10:54 &  05:34 \\ \hline
+      3 &   -   &  05:52 \\ \hline 
+      4 &   -   &  05:54 \\ \hline \hline
+      1 & 03:46 &  05:14 \\ \hline
+      2 & 10:54 &  05:02 \\ \hline
+      3 &   -   &  05:28 \\ \hline
+      4 &   -   &  05:29 \\ \hline
+      5 &   -   &  05:30 \\ \hline
+    \end{tabular}
+    \caption{Porovnanie vplyvu optimalizácie 2 na jednotlivé testovacie
+             systémy}
+    \label{tabulka:porovnanie_optimalizacie_2}
+  \end{center}
+\end{table}
+
+Z~tabuľky vyplýva, že v~prípade nevyužitia optimalizácie sme schopný distribuovať 
+iba skupiny clusterov s~rovnakými prerekvizitami. Nakoľko máme takéto skupiny 
+iba dve, sme schopný využiť iba dva testovacie systémy. V~prípade využitia
+optimalizácie sme schopný rozdelovať skupiny clusterov na menšie, a~využiť 
+tým viac testovacích systémov. V~prípade využitia dvoch testovacích systémov
+je vidieť efektivitu tejto optimalizácie, nakoľko sa dve skupiny clusterov
+rozdelia tak, aby sa dva testovacie systémy využili rovnomerne. 
+Odhadovaný čas testovania sa na týchto dvoch systémoch bude líšiť o~25 sekúnd,
+namiesto takmer siedmych minút, o~ktoré by sa tento čas líšil v~prípade nevyužitia
+optimalizácie. 
+
+V~prípade použitia viacerých testovacích systémov môžeme na tabuľke jasne vidieť,
+že sa niektoré testovacie systémy bez použitia optimalizácie nevyužijú. 
+V~prípade využitia optimalizácie sa skupiny clusterov rozdelia tak efektívne,
+že rozdiely dĺžky trvania testovania medzi jednotlivými testovacími systémami 
+sú rádovo v~sekundách.
 
 
 %
