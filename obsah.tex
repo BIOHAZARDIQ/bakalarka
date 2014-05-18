@@ -9,12 +9,53 @@
 %
 \chapter{Úvod}
 \label{kapitola:uvod}
-Úvod tejto bakalárskej práce bude popísaný až nakoniec
-\footnote{Viz Zásady písania odborných prác}.
+Testovanie softvéru je jednou z~dôležitých etáp pri jeho vyvíjaní.
+Pred vydávaním softvéru a~jeho predávaním zákazníkovi sa na výsledky
+testovania berie obrovský ohľad. Preto sa softvér často testuje veľkou
+sadou testov.
 
-Zvyšok tohoto úvodu slúži na skúšku príkazov v~\LaTeX-e.
-Toto je \textbf{Textbf text} uprostred normálneho textu spolu 
-s~\emph{Emph textom}, {\it it textom}, a~ešte aj \texttt{texttt textom}.
+Vo firme Acision sa testujú jednotlivé produkty pomocou regresného 
+testovania, ktoré často pozostáva z~tisícok testov a~trvá až niekoľko hodín.
+Toto testovanie je riadené nástrojom, ktorý je schopný vybrať z~
+testovacej sady testy na základe niekoľkých parametrov, tieto testy 
+naplánovať a~spustiť ich. 
+Naplánovanie testov je nutné z~dôvodu, že jednotlivé testy totiž nie je 
+možné spúšťať v~náhodnom poradí. Je to okrem iného aj z~dôvodu, 
+že testy majú medzi sebou závislosti, ktoré je nutné dodržiavať. 
+
+Problémom tohoto nástroja je to, že je schopný spúšťať testy len na
+jednom testovacom systéme. Postupom času sa však toto regresné testovanie
+stalo časovo náročným, a~bolo potrebné násť riešenie pre zníženie časovej
+náročnosti tohoto testovania. 
+Riešením tohoto problému sa venuje táto diplomová práca.
+
+Táto diplomová práca sa zaoberá vytvorením rozšírenia pre existujúci
+nástroj na plánovanie testov, aby bolo možné testy distribuovať na 
+niekoľko testovacích systémov. Takouto formou sa zabezpečí to, že 
+sa časová náročnosť regresného testovania zníži. 
+Vďaka tejto diplomovej práci je teraz možné testy rozdistribuovať na 
+teoreticky ľubovolný počet testovacích systémov.
+V~prípade kritickej časovej tiesne je teda možné pozbierať všetky voľné
+testovacie systémy a~skrátiť tak čas na otestovanie testovaného systému
+na minimum.
+
+Diplomová práca je rozdelená na \ref{kapitola:zaver} kapitol. 
+Kapitola \ref{kapitola:testovanie_softveru} obsahuje popis základných
+princípov testovania softvéru a~možnosti znižovania cien regresného testovania.
+Ďalej kapitola popisuje, ako sa softvér testuje v~praxi vo firme Acision,
+a~popis využívaného nástroja pre plánovanie a~spúšťanie testov.
+V~kapitole \ref{kapitola:navrh_riesenia} si rozoberieme konceptuálny
+návrh vytváraného rozšírenia pre plánovač testov. 
+Uvedieme si návrh riešenia nových problémov, ktoré vznikli pri riešení
+distribúcie testov na viaceré testovacie systémy.
+Kapitola \ref{kapitola:implementacia} popisuje implementáciu jednotlivých
+častí vytváraného rozšírenia nástroja pre plánovanie a~spúšťanie testov.
+V~kapitole \ref{kapitola:optimalizacie} si popíšeme naimplementované 
+optimalizácie algoritmu na distribúciu testov. V~predposlednej kapitole 
+\ref{kapitola:zhodnotenie_vysledkov} si zhodnotíme výsledky, ktoré sa 
+vytvorením tejto práce podarilo dosiahnuť. Nakoniec je v~kapitole
+\ref{kapitola:zaver} uvedené ceľkové zhrnutie obsahu a~takisto aj námety
+na ďalší vývoj tejto práce. 
 
 
 
@@ -2132,10 +2173,67 @@ sú rádovo v~sekundách.
 %
 \chapter{Záver}
 \label{kapitola:zaver}
+Táto diplomová práca je zameraná na návrh a~implementáciu rozšírenia
+existujúceho nástroja pre plánovanie a~spúšťanie testov tak, aby bolo
+možné testy distribuovať na viaceré testovacie systémy. 
+Záver tejto diplomovej práce je venovaný zhrnutiu odvedenej práce a~
+dosiahnutých výsledkov. Súčasne na záver uvádzam návrh možností ďalšieho
+vývoja implementovaného nástroja.
 
 \section{Zhrnutie}
 \label{sekcia:zhrnutie}
+Pre riešenie práce som potreboval naštudovať existujúci nástroj pre 
+plánovanie testov a~teoretické znalosti o~distribúcií testov.
+Medzi tieto teoretické znalosti patrili hlavne základné princípy 
+distribuovania testov a~požiadavky pre nástroj schopný takejto distribúcie.
+
+Po naštudovaní potrebných teoretických znalostí som sa zameral na vytvorenie
+základného konceptu fungovania mnou vytváraného nástroja. Pri jeho tvorbe
+som sa zameriaval hlavne na centralizovanú správu testov a~na transparentnú
+a~automatickú distribúciu testov. Naimplementované rozšírenie nástroja pre
+plánovanie a~spúšťanie testov týmito vlastnosťami disponuje.
+
+Pri implementovaní som sa zameriaval na optimalizáciu algoritmov tak, aby
+boli čo najviac efektívne pre testovanie priamo v~praxi. 
+Aj keď je teoreticky možné distribuovať testy na obrovský počet
+testovacích systémov, v~praxi je problém zohnať čo i~len niekoľko testovacích
+systémov navyše. 
+Distribúcia testov je teda optimalizovaná pre rádovo niekoľko testovacích 
+systémov, a~použitím viacerých testovacích systémov efektivita distribúcie
+testov klesá. 
+
+Po dokončení implementácie distribúcie testov som ešte nad rámec začal s~
+implementáciou niekoľkých optimalizácií. Tieto optimalizácie slúžia hlavne
+na zníženie času potrebného pre dokončenie testovania, a~pre rovnomernejšie
+rozloženie záťaže medzi testovacími systémami. 
+
+Hotová práca sa používa pri testovaní niekoľkých produktov vo
+firme Acision, nakoľko testovanie týchto produktov sa postupom času 
+začalo stávať časovo náročné, a~túto časovú náročnosť bolo potrebné znížiť.
+
 
 \section{Možnosti ďalšieho vývoja}
 \label{sekcia:moznosti_dalsieho_vyvoja}
+Analýza výsledkov vytvárania plánov testov na viacerých testovacích systémoch
+odhalila niektoré nedokonalosti, ktoré si žiadajú ďalšiu prácu. 
+
+Medzi hlavnú nedokonalosť vytvoreného rozšírenia patrí viacnásobné spúšťanie
+niektorých testov. Aj keď tento nedostatok nie je možné z~povahy 
+plánovača testov úplne odstrániť, je možné ho aspoň zmierniť. 
+Ako možnosť ďalšieho vývoja je vhodné popremýšlať o~novom algoritme, ktorý
+by takéto viacnásobné spúšťanie testov minimalizoval.
+
+Ďalším zaujímavým nápadom je možnosť komunikácie medzi jednotlivými 
+testovacími systémami. Pomocou tohoto návrhu by sme totiž mohli dosiahnuť to,
+aby sa minimalizovalo doplnenie Preoptov na každom testovacom systéme. 
+Pri vhodnom naplánovaní testov by sme totižto mohli prvý výsledok každého
+Preoptu preposlať na ostatné testovacie systémy, ktoré by sa potom týmto
+výsledkom mohli riadiť.  Takýmto spôsobom by sme mohli zabrániť tomu,
+aby sa niektoré Preopty spúšťali na každom testovacom systéme zvlášť.
+
+Posledným návrhom možného ďalšieho vývoja je prerobenie algoritmu plánovača 
+testov tak, aby bol schopný distribuovať testy na základe častí plánu.
+Tento algoritmus je pre distribuovanie testov najvhodnejší, no pre jeho imlementáciu
+by bolo nutné zmeniť logiku celého plánovača testov.
+
 %=========================================================================
