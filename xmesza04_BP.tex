@@ -9,7 +9,7 @@
 % připomínky posílejte na e-mail: bidlom AT fit.vutbr.cz
 % vim: set syntax=tex encoding=latin2:
 %============================================================================
-\documentclass[cover]{fitthesis} % odevzdani do wisu - odkazy, na ktere se da klikat
+\documentclass{fitthesis} % odevzdani do wisu - odkazy, na ktere se da klikat
 %\documentclass[cover,print]{fitthesis} % pro tisk - na odkazy se neda klikat
 %\documentclass[english,print]{fitthesis} % pro tisk - na odkazy se neda klikat
 %      \documentclass[english]{fitthesis}
@@ -114,12 +114,14 @@
   %bud pomoci nasledujicich parametru nebo pomoci vyhrazenych maker (viz dale)
   %===========================================================================
   %Klicova slova
-  keywords.cs={automatické testování softvéru, paralelizace, plánovač, 
-               vyhodnocování výsledků, distribuce zátěže, verifikace, 
-               validace}, %klicova slova v ceskem jazyce
-  keywords.en={automatical software testing, parallelization, scheduler, 
-               evaluation of results, load distribution, verification, 
-               validation}, %klicova slova v anglickem jazyce
+  keywords.cs={automatické testování softvéru, distribuce testů, 
+               paralelizace, plánovač, vyhodnocování výsledků, 
+               distribuce zátěže, verifikace, validace, 
+               regresní testování}, %klicova slova v ceskem jazyce
+  keywords.en={automatical software testing, test distribution, 
+               parallelization, scheduler, evaluation of results, 
+               load distribution, verification, validation, 
+               regression testing}, %klicova slova v anglickem jazyce
   %Abstract
   abstract.cs={
     Tato bakalářská práce se zabývá automatickým testováním softwaru 
@@ -127,11 +129,12 @@
     plánovače testů tak, aby bylo možné efektivně rozdělit skupinu 
     testů na části, které se budou vykonávat nezávisle na sobě. 
     Jednotlivé testy jsou rozdělovány na základě společných vlastností
-    prostředí, které je pro tyto testy nutno připravit. 
-    Práce dále popisuje jaké optimalizace jsou použity pro rozdělování 
+    prostředí, které je pro tyto testy nutno připravit, a~na základě 
+    závislostí mezi testy. 
+    Práce dále popisuje, jaké optimalizace jsou použity pro rozdělování 
     testů do podmnožin. Každá podmnožina testů je spouštěná na 
     samostatném testovacím systému a~tím je snížen čas potřebný pro 
-    otestování testovaného softwaru danou sadou testů. Vytvořený nástroj 
+    otestování testovaného softvéru danou sadou testů. Vytvořený nástroj 
     se úspěšně používá při každodenním testování několika produktů ve 
     firmě Acision, pro kterou byl tento nástroj vytvářen.
   }, % abstrakt v ceskem jazyce
@@ -139,12 +142,13 @@
     This bachelor thesis is about automatical software testing using 
     the testing scheduler. It describes creation of the extension for 
     the existing testing scheduler, so it will be possible to 
-    effectively split a~group of test to segments, that will be executed 
-    independently at each other. Tests are splitted according to the 
+    split effectively a~group of tests to segments, that will be executed 
+    independently on each other. Tests are splitted according to the 
     common characteristics of the enviroment, that need to be prepared 
-    for each test. Furthermore, it describes what optimizations are used 
-    for splitting of the tests to subgroups. Each subset of the tests is 
-    being run on a~standalone testing system, so the time needed for 
+    for each test, and according to the dependencies between the tests. 
+    Furthermore, it describes what optimizations are used 
+    for splitting of the tests to subsets. Each subset of the tests 
+    runs on a~standalone testing system, so the time needed for 
     succesful completion of testing with the given set of tests is reduced.
     Created tool is succesfully used during everyday testing of the 
     several products in the Acision company, to which was this tool made.
