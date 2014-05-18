@@ -4,11 +4,20 @@
 \chapter{Obsah CD}
 Na priloženom CD sa nachádzajú nasledovné súbory a~adresáre:
 \begin{itemize}
-\item \textbf{doc -} zdrojové súbory tohoto textu v~\LaTeX-ovom formáte 
-spolu s~elektronickou verziou vo formáte PDF
-\item \textbf{src -} zdrojové súbory plánovača testov spolu s~hlavičkami 
-testov používaných v~praxi
-\item \textbf{README.txt -} textový súbor obsahujúci príklady spustenia
+\item \textbf{doc} -- zdrojové súbory tohoto textu v~\LaTeX-ovom formáte 
+spolu s~elektronickou verziou vo formáte PDF.
+\item \textbf{TTT} -- zdrojové súbory plánovača testov spolu s~hlavičkami 
+testov používaných v~praxi. Tento adresár takisto obsahuje súbory 
+so známymi chybami \textit{KNOWN.BUGS} a~funkcie pre simuláciu testovania
+pre potreby demonštrácie.
+\item \textbf{working\_dir} -- pracovný adresár s~konfiguračnými súbormi
+pre produkty MCO a~SMSCv5 a~štatistickými súbormi pre tieto dva produkty.
+Do tohoto adresára sa v~prípade spustenia plánovača testov budú zapisovať
+logovacie informácie.
+\item \textbf{rpms} -- \textit{rpm} súbory pre nainštalovanie 
+skriptovacieho jazyka Tcl/Tk vo verzii 8.4.19, pre ktorú je plánovač 
+testov napísaný a~otestovaný.
+\item \textbf{README.txt -} textový súbor obsahujúci príklady spustenia.
 \end{itemize}
 
 
@@ -21,24 +30,31 @@ testov používaných v~praxi
 Na nasledujúcej strane je zobrazený plán testov z~produktu MCO,
 ktorý pozostáva z~desiatich clusterov. Z~obrázku vyplýva, že pre potreby
 týchto clusterov je potrebné spustiť celkovo 19 prerekvizít a~19 
-odrekvizít. Pre otestovanie produktu týmito desiatimi clustermi je 
+odrekvizít. Pre otestovanie produktu týmito desiatimi clustermi, je 
 potrebné vykonať ďalších 38 testov, ktoré slúžia na zmenu konfigurácie
-systému a~na obnovu týchto zmien. 
+systému, a~na obnovu týchto zmien. 
 
-Uvedený plán obsahuje celkovo 48 testov a~je relatívne jednoduchý.
+Uvedený plán obsahuje celkovo 48 testov, a~je relatívne jednoduchý.
 V~regresných testoch sa aktuálne používa plán testov, ktorý v~prípade 
 produktu MCO pozostáva z~viac ako 3100 testov.
 Plán testov každodenne používaný v~regresnom testovní produktu SMSCv5 
 pozostáva z~približne 3000 testov.
 
-Príkaz pre naplánovanie a~spustenie regresnej sady každodenne 
-používanej v~produkte MCO je zobrazený na obrázku 
-\ref{obrazok:priklad_spustania_testov}.
+V~produktoch MCO a~SMSCv5 sa každodenne spúšťajú regresné testy, ktoré
+tvoria veľkú časť zo všetkých dostupných testov.
+Spúšťanie regresných testov pre produkty MCO a~SMSCv5 je zabezpečované 
+nasledujúcimi dvomi príkazmi.
 
-\begin{figure}[h]
-  \includegraphics[scale=0.90]{ukazka_jednoducheho_planu}
-  \caption{Ukážka jednoduchého plánu testov}
-\end{figure}
+\begin{lstlisting}[caption=Spúšťanie regresných testov v~produkte MCO
+,label=priklad:prilohy_regresie_mco]
+meszarosf@mco-v156#./Run_test.tcl -i mco.ini -B TEST.REVIEW_23 -f all -tw
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption=Spúšťanie regresných testov v~produkte SMSCv5
+,label=priklad:prilohy_regresie_smsc]
+meszarosf@smsc-v156#./Run_test.tcl -i smsc.ini -f all 2nd -tw
+\end{lstlisting}
 
 
 
@@ -47,20 +63,22 @@ používanej v~produkte MCO je zobrazený na obrázku
 %
 \chapter{Zmeny prevedené do zdrojových súborov a~odovzdané súbory}
 \label{priloha:zmeny_do_zdrojakov}
-Pri implementovaní rozšírenia plánovaču testov som musel upraviť zdrojové
-kódy dvoch hlavných súborov plánovača testov, vytvorených firmou Acision.
-Približné zmeny týchto dvoch zdrojových súborov sú nasledovné:
+Pri implementovaní rozšírenia plánovača testov som musel upraviť zdrojové
+kódy dvoch hlavných súborov tohoto nástroja. 
+Nakoľko boli tieto dva súbory vytvorené firmou Acision, v~tejto prílohe
+sú uvedené zmeny do týchto dvoch súborov vykonané pri vytváraní tejto
+práce. Približné zmeny týchto dvoch zdrojových súborov sú nasledovné:
 
 \noindent Zmeny prevedené v~súbore \textbf{Run\_test.tcl}: \\
-Riadky: 1426--1430, 1453--1457, 1460--1486 a~ďalej riadky 1488 až 1500.\\
+Riadky: 1433--1437, 1461--1464, 1467--1493 a~ďalej riadky 1499 až 1507.\\
 Celkovo približne 50 riadkov kódu (bez komentárov).
 \\
 \\
 \noindent Zmeny prevedené v~súbore \textbf{tstmng.tcl}: \\
-Riadky: 115--125, 2245--2253, 2285--2307, 2536--2567, 2607--2609, 
-3080--3082, 3184--3187, 3221--3228 a~riadky 3237 až 3245. \\
-Ďalej riadky: 2345, 2350, 2354, 2364, 2369, 2395, 2400, 2409, 2442, 
-2462, 2467, 2473, 2489, 2513, 2518, 2523, 2528 a~2533. \\
+Riadky: 125--133, 2257--2268, 2301--2322, 2551--2582, 2622--2624, 
+3095--3097, 3199--3202, 3238--3242 a~riadky 3252 až 3260. \\
+Ďalej riadky: 2360, 2365, 2369, 2374, 2379, 2384, 2410, 2415, 2424, 
+2457, 2477, 2482, 2488, 2504, 2528, 2533, 2538, 2543, 2548 a~riadok 2642. \\
 Celkovo približne 123 riadkov kódu (bez komentárov).
 \\
 \\
@@ -75,7 +93,7 @@ však zmenil popis testov (informácia \textit{Description})
 a~funkcionalitu (informácia \textit{Function}) popísané v~kapitole 
 \ref{sekcia:princip_pouziteho_planovaca}.
 Jednotlivé závislosti medzi testami ostali ponechané, a~je teda možné 
-vytvoriť test plány, ktoré sa používajú priamo v~praxi.
+vytvoriť plány testov, ktoré sa používajú priamo v~praxi.
 Súbory \textbf{KNOWN.BUGS} ostali ponechané priamo z~týchto dvoch 
 produktov bez zmeny. 
 
@@ -84,15 +102,12 @@ slúžiace napríklad pre výpočet celkovej dĺžky trvania testovania.
 Medzi tieto súbory patrí súbor \textbf{TTT\_stat\_MCO.txt} (pre produkt MCO) 
 a~súbor \textbf{TTT\_stat\_SMSC.txt} (pre produkt SMSCv5).
 Tieto súboy obsahujú presné informácie o~dĺžkach trvania jednotlivých 
-testov v~týchto dvoch produktoch. 
+testov v~týchto dvoch produktov. 
 Pre využitie týchto súborov pre konkrétny produkt je potrebné jeden 
 z~týchto súborov vložiť do logovacieho adresára \textit{Log/Stat} 
 a~premenovať ho na súbor \textbf{TTT\_stat.txt}.
-V~prípade použitia týchto štatistických súborov plánovač testov spočíta
-odhadovaný čas dĺžky trvania testovania pre každý testovací systém.
-Tento čas sa počíta na základe predošlého regresného testovania,
-nakoľko sa pri každom testovaní zaznamenávajú časy behu jednotlivých 
-testov.
+V~prípade použitia týchto štatistických súborov plánovač testov počíta
+odhadované časy dĺžky trvania testovania na základe údajov priamo z praxe.
 
 
 
@@ -103,7 +118,8 @@ testov.
 \label{priloha:ukazka_progress_baru}
 \begin{figure}[h]
   \begin{center}
-    \includegraphics[scale=0.65,angle=90]{ukazka_progress_baru}
+%    \includegraphics[scale=0.65,angle=90]{ukazka_progress_baru}
+    \includegraphics[scale=0.69]{ukazka_progress_baru} 
     \caption{Ukážka progress baru s~väčšou šírkou terminálu}
   \end{center}
 \end{figure}
