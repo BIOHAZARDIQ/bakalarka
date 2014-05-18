@@ -1,4 +1,4 @@
-﻿%=========================================================================
+%============================================================================
 % (c) Michal Bidlo, Bohuslav Křena, 2008
 
 % Autor: Filip Mészáros
@@ -76,7 +76,7 @@ pre každú možnú kombináciu vstupných hodnôt. Tento prístup je však pre
 komplexitu softvéru typicky nemožný, pretože je množina všetkých vstupných
 hodnôt obrovská. Toto však znamená, že testovanie sofvéru nám s~takýmto 
 prístupom môže poukázať na prítomnosť chýb, no nemôže nám dokázať, 
-že v~softvére chyby nie sú.
+že v~softvéri chyby nie sú.
 
 Existujú rôzne spôsoby delenia testovania softvéru. 
 Jedno z~hlavných delení je delenie podľa spôsobu testovania.
@@ -310,7 +310,7 @@ Tester po dokončení testu zaradí tento test pomocou verzovacieho
 systému do aktuálneho repozitára a~vyžiada si kontrolu napísaného testu. 
 
 Raz denne (typicky v~noci) sa potom vezme najnovšia spustiteľná verzia 
-softvéru, a~na tomto softvére sa pustí aktuálna verzia všetkých dostupných 
+softvéru, a~na tomto softvéri sa pustí aktuálna verzia všetkých dostupných 
 testov. Pomocou regresného testovania 
 (viď kapitola \ref{sekcia:regresne_testovanie}) sa potom overí, či sa 
 zmenou zdrojového kódu nezaniesli do systému nové chyby. 
@@ -333,7 +333,7 @@ skupiny, ktorá má rovnakú konfiguráciu systému.
 Tieto jednotlivé testy navyše majú medzi sebou závislosti, ktoré je 
 nutné dodržiavať. Plánovač testov je schopný tieto závislosti riešiť 
 a~efektívne naplánovať poradie všetkých testov tak, aby sa čo najviac 
-skrátil čas pre potrebné otestovanie softvéru. Nie je preto možné spúšťať
+skrátil čas potrebný pre otestovanie softvéru. Nie je preto možné spúšťať
 testy v~ľubovolnom poradí s~tým, že by sme nové testy pridávali nakoniec.
 Viac sa o~tomto nástroji dozvieme v~kapitole
 \ref{sekcia:princip_pouziteho_planovaca}.
@@ -362,8 +362,8 @@ systému bez toho, aby sme museli niektoré testy z~regresnej sady
 \label{sekcia:principy_znizovania_cien}
 Regresné testovanie je operácia náročná na čas, a~preto sa typicky 
 prevádza počas noci. Napriek tomu niekedy na otestovanie systému 
-nestačí ani celá noc, nakoľko sa väčšinou na testovaní podieľa iba jeden 
-testovací stroj. Takáto situácia prináša riziká a~môže negatívne ovplyvniť 
+nestačí ani celá noc, nakoľko sa na testovaní podieľa iba jeden testovací 
+stroj. Takáto situácia prináša mnohé riziká a~môže negatívne ovplyvniť 
 napríklad čas dodania softvéru, nakoľko je softvér nutné pred vydaním 
 zákazníkovi otestovať práve regresným testovaním. Postupom času sa však 
 čas potrebný pre dokončenie regresného testovania zvyšuje, nakoľko sa 
@@ -611,7 +611,7 @@ Umožňuje prípadne pozastaviť beh testovania, ak sa niektorý test
 ukončí neúspechom. Pozastavenie plánovača znamená, že je možné si 
 v~špeciálnom režime spúšťať vlastné funkcie alebo celé testy.
 Interaktívny mód umožňuje zmeniť beh testovania na základe špecifických 
-požiadaviek testera, ktorý túto vlastnosť využíva.
+požiadavkov testera, ktorý túto vlastnosť využíva.
 Tento mód sa však v~regresných testoch nepoužíva, nakoľko sa narušuje 
 vlastnosť nezávislosti testera na priebehu regresného testovania.
 
@@ -1000,8 +1000,8 @@ práve tento princíp distribuovania testov.
 Jedným z~hlavných vlastností, spomínaných v~dokumente 
 \cite{Parallel_approach},  ktoré by mal mať nástroj pre distribúciu 
 testov, je vlastnosť  centralizovanej správy všetkých testov. 
-Pri návrhu rozšírenia plánovača  sa táto vlastnosť brala do~úvahy. 
-Rozšírenie je navrhnuté tak, aby bolo  z~jedného stroja možné spustiť 
+Pri návrhu rozšírenia plánovača sa táto vlastnosť brala do~úvahy. 
+Rozšírenie je navrhnuté tak, aby bolo z~jedného stroja možné spustiť 
 rozšírený plánovač, ktorý by rozdelil množinu 
 testov na \emph{m} podmnožín, v~závislosti na počtu strojov, na ktorých 
 chceme regresné testy spustiť. Jednotlivé podmnožiny testov sa 
@@ -1117,7 +1117,7 @@ Cluster označený týmto výsledkom je zároveň označený aj výsledkom
 V~prípade, že sa nejaký test spúšťal na viacerých systémoch, bolo nutné 
 riešiť stav, v~ktorom sa test mohol ocitnúť. Problémom je situácia, 
 kedy nejaký test, ktorý sa spúšťal na viacerých systémoch, skončil na 
-týchto rozdielnych systémoch s rôznymi výsledkami.
+týchto rozdielnych systémoch s~rôznymi výsledkami.
 Pre riešenie tejto situácie bol zavedený stav \textbf{unclear}. 
 Ak test skončí s~rôznymi výsledkami, jeho finálny výsledok sa určí podľa 
 prevodovej tabuľky \ref{tabulka:vysledky_testu_prevod}.
