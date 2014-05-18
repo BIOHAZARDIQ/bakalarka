@@ -1,4 +1,4 @@
-%============================================================================
+%=========================================================================
 % (c) Michal Bidlo, Bohuslav Křena, 2008
 
 % Autor: Filip Mészáros
@@ -16,25 +16,25 @@ sadou testov.
 
 Vo firme Acision sa testujú jednotlivé produkty pomocou regresného 
 testovania, ktoré často pozostáva z~tisícok testov a~trvá až niekoľko hodín.
-Toto testovanie je riadené nástrojom, ktorý je schopný vybrať z~
-testovacej sady testy na základe niekoľkých parametrov, tieto testy 
+Toto testovanie je riadené nástrojom, ktorý je schopný vybrať 
+z testovacej sady testy na základe niekoľkých parametrov, tieto testy 
 naplánovať a~spustiť ich. 
 Naplánovanie testov je nutné z~dôvodu, že jednotlivé testy totiž nie je 
 možné spúšťať v~náhodnom poradí. Je to okrem iného aj z~dôvodu, 
 že testy majú medzi sebou závislosti, ktoré je nutné dodržiavať. 
 
-Problémom tohoto nástroja je to, že je schopný spúšťať testy len na
+Problémom tohto nástroja je to, že je schopný spúšťať testy len na
 jednom testovacom systéme. Postupom času sa však toto regresné testovanie
-stalo časovo náročným, a~bolo potrebné násť riešenie pre zníženie časovej
+stalo časovo náročným a~bolo potrebné násť riešenie pre zníženie časovej
 náročnosti tohoto testovania. 
-Riešením tohoto problému sa venuje táto diplomová práca.
+Riešením tohto problému sa venuje táto diplomová práca.
 
 Táto diplomová práca sa zaoberá vytvorením rozšírenia pre existujúci
 nástroj na plánovanie testov, aby bolo možné testy distribuovať na 
 niekoľko testovacích systémov. Takouto formou sa zabezpečí to, že 
 sa časová náročnosť regresného testovania zníži. 
 Vďaka tejto diplomovej práci je teraz možné testy rozdistribuovať na 
-teoreticky ľubovolný počet testovacích systémov.
+teoreticky ľubovoľný počet testovacích systémov.
 V~prípade kritickej časovej tiesne je teda možné pozbierať všetky voľné
 testovacie systémy a~skrátiť tak čas na otestovanie testovaného systému
 na minimum.
@@ -42,7 +42,7 @@ na minimum.
 Diplomová práca je rozdelená na \ref{kapitola:zaver} kapitol. 
 Kapitola \ref{kapitola:testovanie_softveru} obsahuje popis základných
 princípov testovania softvéru a~možnosti znižovania cien regresného testovania.
-Ďalej kapitola popisuje, ako sa softvér testuje v~praxi vo firme Acision,
+Ďalej kapitola popisuje, ako sa softvér testuje v~praxi vo firme Acision
 a~popis využívaného nástroja pre plánovanie a~spúšťanie testov.
 V~kapitole \ref{kapitola:navrh_riesenia} si rozoberieme konceptuálny
 návrh vytváraného rozšírenia pre plánovač testov. 
@@ -54,7 +54,7 @@ V~kapitole \ref{kapitola:optimalizacie} si popíšeme naimplementované
 optimalizácie algoritmu na distribúciu testov. V~predposlednej kapitole 
 \ref{kapitola:zhodnotenie_vysledkov} si zhodnotíme výsledky, ktoré sa 
 vytvorením tejto práce podarilo dosiahnuť. Nakoniec je v~kapitole
-\ref{kapitola:zaver} uvedené ceľkové zhrnutie obsahu a~takisto aj námety
+\ref{kapitola:zaver} uvedené celkové zhrnutie obsahu a~takisto aj námety
 na ďalší vývoj tejto práce. 
 
 
@@ -134,7 +134,7 @@ Medzi statické testovanie patrí napríklad revízia kódu alebo použitie
 niektorého nástroja pre statické testovanie, napríklad 
 syntaktický analyzátor, sémantický analyzátor, analyzátor závislostí, atď. 
 Statické testovanie môže byť manuálne alebo automatické. 
-Tento typ testovania je možný v~ľubovolnej fáze vývoja softvéru.
+Tento typ testovania je možný v~ľubovoľnej fáze vývoja softvéru.
 
 \item \textbf{Dynamické testovanie} -- 
 je testovanie, ktoré vyžaduje beh testovaného softvéru. 
@@ -351,7 +351,7 @@ Tester po dokončení testu zaradí tento test pomocou verzovacieho
 systému do aktuálneho repozitára a~vyžiada si kontrolu napísaného testu. 
 
 Raz denne (typicky v~noci) sa potom vezme najnovšia spustiteľná verzia 
-softvéru, a~na tomto softvéri sa pustí aktuálna verzia všetkých dostupných 
+softvéru a~na tomto softvéri sa pustí aktuálna verzia všetkých dostupných 
 testov. Pomocou regresného testovania 
 (viď kapitola \ref{sekcia:regresne_testovanie}) sa potom overí, či sa 
 zmenou zdrojového kódu nezaniesli do systému nové chyby. 
@@ -375,7 +375,7 @@ Tieto jednotlivé testy navyše majú medzi sebou závislosti, ktoré je
 nutné dodržiavať. Plánovač testov je schopný tieto závislosti riešiť 
 a~efektívne naplánovať poradie všetkých testov tak, aby sa čo najviac 
 skrátil čas potrebný pre otestovanie softvéru. Nie je preto možné spúšťať
-testy v~ľubovolnom poradí s~tým, že by sme nové testy pridávali nakoniec.
+testy v~ľubovoľnom poradí s~tým, že by sme nové testy pridávali nakoniec.
 Viac sa o~tomto nástroji dozvieme v~kapitole
 \ref{sekcia:princip_pouziteho_planovaca}.
 Výhodou tohto nástroja je hlavne to, že je schopný jednoducho zaradiť 
@@ -2176,8 +2176,8 @@ sú rádovo v~sekundách.
 Táto diplomová práca je zameraná na návrh a~implementáciu rozšírenia
 existujúceho nástroja pre plánovanie a~spúšťanie testov tak, aby bolo
 možné testy distribuovať na viaceré testovacie systémy. 
-Záver tejto diplomovej práce je venovaný zhrnutiu odvedenej práce a~
-dosiahnutých výsledkov. Súčasne na záver uvádzam návrh možností ďalšieho
+Záver tejto diplomovej práce je venovaný zhrnutiu odvedenej práce 
+a~dosiahnutých výsledkov. Súčasne na záver uvádzam návrh možností ďalšieho
 vývoja implementovaného nástroja.
 
 \section{Zhrnutie}
@@ -2199,17 +2199,17 @@ Aj keď je teoreticky možné distribuovať testy na obrovský počet
 testovacích systémov, v~praxi je problém zohnať čo i~len niekoľko testovacích
 systémov navyše. 
 Distribúcia testov je teda optimalizovaná pre rádovo niekoľko testovacích 
-systémov, a~použitím viacerých testovacích systémov efektivita distribúcie
+systémov a~použitím viacerých testovacích systémov efektivita distribúcie
 testov klesá. 
 
-Po dokončení implementácie distribúcie testov som ešte nad rámec začal s~
-implementáciou niekoľkých optimalizácií. Tieto optimalizácie slúžia hlavne
-na zníženie času potrebného pre dokončenie testovania, a~pre rovnomernejšie
+Po dokončení implementácie distribúcie testov som ešte nad rámec začal 
+s implementáciou niekoľkých optimalizácií. Tieto optimalizácie slúžia hlavne
+na zníženie času potrebného pre dokončenie testovania a~pre rovnomernejšie
 rozloženie záťaže medzi testovacími systémami. 
 
 Hotová práca sa používa pri testovaní niekoľkých produktov vo
 firme Acision, nakoľko testovanie týchto produktov sa postupom času 
-začalo stávať časovo náročné, a~túto časovú náročnosť bolo potrebné znížiť.
+začalo stávať časovo náročné a~túto časovú náročnosť bolo potrebné znížiť.
 
 
 \section{Možnosti ďalšieho vývoja}
@@ -2220,7 +2220,7 @@ odhalila niektoré nedokonalosti, ktoré si žiadajú ďalšiu prácu.
 Medzi hlavnú nedokonalosť vytvoreného rozšírenia patrí viacnásobné spúšťanie
 niektorých testov. Aj keď tento nedostatok nie je možné z~povahy 
 plánovača testov úplne odstrániť, je možné ho aspoň zmierniť. 
-Ako možnosť ďalšieho vývoja je vhodné popremýšlať o~novom algoritme, ktorý
+Ako možnosť ďalšieho vývoja je vhodné popremýšľať o~novom algoritme, ktorý
 by takéto viacnásobné spúšťanie testov minimalizoval.
 
 Ďalším zaujímavým nápadom je možnosť komunikácie medzi jednotlivými 
