@@ -1286,7 +1286,7 @@ sa všetky spustia na každom testovacom systéme.
 Príkaz pre nainštalovanie produktu MCO na troch testovacích systémoch 
 je uvedený v~príklade \ref{priklad:distribuovana_instalacia}.
 
-\begin{lstlisting}[caption=Inštalácia produktu MCO na troch systémoch súčasne,
+\begin{lstlisting}[caption=Inštalácia produktu MCO na troch testovacích systémoch súčasne,
 label=priklad:distribuovana_instalacia]
 meszarosf@mco-v156#./Run_test.tcl -i cfg.ini -mi cfg-vm1.ini cfg-vm2.ini 
    cfg-vm3.ini -f env -wd
@@ -1514,7 +1514,7 @@ Zároveň sa uvádza odhadovaný čas, ktorý v~prípade distribúcie testov
 na aktuálny počet testovacích systémov ušetríme. 
 Ukážka takýchto informácii je uvedená v~príklade \ref{priklad:ukazka_statistiky}.
 
-\begin{lstlisting}[caption=Informácie zobrazované pred spustením regresných testoch,
+\begin{lstlisting}[caption=Informácie zobrazované po naplánovaní regresných testoch,
 label=priklad:ukazka_statistiky]
 status: ##########################################################
 status: #                  Number of TCS: 1487                   #
@@ -1907,7 +1907,7 @@ dĺžku trvania regresných testov. Tým spôsobom bola distribúcia testov.
       9  & 02:26:04 & 02:28:20 \\ \hline
       10 & 02:10:16 & 02:10:00 \\ \hline
     \end{tabular}
-    \caption{Prínos použitia distribúcie testov na rôzny počet 
+    \caption{Prínos použitia distribúcie testov pre rôzny počet 
              testovacích systémov}
     \label{tabulka:prinos_pouzitia_distribucie}
   \end{center}
@@ -2144,8 +2144,8 @@ ktorý zapríčiní, že sa funkcionalita naplánuje bez použitia \textit{Preop
       4 &   -   &  05:29 \\ \hline
       5 &   -   &  05:30 \\ \hline
     \end{tabular}
-    \caption{Porovnanie vplyvu optimalizácie 2 na jednotlivé testovacie
-             systémy}
+    \caption{Porovnanie vplyvu optimalizácie 2 na testovacie
+             systémy pri plánovaní funkcionality \textit{addrtran}}
     \label{tabulka:porovnanie_optimalizacie_2}
   \end{center}
 \end{table}
