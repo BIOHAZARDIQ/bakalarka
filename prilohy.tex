@@ -56,7 +56,10 @@ meszarosf@mco-v156#./Run_test.tcl -i mco.ini -B TEST.REVIEW_23 -f all -tw
 meszarosf@smsc-v156#./Run_test.tcl -i smsc.ini -f all 2nd -tw
 \end{lstlisting}
 
-
+\begin{figure}[h]
+  \includegraphics[scale=0.90]{ukazka_jednoducheho_planu}
+  \caption{Ukážka jednoduchého plánu testov}
+\end{figure}
 
 %
 % Príloha C
@@ -134,6 +137,7 @@ odhadované časy dĺžky trvania testovania na základe údajov priamo z~praxe.
 Nasledujúci graf zobrazuje závislosť medzi počtom použitých testovacích
 systémov a~časom potrebným pre otestovanie produktu MCO regresnou 
 sadou testov.
+Uvedené hodnoty sú použité priamo z~praxe pri testovaní produktu MCO.
 
 \begin{figure}[h!]
 \begin{tikzpicture}[x=1.4cm,y=0.6cm]
@@ -161,6 +165,8 @@ sadou testov.
    node [right] {MCO};
 
 \end{tikzpicture}
+\caption{Závislosť medzi počtom testovacích systémov a~dĺžkou testovania
+v~produkte MCO}
 \end{figure}
 
 
@@ -173,6 +179,7 @@ sadou testov.
 Nasledujúci graf zobrazuje závislosť medzi počtom použitých testovacích
 systémov a~časom potrebným pre otestovanie produktu SMSCv5 regresnou 
 sadou testov.
+Uvedené hodnoty sú použité priamo z~praxe pri testovaní produktu SMSCv5.
 
 \begin{figure}[h!]
 \begin{tikzpicture}[x=1.4cm,y=0.6cm]
@@ -200,4 +207,6 @@ sadou testov.
    node [right] {SMSCv5};
 
 \end{tikzpicture}
+\caption{Závislosť medzi počtom testovacích systémov a~dĺžkou testovania
+v~produkte SMSCv5}
 \end{figure}

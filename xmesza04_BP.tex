@@ -61,14 +61,13 @@
 \graphicspath{ {images/} }
 \addto\captionsczech{
   \renewcommand{\figurename}{Obrázok}
-  \renewcommand{\appendixname}{Príloha}
-  \renewcommand{\listfigurename}{Zoznam obrázkov}
-  \renewcommand{\listtablename}{Zoznam tabuliek} 
-  \renewcommand{\bibname}{Literatúra}
   \renewcommand{\tablename}{Tabuľka}
   \renewcommand{\lstlistingname}{Príklad}
-%  \renewcommand{\contentsname}{Contentsname}
-%  \renewcommand{\glossaryname}{Glossaryname}
+  \renewcommand{\listfigurename}{Zoznam obrázkov}
+  \renewcommand{\listtablename}{Zoznam tabuliek}
+  \renewcommand{\lstlistlistingname}{Zoznam príkladov}
+  \renewcommand{\bibname}{Literatúra}
+  \renewcommand{\appendixname}{Príloha}
 }
 
 % =======================================================================
@@ -115,11 +114,11 @@
   %===========================================================================
   %Klicova slova
   keywords.cs={automatické testování softvéru, distribuce testů, 
-               paralelizace, plánovač, vyhodnocování výsledků, 
+               paralelizace, plánovač, vyhodnocování \\ výsledků, 
                distribuce zátěže, verifikace, validace, 
                regresní testování}, %klicova slova v ceskem jazyce
   keywords.en={automatical software testing, test distribution, 
-               parallelization, scheduler, evaluation of results, 
+               parallelization, scheduler, evaluation of \\ results, 
                load distribution, verification, validation, 
                regression testing}, %klicova slova v anglickem jazyce
   %Abstract
@@ -162,7 +161,8 @@
     za podporu při studiu. Dále bych chtěl poděkovat svému odbornému 
     konzultantovi Miroslavu Burešovi, za jeho rady, které mi pomohly 
     k~úspěšnému vytvoření této práce. Velké poděkování patří také mému 
-    vedoucímu práce, Ing. Františkovi Ščuglíkovi, Ph.D., za jeho cenné 
+    vedoucímu práce, Ing. Františkovi Ščuglíkovi, Ph.D., a~mým kolegům 
+    z~práce, za jejich cenné 
     rady a~připomínky. Velice rád bych také poděkoval firmě Acision, 
     která mi umožnila tuto práci vypracovávat.
   } % nepovinne
@@ -196,7 +196,7 @@
   % Seznam obrazku a tabulek (pokud prace obsahuje velke mnozstvi obrazku, tak se to hodi)
   \listoffigures
   \listoftables 
-
+%  \lstlistoflistings
   % Text prace
   % ----------------------------------------------
   \input{obsah} % viz. obsah.tex
