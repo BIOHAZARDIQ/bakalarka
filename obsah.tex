@@ -72,7 +72,7 @@ Podľa štandardu IEEE 1059 \cite{Ieee} je testovanie proces analýzy
 softvéru a~detekovanie rozdielností medzi existujúcimi a~požadovanými 
 podmienkami a~slúži na vyhodnocovanie vlastností testovaného softvéru. 
 
-Kapitola popisuje, prečo je testovanie sofvtéru 
+Kapitola popisuje, prečo je testovanie softvéru 
 dôležité a~aké rôzne typy testovania softvéru sa dnes používajú. 
 Vysvetlíme si základné pojmy súvisiace s~testovaním softvéru a~pozrieme
 sa na to, ako sa testuje softvér v~praxi.
@@ -167,7 +167,7 @@ aké znalosti máme o~testovanom produkte. Môže ísť o:
 \begin{itemize}
 \item \textbf{Testovanie pomocou bielej skrinky} --
 tento typ testovania vyžaduje prístup k~zdrojovému kódu softvéru. 
-Testy sa potom vytvárajú na základe znalosti zdrojového kódu.
+Testy sa potom vytvárajú na základe znalosti tohto zdrojového kódu.
 Testovanie pomocou bielej skrinky však nemusí odhaliť neimplementované 
 časti systému, alebo chýbajúce požiadavky.
 
@@ -412,7 +412,7 @@ sú uprednostňované.
 
 \subsection*{Distribúcia testov}
 Distribúcia testov znamená, že testy sú rozdelené do niekoľkých častí,
-pričom platí, že ka každá z~týchto častí je spúšťaná na vlastnom stroji.
+pričom platí, že každá z~týchto častí je spúšťaná na samostatnom stroji.
 Až donedávna bolo však vyčlenenie nového stroja na testovanie náročné 
 na zdroje. V~dnešnej sfére virtualizácie a~cloudu sa však tento prístup 
 považuje za jeden z~najlepších. 
@@ -522,12 +522,12 @@ a~\texttt{cl\_send\_100\_sms} je nutné vykonať štyri prerekvizity, a~to
 prerekvizity \texttt{p\_login}, \texttt{p\_start\_component}, 
 \texttt{p\_start\_simulator} a~\texttt{p\_configure\_component}. 
 
-Zvyšným dvom clustrom stačia iba 3 prerekvizity, a~to prerekvizity
+Zvyšným dvom clusterom stačia iba 3 prerekvizity, a~to prerekvizity
 \texttt{p\_start\_simulator}, \texttt{p\_login} 
 a~\texttt{p\_start\_component}. Cluster \texttt{cl\_test\_after\_sending} 
 má rovnakú množinu prerekvizít ako cluster \texttt{cl\_test\_component\_basic}, 
 avšak tento cluster sa spúšťa až za clusterom \texttt{cl\_send\_100\_sms}. 
-Je preto nutné vrátiť konfiguráciu systému, ktoré vykonala prerekvizita 
+Je preto nutné vrátiť konfiguráciu systému, ktorú vykonala prerekvizita 
 \texttt{p\_configure\_component} pomocou odrekvizity
 \texttt{u\_configure\_component}. 
 Takýmto spôsobom sa dosiahne, aby mal tento cluster rovnakú konfiguráciu 
@@ -575,9 +575,9 @@ pravidlo, že každý cluster má svoju vlastnú unikátnu prerekvizitu.
 
 Medzi ďalšie výhody tohto plánovača testov patrí možnosť špecifikovania 
 pravidiel, s~akými sa budú dané testy spúšťať. Je napríklad možné 
-nastaviť clusteru zoznam clusterov, takzvaných \textit{preopt-ov}, ktoré musia byť 
+nastaviť clusteru zoznam clusterov, takzvaných \textit{Preoptov}, ktoré musia byť 
 úspešne vykonané ešte predtým, ako sa vykoná samotný cluster. V~prípade, 
-že sa aspoň jeden z~týchto \textit{preopt-ov} nevykoná úspešne, cluster sa preskočí.
+že sa aspoň jeden z~týchto \textit{Preoptov} nevykoná úspešne, cluster sa preskočí.
 Výhoda tohto prístupu je v~tom, že ak zo sady testov, ktoré testujú 
 podobnú funkcionalitu, neprejde nejaký základný test, môžeme predpokladať, 
 že všetky pokročilé testy by taktiež skončili neúspechom, 
@@ -591,7 +591,9 @@ môžeme otestovať samostatne. Pre regresný beh je použitá funkcionalita
 \emph{all}, ktorá združuje všetky testy, ktoré nie sú explicitne označené 
 funkcionalitou \emph{notall}. 
 
-Spúšťanie regresných testov pre dva najväčšie produkty firmy Acision 
+Dva najväčšie produkty vo firme Acision, sú produkty MCO a~SMSCv5.
+Regresné testovanie týchto dvoch produktov trvá približne 15 hodín.
+Spúšťanie regresných testov pre tieto dva produkty 
 je zabezpečované príkazmi uvedenými v~príkladoch \ref{priklad:regresie_mco}
 a~\ref{priklad:regresie_smsc}. Spúšťanie takýchto regresných testov využíva
 práve spomínanú funkcionalitu \emph{all}.
@@ -639,7 +641,7 @@ ukončí neúspechom. Pozastavenie plánovača znamená, že je možné si
 v~špeciálnom režime spúšťať vlastné funkcie alebo celé testy.
 Interaktívny mód umožňuje zmeniť beh testovania na základe špecifických 
 požiadavkov testera, ktorý túto vlastnosť využíva.
-Tento mód sa však v~regresných testoch nepoužíva, nakoľko sa využitím 
+Tento mód sa však v~regresnom testovaní nepoužíva, nakoľko sa využitím 
 tohoto módu stráca vlastnosť plnej automatizácie.
 
 Spomínaný plánovač testov má ešte niekoľko vlastností, ktoré však nie sú
@@ -677,8 +679,8 @@ V~regresnej sade potom môže existovať cluster s~názvom
 označenou ako \texttt{cl\_send\_sms 10000}, ktorý 
 posiela takýchto správ stonásobne viac.
 \item \textbf{Pre} -- množina všetkých prerekvizít, ktoré musia byť 
-v~čase spustenia daného testu úspešne \textit{aktivované}. 
-Pod pojmom \textit{aktivované} sa myslia tie prerekvizity, ktorých konfiguračné
+v~čase spustenia daného testu úspešne \uvodzovky{aktivované}. 
+Pod týmto pojmom sa myslia tie prerekvizity, ktorých konfiguračné
 zmeny neboli odstránené spustením príslušnej odrekvizity.
 Princíp plánovača je ten, že prerekvizity sú určené na zmenu stavu 
 testovacieho prostredia. Množina prerekvizít uvedených v~tejto položke 
@@ -700,7 +702,7 @@ Táto položka umožňuje logicky rozdeliť všetky testy do podmnožín,
 ktoré je možné spúšťať samostatne. 
 Plánovač umožňuje pomocou prepínača \textbf{-f} určiť, ktoré 
 funkcionality sa pri testovaní spustia.
-Pri plánovaní testov sa potom nájdu všetky testy, ktoré sú týmito 
+Pri plánovaní testov sa potom pracuje iba testami, ktoré sú týmito 
 funkcionalitami označené.
 Štandardná hodnota pre všetky clustre je hodnota \textit{all}, a~pre 
 všetky prerekvizity a~odrekvizity je to hodnota \textit{notall}.
@@ -719,8 +721,8 @@ $\sim$ \textgreater= 2.3-04.06).
 \item \textbf{CR} -- popisok slúžiaci na označenie čísla ticketu, alebo 
 čísla zmeny požiadavkov systému\footnote{angl. change request}, ktoré sú 
 do systému implementované na vyžiadanie zákazníka. 
-Pomocou prepínača \textbf{-cr} v~plánovači testov je možné naplánovať a~
-spustiť všetky testy, ktoré majú dané označenie v~tejto položke.
+Pomocou prepínača \textbf{-cr} je v~plánovači testov možné naplánovať 
+a~spustiť všetky testy, ktoré majú dané označenie v~tejto položke.
 \item \textbf{CRS} -- informačný popisok slúžiaci na označenie konkrétnej 
 časti naimplementovanej zmeny systému. 
 \end{itemize}
@@ -912,7 +914,7 @@ záťaže medzi jednotlivými testovacími systémami.
 po naplánovaní, pretože by neobsahoval čas potrebný pre spustenie 
 prerekvizít a~odrekvizít
 \item neefektívne združovanie prerekvizít
-\item nerovnomerné rozloženie záťaže
+\item nerovnomerné rozloženie záťaže medzi testovacími systémami
 \end{itemize}
 
 \subsubsection*{Distribúcia clusterov na základe spoločných prerekvizít}
@@ -955,7 +957,7 @@ a~cluster \texttt{cl\_subset3\_test2}).
 \noindent \textbf{Výhody}:
 \begin{itemize}
 \item efektívnejšie združovanie prerekvizít
-\item efektívnejšie rozloženie zážaže
+\item efektívnejšie rozloženie záťaže medzi testovacími systémami
 \end{itemize} 
 
 
@@ -1012,7 +1014,7 @@ práve tento princíp distribúcie testov.
 \noindent \textbf{Výhody}:
 \begin{itemize}
 \item efektívne združovanie prerekvizít
-\item veľmi presné rozloženie záťaže 
+\item veľmi presné rozloženie záťaže medzi testovacími systémami 
 (v~prípade nezachovania požiadavkov na funkcionalitu)
 \item presný odhad trvania testovania 
 (v~prípade nezachovania požiadavkov na funkcionalitu)
@@ -1042,10 +1044,10 @@ Rozšírenie je navrhnuté tak, aby bolo z~jedného stroja možné spustiť
 rozšírený plánovač, ktorý by rozdelil množinu 
 testov na \emph{m} podmnožín, v~závislosti na počtu strojov, na ktorých 
 chceme regresné testy spustiť. Jednotlivé podmnožiny testov sa 
-potom predajú novým inštanciám plánovačom testov, ktoré si tieto testy 
+potom predajú novým inštanciám plánovačov testov, ktoré si tieto testy 
 preplánujú a~začnú ich vykonávať. 
 Tieto nové inštancie plánovačov sú spustené ako podprocesy hlavného procesu, 
-ktorým je plánovač testov.
+ktorým je plánovač testov s~podporou distribúcie testov.
 Plánovač testov je navrhnutý tak, aby dokázal rozdistribuovať testy na 
 teoreticky nekonečný počet neprázdnych podmnožín.
 V~prípade, že je počet testovacích systémov väčší ako počet clusterov, 
@@ -1060,7 +1062,7 @@ Pri navrhovaní riešenia pre centralizovanú správu testov bolo nutné
 vymyslieť, akou formou sa budú spúšťať jednotlivé inštancie plánovača testov pre 
 distribuované systémy. Plánovač testov totiž potrebuje konfiguračný súbor,
 zadávaný parametrom \textbf{-i}, ktorý je uvedený pri spúšťaní regresných testov
-v~príklade \ref{priklad:regresie_mco}.
+v~príkladoch \ref{priklad:regresie_mco} a~\ref{priklad:regresie_smsc}.
 Tento konfiguračný súbor obsahuje informácie ako napríklad IP adresa systému, na ktorom sa 
 budú spúšťať testy, číslo verzie softvéru, názov 
 produktu, atď. Príklad \ref{priklad:konfig_subor} znázorňuje takýto 
@@ -1082,7 +1084,7 @@ Pri spúšťaní regresných testov na troch systémoch je preto potrebné
 mať pripravené 3 konfiguračné súbory, každý pre jeden testovací systém. 
 Spoločné informácie v~každom konfiguračnom súbore je možné uložiť do 
 samostatného súboru. V~každom z~použitých konfiguračých súborov potom môžeme 
-takýto súbor zahrnúť pomocou známej direktívy \texttt{\#include názov\_súboru} 
+takýto súbor zahrnúť pomocou známej direktívy \texttt{\#include} 
 používanej v~ostatných programovacích jazykoch.
 
 \begin{lstlisting}[caption=Konfiguračný súbor pre produkt MCO,label=priklad:konfig_subor]
@@ -1261,8 +1263,8 @@ Pri implementácií rozšírenia plánovača testov sa využíva práve toto rie
 \subsection*{Neželaná distribúcia testov}
 V~regresnej sade existujú množiny testov, ktoré chceme spúšťať vždy ako celok.
 Príkladom takejto množiny testov je funkcionalita \textit{env}, ktorá
-slúži na nainštalovanie rôznych produktov. Táto funkcionalita obsahuje 5 clusterov,
-ktoré tvoria jeden funkčný celok slúžiaci na inštaláciu produktu.
+slúži na nainštalovanie rôznych produktov. Táto funkcionalita obsahuje niekoľko clusterov,
+ktoré tvoria jeden funkčný celok slúžiaci na preinštalovanie produktu.
 V~prípade produktu MCO táto funkcionalita obsahuje clustre, ktoré:
 \begin{enumerate}
 \item vymažú zo systému produkt MCO
@@ -1281,7 +1283,7 @@ Pre tento účel bol naimplementovaný parameter
 \textbf{-wd}\footnote{skratka pre angl. without distribution}, 
 ktorý zapríčiní, že sa testy nebudú distribuovať, ale po naplánovaní 
 sa všetky spustia na každom testovacom systéme. 
-Príkaz na nainštalovanie produktu MCO na troch testovacích systémoch 
+Príkaz pre nainštalovanie produktu MCO na troch testovacích systémoch 
 je uvedený v~príklade \ref{priklad:distribuovana_instalacia}.
 
 \begin{lstlisting}[caption=Inštalácia produktu MCO na troch systémoch súčasne,
@@ -1303,7 +1305,7 @@ Nakoľko sa jedná o~implementáciu rozšírenia pre nástroj, ktorý už bol
 vytvorený, kapitola taktiež popisuje rozdelenie zdrojového kódu na časť 
 vytvorenú firmou Acision, a~časť vytvorenú mnou.
 Kapitola obsahuje popis implementácie distribúcie testov so zameraním na 
-rozloženie záťaže a~akou formou sa spúšťajú testy na jednotlivých 
+rozloženie záťaže a~popis toho, a~akou formou sa spúšťajú testy na jednotlivých 
 testovacích systémoch. Ďalej kapitola popisuje implementáciu 
 komunikácie medzi jednotlivými procesmi plánovača testov.
 Posledná kapitola popisuje implementáciu 
@@ -1458,10 +1460,10 @@ Tento konfiguračný súbor sa zadáva rovnako ako v~plánovači testov
 bez rozšírenia o~možnosti spúšťať testy na distribuovaných systémoch, 
 a~to parametrom \textbf{-i}.
 Spustenie regresných testov v~produkte MCO na troch distribuovaných 
-systémoch je uvedený na príklade
+systémoch je uvedené na príklade
 \ref{priklad:spustanie_testov_paralelne}.
 
-\begin{lstlisting}[caption=Príkaz pre distribúciu regresných testov v 
+\begin{lstlisting}[caption=Príkaz pre distribúciu regresných testov v~
 produkte MCO na 3 testovacie systémy,
 label=priklad:spustanie_testov_paralelne]
 meszarosf@mco-v156#./Run_test.tcl -i cfg.ini -mi cfg-vm1.ini cfg-vm2.ini 
@@ -1487,7 +1489,7 @@ Spúšťanie podprocesov je implementované vo funkcii
 Po spustení všetkých potrebných podprocesov na pozadí sa vo funkcii 
 hlavného procesu \texttt{prl\_accept\_conn} čaká na dáta od podprocesov.
 Podprocesy potom asynchrónne zasielajú výsledky svojich testov 
-a~takisto aj test plán hlavnému procesu. 
+a~takisto aj plán testov hlavnému procesu. 
 Každý podproces komunikuje len s~hlavným procesom. 
 Jednotlivé podprocesy o~sebe navzájom nevedia, nakoľko sa každý podproces 
 správa ako autonómny systém. 
@@ -1503,7 +1505,7 @@ podprocesy spustí s~parametrom
 
 Ako prvé sa čaká na test plány od každého podprocesu. 
 Po prijatí týchto test plánov sa vypočítajú informácie
-o~odhade času potrebnúho pre testovanie, počtu prerekvizít, počtu clusterov a~iné.
+o~odhade času potrebného pre testovanie, počtu prerekvizít, počtu clusterov a~iné.
 Medzi týmito informáciami je uvedené napríklad aj percentuálne vyjadrenie 
 počtu clusterov alebo prerekvizít, ktoré sa spúšťaju viacnásobne. 
 Počítanie tohto percentuálneho vyjadrenia 
@@ -1830,7 +1832,7 @@ aby sa narušilo rozloženie záťaže na týchto systémoch.
 V~prípade, že je takýchto systémov viac (čo sa v~prípade širokej škály 
 clusterov s~rôznymi prerekvizitami bežne stáva),
 aktuálnu skupinu clusterov automaticky nepriradíme testovaciemu systému, 
-ktorý má najmenšiu odhadovanú dĺžki trvania testovania. 
+ktorý má najmenšiu odhadovanú dĺžku trvania testovania. 
 Namiesto toho si pre každý takýto testovací systém spočítame počet 
 prerekvizít, ktoré má spoločné s~aktuálnou skupinou clusterov, ktorú 
 sa snažíme distribuovať. 
@@ -1940,7 +1942,7 @@ lepšia, a~to niekde na úrovni 27\%.
 postupne znižuje. Je to zapríčinené hlavne prekrývaním clusterov 
 a~prerekvizít (hodnota test overlapping ratio použitá v~príklade 
 \ref{priklad:ukazka_statistiky}), čo znamená že sa tieto testy spúšťajú 
-vďaka distribúcii viacnásobne. Plánovač testov je schopný túto 
+vďaka distribúcii testov viacnásobne. Plánovač testov je schopný túto 
 hodnotu prekrývania testov pri naplánovaní testov vypočítať.
 
 Grafické znázornenia tabuľky \ref{tabulka:prinos_pouzitia_distribucie}

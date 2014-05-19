@@ -85,27 +85,27 @@ Celkovo približne 123 riadkov kódu (bez komentárov).
 Pri odovzdávaní zdrojových súborov som navyše odovzdal len súbory,
 potrebné pre beh plánovača testov. Jednotlivé testy pre produkty MCO
 a~SMSCv5 boli odstránené a~nahradené jednoduchou funkciou 
-\texttt{cl\_wait\_random\_ok} umiestnenou v~súbore \textbf{CL-MY.tcl}. 
+\texttt{cl\_wait\_random\_ok} umiestnenou v~súbore \textit{CL-MY.tcl}. 
 
-Hlavičky testov v~súboroch \textbf{TEST.ALL} a~\textbf{TEST.REVIEW\_23} 
+Hlavičky testov v~súboroch \textit{TEST.ALL} a~\textit{TEST.REVIEW\_23} 
 boli ponechané priamo z~produktov MCO a~SMSCv5. V~týchto súboroch som 
 však zmenil popis testov (informácia \textit{Description}) 
 a~funkcionalitu (informácia \textit{Function}) popísané v~kapitole 
 \ref{sekcia:princip_pouziteho_planovaca}.
 Jednotlivé závislosti medzi testami ostali ponechané, a~je teda možné 
 vytvoriť plány testov, ktoré sa používajú priamo v~praxi.
-Súbory \textbf{KNOWN.BUGS} ostali ponechané priamo z~týchto dvoch 
+Súbory \textit{KNOWN.BUGS} ostali ponechané priamo z~týchto dvoch 
 produktov bez zmeny. 
 
 Medzi odovzdanými súbormi sa taktiež nachádzajú dva štatistické súbory 
 slúžiace napríklad pre výpočet celkovej dĺžky trvania testovania. 
-Medzi tieto súbory patrí súbor \textbf{TTT\_stat\_MCO.txt} (pre produkt MCO) 
-a~súbor \textbf{TTT\_stat\_SMSC.txt} (pre produkt SMSCv5).
+Medzi tieto súbory patria dva súbory \textit{TTT\_stat\_MCO.txt} (pre produkt MCO) 
+a~súbor \textit{TTT\_stat\_SMSC.txt} (pre produkt SMSCv5).
 Tieto súboy obsahujú presné informácie o~dĺžkach trvania jednotlivých 
 testov v~týchto dvoch produktov. 
 Pre využitie týchto súborov pre konkrétny produkt je potrebné jeden 
 z~týchto súborov vložiť do logovacieho adresára \textit{Log/Stat} 
-a~premenovať ho na súbor \textbf{TTT\_stat.txt}.
+a~premenovať ho na súbor \textit{TTT\_stat.txt}.
 V~prípade použitia týchto štatistických súborov plánovač testov počíta
 odhadované časy dĺžky trvania testovania na základe údajov priamo z~praxe.
 
